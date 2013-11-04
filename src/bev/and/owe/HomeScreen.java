@@ -21,7 +21,7 @@ public class HomeScreen extends Activity {
 	}
 	
 	protected void initLayout() {
-		
+		setContentView(R.layout.home_screen);
 	}
 
 }
