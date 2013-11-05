@@ -34,8 +34,8 @@ public class HomeScreen extends BaseGameActivity {
 	protected Button pointButton;
 	protected TextView pointValue;
 	
-	protected Button signInButton = (Button) findViewById(R.id.signInButton);
-	protected Button signOutButton = (Button) findViewById(R.id.signOutButton);
+	protected Button signInButton;
+	protected Button signOutButton;
 
 	
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,8 @@ public class HomeScreen extends BaseGameActivity {
 		
 		pointButton = (Button) findViewById(R.id.pointButton);
 		pointValue = (TextView) findViewById(R.id.pointValue);
-		
+		signInButton = (Button) findViewById(R.id.signInButton);
+		signOutButton = (Button) findViewById(R.id.signOutButton);
 	}
 	
 	protected void initAddLeaderboard() {
@@ -83,10 +84,8 @@ public class HomeScreen extends BaseGameActivity {
 				}
 			}
 		});
-	}
-		/*
+		
 		this.signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View v) {
                 // start the asynchronous sign in flow
                 beginUserInitiatedSignIn();
@@ -114,7 +113,7 @@ public class HomeScreen extends BaseGameActivity {
         }           
     }
 
-	*/
+	
 	@Override
 	public void onSignInFailed() {
 		// TODO Auto-generated method stub
