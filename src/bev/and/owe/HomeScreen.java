@@ -95,7 +95,11 @@ public class HomeScreen extends BaseGameActivity {
 		this.signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signOut();
+            	if (isSignedIn()) {
+                    signOut();
+                    Toast.makeText(getBaseContext(), "Sign out successful", Toast.LENGTH_SHORT);
+            	}
+           
             }
         });
         
@@ -122,7 +126,7 @@ public class HomeScreen extends BaseGameActivity {
 
 	@Override
 	public void onSignInSucceeded() {
-		// TODO Construct a new GamesClient
+		// TODO Create a new GamesClient
 		
 	}
 
