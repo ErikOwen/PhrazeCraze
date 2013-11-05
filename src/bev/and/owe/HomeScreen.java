@@ -96,13 +96,12 @@ public class HomeScreen extends BaseGameActivity {
             @Override
             public void onClick(View v) {
                 signOut();
-                setSigninButtonState();
             }
         });
         
 	}
 	
-	
+	/*
 	public void setSigninButtonState() {        
         if(isSignedIn()) {
             findViewById(R.id.signOutButton).setVisibility(View.VISIBLE);
@@ -112,17 +111,18 @@ public class HomeScreen extends BaseGameActivity {
             findViewById(R.id.signInButton).setVisibility(View.VISIBLE);          
         }           
     }
+    */
 
 	
 	@Override
 	public void onSignInFailed() {
-		// TODO Auto-generated method stub
+		// TODO Tell them to sign in again
 		
 	}
 
 	@Override
 	public void onSignInSucceeded() {
-		// TODO Auto-generated method stub
+		// TODO Construct a new GamesClient
 		
 	}
 
