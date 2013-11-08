@@ -27,13 +27,15 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp" >
 
-        <Button
+        <ImageButton
             android:id="@+id/timed_play_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+			android:layout_width="120sp"
+			android:layout_height="40sp"
+            android:background="@drawable/timed_play_button"
             android:layout_alignParentLeft="true"
-            android:text="Timed Play" >
-        </Button>
+            android:scaleType="fitXY" >   
+
+        </ImageButton>
 
         <Button
             android:id="@+id/free_play_button"

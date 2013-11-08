@@ -6,5 +6,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="LEADERBOARD_ID">CgkI7qLXncMNEAIQAA</string>
     <string name="APP_ID">464724021614</string>
+    <string name="title_activity_pre_timed_play">Phraze Craze Timed Play</string>
+    <string name="pre_timed_play_banner">Timed Play</string>
 
 </resources>

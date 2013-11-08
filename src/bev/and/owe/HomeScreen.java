@@ -3,6 +3,7 @@ package bev.and.owe;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -13,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import bev.and.owe.*;
@@ -23,9 +25,10 @@ import com.google.android.gms.plus.PlusClient;
 import com.google.android.gms.appstate.*;
 import com.google.example.games.basegameutils.BaseGameActivity;
 
+
 public class HomeScreen extends BaseGameActivity {
 
-	protected Button timedPlay_button;
+	protected ImageButton timedPlay_button;
 	protected Button freePlay_button;
 	protected Button highScores_button;
 	protected Button settings_button;
@@ -40,9 +43,9 @@ public class HomeScreen extends BaseGameActivity {
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.home_screen);
 		
 		initLayout();
+		initOnClickListeners();
 		initAddLeaderboard();
 	}
 
@@ -50,16 +53,31 @@ public class HomeScreen extends BaseGameActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.home, menu);
+		
 		return true;
 	}
 	
 	protected void initLayout() {
 		setContentView(R.layout.home_screen);
 		
-		pointButton = (Button) findViewById(R.id.pointButton);
-		pointValue = (TextView) findViewById(R.id.pointValue);
-		signInButton = (Button) findViewById(R.id.signInButton);
-		signOutButton = (Button) findViewById(R.id.signOutButton);
+		this.timedPlay_button = (ImageButton) findViewById(R.id.timed_play_button);
+		this.freePlay_button = (Button) findViewById(R.id.free_play_button);
+		this.highScores_button = (Button) findViewById(R.id.high_scores_button);
+		this.settings_button = (Button) findViewById(R.id.settings_button);
+		
+		this.pointButton = (Button) findViewById(R.id.pointButton);
+		this.pointValue = (TextView) findViewById(R.id.pointValue);
+		this.signInButton = (Button) findViewById(R.id.signInButton);
+		this.signOutButton = (Button) findViewById(R.id.signOutButton);
+	}
+	
+	protected void initOnClickListeners(){
+		this.timedPlay_button.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+				Intent startTimedPlayActivity = new Intent(HomeScreen.this, PreTimedPlay.class);
+				HomeScreen.this.startActivity(startTimedPlayActivity);
+			}
+		});
 	}
 	
 	protected void initAddLeaderboard() {
@@ -97,7 +115,7 @@ public class HomeScreen extends BaseGameActivity {
             public void onClick(View v) {
             	if (isSignedIn()) {
                     signOut();
-                    Toast.makeText(getBaseContext(), "Sign out successful", Toast.LENGTH_SHORT);
+                    Toast.makeText(getBaseContext(), "Sign out successful", Toast.LENGTH_SHORT).show();
             	}
            
             }
