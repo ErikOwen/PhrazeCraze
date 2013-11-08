@@ -29,9 +29,9 @@ import com.google.example.games.basegameutils.BaseGameActivity;
 public class HomeScreen extends BaseGameActivity {
 
 	protected ImageButton timedPlay_button;
-	protected Button freePlay_button;
-	protected Button highScores_button;
-	protected Button settings_button;
+	protected ImageButton freePlay_button;
+	protected ImageButton highScores_button;
+	protected ImageButton settings_button;
 	
 	protected GamesClient gameClient;
 	protected Button pointButton;
@@ -61,9 +61,11 @@ public class HomeScreen extends BaseGameActivity {
 		setContentView(R.layout.home_screen);
 		
 		this.timedPlay_button = (ImageButton) findViewById(R.id.timed_play_button);
-		this.freePlay_button = (Button) findViewById(R.id.free_play_button);
-		this.highScores_button = (Button) findViewById(R.id.high_scores_button);
-		this.settings_button = (Button) findViewById(R.id.settings_button);
+		this.freePlay_button = (ImageButton) findViewById(R.id.free_play_button);
+		this.highScores_button = (ImageButton) findViewById(R.id.high_scores_button);
+		this.settings_button = (ImageButton) findViewById(R.id.settings_button);
+		
+		//this.timedPlay_button.setBackgroundResource(R.drawable.timed_play_button);
 		
 		this.pointButton = (Button) findViewById(R.id.pointButton);
 		this.pointValue = (TextView) findViewById(R.id.pointValue);
@@ -72,8 +74,9 @@ public class HomeScreen extends BaseGameActivity {
 	}
 	
 	protected void initOnClickListeners(){
-		this.timedPlay_button.setOnClickListener(new OnClickListener() {
+		this.timedPlay_button.setOnTouchListener(new OnClickListener() {
 			public void onClick(View view) {
+				timedPlay_button.setImageResource(R.drawable.timed_play_button_pushed);
 				Intent startTimedPlayActivity = new Intent(HomeScreen.this, PreTimedPlay.class);
 				HomeScreen.this.startActivity(startTimedPlayActivity);
 			}

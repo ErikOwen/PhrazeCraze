@@ -31,38 +31,44 @@
             android:id="@+id/timed_play_button"
 			android:layout_width="120sp"
 			android:layout_height="40sp"
-            android:background="@drawable/timed_play_button"
+            android:background="@drawable/timed_play_button_selector"
             android:layout_alignParentLeft="true"
+            android:layout_marginBottom="10sp"
             android:scaleType="fitXY" >   
-
         </ImageButton>
 
-        <Button
+        <ImageButton
             android:id="@+id/free_play_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+			android:layout_width="120sp"
+			android:layout_height="40sp"
+            android:background="@drawable/free_play_button"
             android:layout_alignParentRight="true"
-            android:layout_toRightOf="@+id/timed_play_button"
-            android:text="Free Play" >
-        </Button>
+            android:layout_toRightOf="@+id/free_play_button"
+            android:layout_marginBottom="10sp"
+            android:scaleType="fitXY" >   
+        </ImageButton>
 
-        <Button
+        <ImageButton
             android:id="@+id/high_scores_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+			android:layout_width="120sp"
+			android:layout_height="40sp"
+            android:background="@drawable/scores_button"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/timed_play_button"
-            android:text="High Scores" >
-        </Button>
-
-        <Button
+            android:layout_marginBottom="10sp"
+            android:scaleType="fitXY" >   
+        </ImageButton>        
+        
+        <ImageButton
             android:id="@+id/settings_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+			android:layout_width="120sp"
+			android:layout_height="40sp"
+            android:background="@drawable/settings_button"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/free_play_button"
-            android:text="Settings" >
-        </Button>
+            android:layout_marginBottom="10sp"
+            android:scaleType="fitXY" >   
+        </ImageButton> 
     </RelativeLayout>
 
     <TextView
