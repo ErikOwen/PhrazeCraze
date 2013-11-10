@@ -25,10 +25,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/pre_timedplay_banner"
+        android:layout_centerHorizontal="true"
         android:adjustViewBounds="true"
         android:gravity="center_horizontal"
-        android:maxHeight="200sp"
-        android:paddingLeft="45sp"
+        android:maxHeight="100sp"
+        android:paddingLeft="23sp"
         android:scaleType="fitCenter"
         android:src="@drawable/timer_icon" />
 
@@ -37,8 +38,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/timed_play_image"
-        android:gravity="center_horizontal"
-        android:text="1 Minute"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_vertical"
+        android:text="@string/oneMin"
         android:textColor="@color/green"
         android:textSize="15sp" />
 	<CheckBox
@@ -46,16 +48,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/checkBox1min"
-        android:gravity="center_horizontal"
-        android:text="2 Minutes" 
+        android:layout_centerHorizontal="true"
+        android:gravity="center_vertical"
+        android:text="@string/twoMin" 
         android:textColor="@color/green"/>
 	<CheckBox
         android:id="@+id/checkBox3min"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/checkBox2min"
-        android:gravity="center_horizontal"
-        android:text="3 Minutes"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_vertical"
+        android:text="@string/threeMin"
         android:textColor="@color/green" />
 
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/checkBox3min"
+	    android:gravity="center_horizontal"
+	    android:paddingTop="20sp"
+	    android:orientation="horizontal">
+	    <Button 
+	        android:id="@+id/preTimedPlayMenuButton"
+	        android:layout_width="120sp"
+			android:layout_height="40sp"
+			android:text="Main Menu" />
+	  	<Button 
+	        android:id="@+id/preTimedPlayStartButton"
+	        android:layout_width="120sp"
+			android:layout_height="40sp"
+			android:text="Start!" />
+	</LinearLayout>
 </RelativeLayout>

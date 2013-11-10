@@ -33,6 +33,11 @@
             android:name="bev.and.owe.PreTimedPlay"
             android:label="@string/title_activity_pre_timed_play" >
         </activity>
+        <activity
+            android:name="bev.and.owe.TimedPlay"
+            android:label="@string/title_activity_timed_play"
+            android:windowSoftInputMode="stateVisible|adjustResize" >
+        </activity>
     </application>
 
 </manifest>

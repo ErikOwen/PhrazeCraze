@@ -8,5 +8,10 @@
     <string name="APP_ID">464724021614</string>
     <string name="title_activity_pre_timed_play">Phraze Craze Timed Play</string>
     <string name="pre_timed_play_banner">Timed Play</string>
+    <string name="oneMin">1 Minutes</string>
+    <string name="twoMin">2 Minutes</string>
+    <string name="threeMin">3 Minutes</string>
+    <string name="title_activity_timed_play">Phraze Craze Timed Play</string>
+    <string name="defaultPhraze">"Knew Your Cane Keys"</string>
 
 </resources>

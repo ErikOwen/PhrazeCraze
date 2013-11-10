@@ -74,7 +74,7 @@ public class HomeScreen extends BaseGameActivity {
 	}
 	
 	protected void initOnClickListeners(){
-		this.timedPlay_button.setOnTouchListener(new OnClickListener() {
+		this.timedPlay_button.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				timedPlay_button.setImageResource(R.drawable.timed_play_button_pushed);
 				Intent startTimedPlayActivity = new Intent(HomeScreen.this, PreTimedPlay.class);
