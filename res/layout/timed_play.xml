@@ -19,7 +19,7 @@
             android:layout_centerInParent="true"
             android:textAlignment="gravity"
             android:gravity="center_horizontal"
-            android:textColor="@color/green"
+            android:textColor="@color/black"
             android:singleLine="false"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
@@ -40,15 +40,19 @@
 	    	android:gravity="center_horizontal"
 	    	android:orientation="horizontal">
 	    
-        	<Button 
+        	<ImageButton 
 	        	android:id="@+id/skipButton"
 	        	android:layout_width="120sp"
 				android:layout_height="40sp"
+				android:layout_marginRight="10sp"
+				android:background="@drawable/skip_button_selector"
 				android:text="Skip" />
-	    	<Button 
+	    	<ImageButton 
 	        	android:id="@+id/submitButton"
 	        	android:layout_width="120sp"
 				android:layout_height="40sp"
+				android:layout_marginLeft="10sp"
+				android:background="@drawable/submit_button_selector"
 				android:text="Submit" />
     	</LinearLayout>
     

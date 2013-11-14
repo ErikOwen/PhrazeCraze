@@ -11,13 +11,14 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class PreTimedPlay extends Activity {
 
 	private TextView preTimedPlayBanner;
-	private Button menuButton;
-	private Button startButton;
+	private ImageButton menuButton;
+	private ImageButton startButton;
 	private CheckBox oneMinCheckBox;
 	private CheckBox twoMinCheckBox;
 	private CheckBox threeMinCheckBox;
@@ -35,8 +36,8 @@ public class PreTimedPlay extends Activity {
 		setContentView(R.layout.pre_timed_play);
 		
 		this.preTimedPlayBanner = (TextView) findViewById(R.id.pre_timedplay_banner);
-		this.menuButton = (Button) findViewById(R.id.preTimedPlayMenuButton);
-		this.startButton = (Button) findViewById(R.id.preTimedPlayStartButton);
+		this.menuButton = (ImageButton) findViewById(R.id.preTimedPlayMenuButton);
+		this.startButton = (ImageButton) findViewById(R.id.preTimedPlayStartButton);
 		this.oneMinCheckBox = (CheckBox) findViewById(R.id.checkBox1min);
 		this.twoMinCheckBox = (CheckBox) findViewById(R.id.checkBox2min);
 		this.threeMinCheckBox = (CheckBox) findViewById(R.id.checkBox3min);

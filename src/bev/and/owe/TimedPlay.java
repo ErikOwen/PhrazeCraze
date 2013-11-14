@@ -5,12 +5,15 @@ import android.app.Activity;
 import android.graphics.Typeface;
 import android.view.Menu;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class TimedPlay extends Activity {
 
 	private TextView phrazeText;
+	private ImageButton skipPhraze;
+	private ImageButton submitAnswer;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +27,9 @@ public class TimedPlay extends Activity {
     private void initLayout() {
     	setContentView(R.layout.timed_play);
     	
-    	phrazeText = (TextView) findViewById(R.id.phrazeText);
+    	this.phrazeText = (TextView) findViewById(R.id.phrazeText);
+    	this.skipPhraze = (ImageButton) findViewById(R.id.skipButton);
+    	this.submitAnswer = (ImageButton) findViewById(R.id.submitButton);
     	
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
 		this.phrazeText.setTypeface(font);

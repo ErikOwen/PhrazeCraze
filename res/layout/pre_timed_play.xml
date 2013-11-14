@@ -69,15 +69,17 @@
 	    android:gravity="center_horizontal"
 	    android:paddingTop="20sp"
 	    android:orientation="horizontal">
-	    <Button 
+	    <ImageButton 
 	        android:id="@+id/preTimedPlayMenuButton"
 	        android:layout_width="120sp"
 			android:layout_height="40sp"
-			android:text="Main Menu" />
-	  	<Button 
+			android:layout_marginRight="10sp"
+			android:background="@drawable/main_menu_button_selector" />
+	  	<ImageButton 
 	        android:id="@+id/preTimedPlayStartButton"
 	        android:layout_width="120sp"
 			android:layout_height="40sp"
-			android:text="Start!" />
+			android:layout_marginLeft="10sp"
+			android:background="@drawable/start_button_selector" />
 	</LinearLayout>
 </RelativeLayout>
