@@ -12,6 +12,7 @@
     <string name="twoMin">2 Minutes</string>
     <string name="threeMin">3 Minutes</string>
     <string name="title_activity_timed_play">Phraze Craze Timed Play</string>
-    <string name="defaultPhraze">"Knew Your Cane Keys"</string>
+    <string name="title_activity_settings">Phraze Craze Settings</string>
+    <string name="defaultPhraze">Knew Your Cane Keys</string>
 
 </resources>

@@ -38,6 +38,11 @@
             android:label="@string/title_activity_timed_play"
             android:windowSoftInputMode="stateVisible|adjustResize" >
         </activity>
+        <activity
+            android:name="bev.and.owe.Settings"
+            android:label="@string/title_activity_settings" >
+        </activity>
+        
     </application>
 
 </manifest>
