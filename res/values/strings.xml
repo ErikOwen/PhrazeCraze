@@ -14,5 +14,9 @@
     <string name="title_activity_timed_play">Phraze Craze Timed Play</string>
     <string name="title_activity_settings">Phraze Craze Settings</string>
     <string name="defaultPhraze">Knew Your Cane Keys</string>
+    <string name="suggest_phraze">Suggest A Phraze</string>
+    <string name="suggest_phraze_hint">Suggest a Phraze Here!</string>
+    <string name="suggest_answer_hint">Suggest a Answer Here!</string>
+    
 
 </resources>

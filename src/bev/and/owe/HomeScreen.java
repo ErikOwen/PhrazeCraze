@@ -81,6 +81,16 @@ public class HomeScreen extends BaseGameActivity {
 				HomeScreen.this.startActivity(startTimedPlayActivity);
 			}
 		});
+		
+		this.settings_button.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+				settings_button.setImageResource(R.drawable.settings_button_pushed);
+				Intent settingsScreen = new Intent(HomeScreen.this, Settings.class);
+				HomeScreen.this.startActivity(settingsScreen);
+			}
+		});
+		
+		
 	}
 	
 	protected void initAddLeaderboard() {
@@ -147,6 +157,8 @@ public class HomeScreen extends BaseGameActivity {
 
 	@Override
 	public void onSignInSucceeded() {
+		
+		
 		// TODO Create a new GamesClient
 		
 	}
