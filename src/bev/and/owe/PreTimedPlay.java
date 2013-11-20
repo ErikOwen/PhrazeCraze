@@ -22,6 +22,10 @@ public class PreTimedPlay extends Activity {
 	private CheckBox oneMinCheckBox;
 	private CheckBox twoMinCheckBox;
 	private CheckBox threeMinCheckBox;
+	private final int ONE_MIN = 60;
+	private final int TWO_MIN = 120;
+	private final int THREE_MIN = 180;
+	private int timeSelected;
 	
 	
 	@Override
@@ -46,6 +50,7 @@ public class PreTimedPlay extends Activity {
 		this.preTimedPlayBanner.setTypeface(font);
 		
 		this.twoMinCheckBox.setChecked(true);
+		this.timeSelected = TWO_MIN;
 	}
 
 	protected void initOnClickListeners() {
@@ -55,6 +60,7 @@ public class PreTimedPlay extends Activity {
 				if(isChecked) {
 					twoMinCheckBox.setChecked(false);
 					threeMinCheckBox.setChecked(false);
+					timeSelected = ONE_MIN;
 				}
 			}
 		});
@@ -64,6 +70,7 @@ public class PreTimedPlay extends Activity {
 				if(isChecked) {
 					oneMinCheckBox.setChecked(false);
 					threeMinCheckBox.setChecked(false);
+					timeSelected = TWO_MIN;
 				}
 			}
 		});
@@ -73,6 +80,7 @@ public class PreTimedPlay extends Activity {
 				if(isChecked) {
 					oneMinCheckBox.setChecked(false);
 					twoMinCheckBox.setChecked(false);
+					timeSelected = THREE_MIN;
 				}
 			}
 		});
@@ -85,6 +93,7 @@ public class PreTimedPlay extends Activity {
 		this.startButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				Intent startTimedPlayActivity = new Intent(PreTimedPlay.this, TimedPlay.class);
+				startTimedPlayActivity.putExtra("secondsLeft", timeSelected);
 				PreTimedPlay.this.startActivity(startTimedPlayActivity);
 			}
 		});

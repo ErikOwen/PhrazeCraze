@@ -1,6 +1,7 @@
 package bev.and.owe;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.app.Activity;
 import android.graphics.Typeface;
 import android.view.Menu;
@@ -14,6 +15,8 @@ public class TimedPlay extends Activity {
 	private TextView phrazeText;
 	private ImageButton skipPhraze;
 	private ImageButton submitAnswer;
+	private CountDownTimer timer;
+	private final int MILLISECONDS_PER_SECOND = 1000;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +24,11 @@ public class TimedPlay extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         
         initLayout();
+        
+        Bundle bundle = getIntent().getExtras();
+        int timerSecondsLeft = bundle.getInt("secondsLeft", 120);
+        Toast.makeText(this, "Seconds passed in: " + timerSecondsLeft, Toast.LENGTH_LONG).show();
+        startTimer(timerSecondsLeft);
         
     }
 
@@ -35,6 +43,10 @@ public class TimedPlay extends Activity {
 		this.phrazeText.setTypeface(font);
     }
 
+    private void startTimer(int timerSecondsLeft) {
+    	//this.timer = new CountDownTimer
+    }
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
