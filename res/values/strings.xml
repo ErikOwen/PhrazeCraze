@@ -13,6 +13,7 @@
     <string name="threeMin">3 Minutes</string>
     <string name="title_activity_timed_play">Phraze Craze Timed Play</string>
     <string name="title_activity_settings">Phraze Craze Settings</string>
+    <string name="title_suggest_phraze">Contribute A Phraze</string>
     <string name="defaultPhraze">Knew Your Cane Keys</string>
     <string name="suggest_phraze">Suggest A Phraze</string>
     <string name="suggest_phraze_hint">Suggest a Phraze Here!</string>
@@ -24,5 +25,8 @@
     <string name="paused">Game Paused</string>
     <string name="phrazesFinished">Phrazes completed: </string>
     <string name="timeRemaining">Time Remaining: </string>
+    <string name="buy_phraze">Buy More Phrazes</string>
+    <string name="instructions">Instructions</string>
+    <string name="title_activity_instructions">Instructions</string>
 
 </resources>

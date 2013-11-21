@@ -1,30 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:orientation="vertical">
+    tools:context=".TimedPlayPaused" >
 
-    <EditText
-        android:id="@+id/suggest_phraze"
-        android:hint="@string/suggest_phraze_hint"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10" >
-    </EditText>
+	<Button
+	    android:id="@+id/buyPhrazeButton"
+	    android:layout_width="200sp"
+	    android:layout_height="60sp"
+	    android:layout_alignParentBottom="true"
+	    android:layout_centerHorizontal="true"
+	    android:layout_marginBottom="100dp"
+	    android:paddingTop="15sp"
+	    android:text="@string/buy_phraze"
+	    android:textSize="20sp" />
 
-    <EditText
-        android:id="@+id/suggest_answer"
-        android:hint="@string/suggest_answer_hint"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10" />
+	<Button
+	    android:id="@+id/suggestPhrazeButton"
+	    android:layout_width="200sp"
+	    android:layout_height="60sp"
+	    android:layout_above="@+id/buyPhrazeButton"
+	    android:layout_alignLeft="@+id/buyPhrazeButton"
+	    android:layout_marginBottom="54dp"
+	    android:paddingTop="15sp"
+	    android:text="@string/suggest_phraze"
+	    android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/suggestButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/suggest_phraze" />
+	<Button
+	    android:id="@+id/instructionsButton"
+	    android:layout_width="200sp"
+	    android:layout_height="60sp"
+	    android:layout_above="@+id/suggestPhrazeButton"
+	    android:layout_alignLeft="@+id/suggestPhrazeButton"
+	    android:layout_marginBottom="57dp"
+	    android:text="@string/instructions"
+	    android:textSize="20sp" />
 
-</LinearLayout>
+</RelativeLayout>
