@@ -40,6 +40,7 @@ public class TimedPlay extends Activity {
 	private CountDownTimer timer;
 	private int phrazesCompleted;
 	private int secondsLeft;
+	private int initialTimeSelected;
 	private String currentPhraze;
 	private String currentAnswer;
 	private final int MILLISECONDS_PER_SECOND = 1000;
@@ -56,9 +57,9 @@ public class TimedPlay extends Activity {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         
         this.phrazesCompleted = 0;
-        
         Bundle bundle = getIntent().getExtras();
         this.secondsLeft = bundle.getInt("secondsLeft");
+        this.initialTimeSelected = this.secondsLeft / SECONDS_PER_MINUTE;
         startTimer(this.secondsLeft);
         
     }
@@ -79,6 +80,7 @@ public class TimedPlay extends Activity {
     	this.timerDisplay = (TextView) findViewById(R.id.timeLeft);
     	this.phrazesCompletedDisplay = (TextView) findViewById(R.id.completedPhrazesText);
     	this.userAnswer = (EditText) findViewById(R.id.answerInput);
+    	
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
 		this.phrazeText.setTypeface(font);
 		
@@ -169,8 +171,25 @@ public class TimedPlay extends Activity {
 	}
 	
     private void startTimer(int timerLength) {
-    	this.timer = new MyCountdownTimer(timerLength * MILLISECONDS_PER_SECOND, MILLISECONDS_PER_SECOND, this.timerDisplay);
-    	this.timer.start();
+    	this.timer = new CountDownTimer(timerLength * MILLISECONDS_PER_SECOND, MILLISECONDS_PER_SECOND) {
+    	    @Override
+    	    public void onFinish()
+    	    {
+    	        timerDisplay.setText("Done!");
+    	        Intent gameOverIntent = new Intent(TimedPlay.this, TimedPlayGameOver.class);
+    	        gameOverIntent.putExtra("correctAnswers", phrazesCompleted);
+    	        gameOverIntent.putExtra("timeSelected", initialTimeSelected);
+    	        startActivity(gameOverIntent);
+    	    }
+
+    	    @Override
+    	    public void onTick(final long millisUntilFinished)
+    	    {
+    	    	timerDisplay.setText("Time: " + ((millisUntilFinished / MILLISECONDS_PER_SECOND) / SECONDS_PER_MINUTE) + ":" + String.format("%02d", ((millisUntilFinished / MILLISECONDS_PER_SECOND) % SECONDS_PER_MINUTE)));
+    	    }
+    	}.start();
+    	/*this.timer = new MyCountdownTimer(timerLength * MILLISECONDS_PER_SECOND, MILLISECONDS_PER_SECOND, this.timerDisplay);
+    	this.timer.start();*/
     }
     
     private int stringToSeconds(String str) {
