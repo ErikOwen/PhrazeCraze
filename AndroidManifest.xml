@@ -54,6 +54,10 @@
             android:name="bev.and.owe.SuggestPhraze"
             android:label="@string/title_suggest_phraze" >
         </activity>
+        <activity
+            android:name="bev.and.owe.TimedPlayGameOver"
+            android:label="@string/title_activity_timed_play_game_over" >
+        </activity>
     </application>
 
 </manifest>

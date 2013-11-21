@@ -53,7 +53,8 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
 		gameClient = new GamesClient.Builder(getBaseContext(), this, this).create();
 		if (isSignedIn()) {
 			gameClient.connect();
-		} else {
+		}
+		else {
 			Toast.makeText(this, "Please sign in", Toast.LENGTH_SHORT).show();
 		}
 	}

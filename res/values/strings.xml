@@ -28,5 +28,9 @@
     <string name="buy_phraze">Buy More Phrazes</string>
     <string name="instructions">Instructions</string>
     <string name="title_activity_instructions">Instructions</string>
-
+    <string name="title_activity_timed_play_game_over">TimedPlayGameOver</string>
+    <string name="gameOver">Game Over!</string>
+    <string name="completedPhrazes">Congratulations, you completed 5 Phrazes!</string>
+	<string name="newHighScore">New High Score!</string>
+	
 </resources>
