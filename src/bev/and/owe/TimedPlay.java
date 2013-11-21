@@ -8,13 +8,18 @@ import android.annotation.TargetApi;
 import android.support.v4.internal.view.SupportMenuItem;
 import android.support.v4.view.MenuItemCompat;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -27,6 +32,7 @@ public class TimedPlay extends Activity {
 	private Menu timedMenu;
 	private ImageButton pauseButton;
 	private TextView timerDisplay;
+	private TextView phrazesCompletedDisplay;
 	private TextView phrazeText;
 	private ImageButton skipPhraze;
 	private ImageButton submitAnswer;
@@ -46,6 +52,8 @@ public class TimedPlay extends Activity {
         
         initLayout();
         initOnClickListeners();
+        
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         
         this.phrazesCompleted = 0;
         
@@ -69,6 +77,7 @@ public class TimedPlay extends Activity {
     	this.submitAnswer = (ImageButton) findViewById(R.id.submitButton);
     	this.pauseButton = (ImageButton) findViewById(R.id.pauseButton);
     	this.timerDisplay = (TextView) findViewById(R.id.timeLeft);
+    	this.phrazesCompletedDisplay = (TextView) findViewById(R.id.completedPhrazesText);
     	this.userAnswer = (EditText) findViewById(R.id.answerInput);
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
 		this.phrazeText.setTypeface(font);
@@ -76,7 +85,9 @@ public class TimedPlay extends Activity {
 		PhrazePack pack = PhrazesAndAnswers.getRandomPhrazePack();
 		this.currentPhraze = pack.getPhraze();
 		this.currentAnswer = pack.getAnswer();
+		
 		this.phrazeText.setText(this.currentPhraze);
+		this.phrazesCompletedDisplay.setText(getResources().getString(R.string.phrazesFinished) + " " + this.phrazesCompleted);
     }
 
 	protected void initOnClickListeners() {
@@ -89,6 +100,70 @@ public class TimedPlay extends Activity {
 				pauseScreenActivity.putExtra("phrazesCompleted", phrazesCompleted);
 				
 				TimedPlay.this.startActivityForResult(pauseScreenActivity, 1);
+			}
+		});
+		
+		this.submitAnswer.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+				if (StringComparer.stringChecker(userAnswer.getText().toString(), currentAnswer) < 15) {
+					phrazesCompleted++;
+					phrazesCompletedDisplay.setText(getResources().getString(R.string.phrazesFinished) + " " + phrazesCompleted);
+					Toast.makeText(getBaseContext(), "Correct!", Toast.LENGTH_SHORT).show();
+				}
+				else {
+					Toast.makeText(getBaseContext(), "Incorrect answer", Toast.LENGTH_SHORT).show();
+				}
+				
+				userAnswer.getText().clear();
+				PhrazePack pack = PhrazesAndAnswers.getRandomPhrazePack();
+				currentPhraze = pack.getPhraze();
+				currentAnswer = pack.getAnswer();
+				phrazeText.setText(currentPhraze);
+				
+				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(userAnswer.getWindowToken(), 0);
+			}
+		});
+		
+		this.userAnswer.setOnKeyListener(new OnKeyListener() {
+			@Override
+			public boolean onKey(View view, int keyCode, KeyEvent event) {
+				if(event.getAction() == KeyEvent.ACTION_DOWN) {
+					if (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
+						if (StringComparer.stringChecker(userAnswer.getText().toString(), currentAnswer) < 15) {
+							phrazesCompleted++;
+							phrazesCompletedDisplay.setText(getResources().getString(R.string.phrazesFinished) + " " + phrazesCompleted);
+							Toast.makeText(getBaseContext(), "Correct!", Toast.LENGTH_SHORT).show();
+						}
+						else {
+							Toast.makeText(getBaseContext(), "Incorrect answer", Toast.LENGTH_SHORT).show();
+						}
+						
+						userAnswer.getText().clear();
+						PhrazePack pack = PhrazesAndAnswers.getRandomPhrazePack();
+						currentPhraze = pack.getPhraze();
+						currentAnswer = pack.getAnswer();
+						phrazeText.setText(currentPhraze);
+						
+						InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+						imm.hideSoftInputFromWindow(userAnswer.getWindowToken(), 0);
+						
+						return true;
+					}
+				}
+				return false;
+			}
+		});
+		this.skipPhraze.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+				userAnswer.getText().clear();
+				PhrazePack pack = PhrazesAndAnswers.getRandomPhrazePack();
+				currentPhraze = pack.getPhraze();
+				currentAnswer = pack.getAnswer();
+				phrazeText.setText(currentPhraze);
+				
+				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(userAnswer.getWindowToken(), 0);
 			}
 		});
 	}
