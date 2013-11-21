@@ -7,11 +7,6 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.support.v4.internal.view.SupportMenuItem;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.internal.view.menu.MenuItemImpl;
-import android.support.v7.internal.view.menu.ActionMenuItem;
-import android.support.v7.internal.view.SupportMenuInflater;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -21,6 +16,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,9 +30,12 @@ public class TimedPlay extends Activity {
 	private TextView phrazeText;
 	private ImageButton skipPhraze;
 	private ImageButton submitAnswer;
+	private EditText userAnswer;
 	private CountDownTimer timer;
 	private int phrazesCompleted;
 	private int secondsLeft;
+	private String currentPhraze;
+	private String currentAnswer;
 	private final int MILLISECONDS_PER_SECOND = 1000;
 	private final int SECONDS_PER_MINUTE = 60;
 	
@@ -51,8 +50,8 @@ public class TimedPlay extends Activity {
         this.phrazesCompleted = 0;
         
         Bundle bundle = getIntent().getExtras();
-        int timerLength = bundle.getInt("secondsLeft");
-        startTimer(timerLength);
+        this.secondsLeft = bundle.getInt("secondsLeft");
+        startTimer(this.secondsLeft);
         
     }
 
@@ -70,8 +69,14 @@ public class TimedPlay extends Activity {
     	this.submitAnswer = (ImageButton) findViewById(R.id.submitButton);
     	this.pauseButton = (ImageButton) findViewById(R.id.pauseButton);
     	this.timerDisplay = (TextView) findViewById(R.id.timeLeft);
+    	this.userAnswer = (EditText) findViewById(R.id.answerInput);
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
 		this.phrazeText.setTypeface(font);
+		
+		PhrazePack pack = PhrazesAndAnswers.getRandomPhrazePack();
+		this.currentPhraze = pack.getPhraze();
+		this.currentAnswer = pack.getAnswer();
+		this.phrazeText.setText(this.currentPhraze);
     }
 
 	protected void initOnClickListeners() {
@@ -83,7 +88,7 @@ public class TimedPlay extends Activity {
 				pauseScreenActivity.putExtra("secondsLeft", stringToSeconds((String) timerDisplay.getText()));
 				pauseScreenActivity.putExtra("phrazesCompleted", phrazesCompleted);
 				
-				TimedPlay.this.startActivity(pauseScreenActivity);
+				TimedPlay.this.startActivityForResult(pauseScreenActivity, 1);
 			}
 		});
 	}
@@ -98,12 +103,9 @@ public class TimedPlay extends Activity {
     	int colonIndex = str.indexOf(':', spaceIndex);
     	String minutesString = str.substring(spaceIndex + 1, colonIndex);
     	String secondsString = str.substring(colonIndex + 1, str.length());
-    	//Toast.makeText(this, "minutesString: " + minutesString, Toast.LENGTH_LONG).show();
+    	
     	Integer minutes = Integer.parseInt(minutesString);
     	Integer seconds = Integer.parseInt(secondsString);
-    	
-    	//Toast.makeText(this, "seconds: " + seconds, Toast.LENGTH_LONG).show();
-    	//Toast.makeText(this, "minutes: " + minutes, Toast.LENGTH_LONG).show();
     	
     	return (minutes.intValue() * SECONDS_PER_MINUTE) + seconds.intValue();
     }
@@ -115,4 +117,10 @@ public class TimedPlay extends Activity {
         return true;
     }
     
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	if (requestCode == 1) {
+    		this.secondsLeft = data.getIntExtra("secondsLeft", 60);
+    	    startTimer(this.secondsLeft);
+    	}
+	}
 }
