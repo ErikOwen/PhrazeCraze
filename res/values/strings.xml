@@ -17,6 +17,9 @@
     <string name="suggest_phraze">Suggest A Phraze</string>
     <string name="suggest_phraze_hint">Suggest a Phraze Here!</string>
     <string name="suggest_answer_hint">Suggest a Answer Here!</string>
-    
+    <string name="pause">Pause Game</string>
+    <string name="timer">Time: </string>
+    <string name="phrazesCompleted">Score:</string>
+    <string name="title_activity_timed_play_paused">TimedPlayPaused</string>
 
 </resources>

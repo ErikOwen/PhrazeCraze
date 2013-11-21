@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="bev.and.owe"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0"
+    android:installLocation="preferExternal" >
 
     <uses-sdk
         android:minSdkVersion="7"
@@ -35,14 +36,17 @@
         </activity>
         <activity
             android:name="bev.and.owe.TimedPlay"
-            android:label="@string/title_activity_timed_play"
+            android:label=""
             android:windowSoftInputMode="stateVisible|adjustResize" >
         </activity>
         <activity
             android:name="bev.and.owe.Settings"
             android:label="@string/title_activity_settings" >
         </activity>
-        
+        <activity
+            android:name="bev.and.owe.TimedPlayPaused"
+            android:label="@string/title_activity_timed_play_paused" >
+        </activity>
     </application>
 
 </manifest>
