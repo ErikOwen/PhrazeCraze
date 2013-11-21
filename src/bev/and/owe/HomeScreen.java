@@ -50,6 +50,7 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
 		initLayout();
 		initOnClickListeners();
 		initAddLeaderboard();
+		
 		gameClient = new GamesClient.Builder(getBaseContext(), this, this).create();
 		if (isSignedIn()) {
 			gameClient.connect();
@@ -77,8 +78,8 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
 		
 		//this.timedPlay_button.setBackgroundResource(R.drawable.timed_play_button);
 		
-		this.pointButton = (Button) findViewById(R.id.pointButton);
-		this.pointValue = (TextView) findViewById(R.id.pointValue);
+		//this.pointButton = (Button) findViewById(R.id.pointButton);
+		//this.pointValue = (TextView) findViewById(R.id.pointValue);
 		this.signInButton = (Button) findViewById(R.id.signInButton);
 		this.signOutButton = (Button) findViewById(R.id.signOutButton);
 	}
@@ -91,12 +92,32 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
 				HomeScreen.this.startActivity(startTimedPlayActivity);
 			}
 		});
+		this.freePlay_button.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+				freePlay_button.setImageResource(R.drawable.free_play_button_pushed);
+				Intent startFreePlayActivity = new Intent(HomeScreen.this, FreePlay.class);
+				HomeScreen.this.startActivity(startFreePlayActivity);
+			}
+		});
 		
 		this.settings_button.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				settings_button.setImageResource(R.drawable.settings_button_pushed);
 				Intent settingsScreen = new Intent(HomeScreen.this, Settings.class);
 				HomeScreen.this.startActivity(settingsScreen);
+			}
+		});
+		
+		this.highScores_button.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+				highScores_button.setImageResource(R.drawable.settings_button_pushed);
+				
+				if (isSignedIn()) {
+					startActivityForResult(gameClient.getLeaderboardIntent(getString(R.string.LEADERBOARD_ID_1_MIN)), REQUEST_LEADERBOARD);
+				}
+				else {
+					Toast.makeText(getBaseContext(), "You must sign in to view high scores.", Toast.LENGTH_LONG).show();
+				}
 			}
 		});
 		
@@ -113,14 +134,15 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
 			Toast.makeText(this, "Error code: " + connectionResult, Toast.LENGTH_LONG).show();
 			break;
 		}
-		this.pointButton.setOnClickListener(new OnClickListener() {
+		/*this.pointButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				String pointString = pointValue.getText().toString();
 				try {
 					Integer points = Integer.parseInt(pointString);
 					if (isSignedIn()) {
-						gameClient.submitScore(getString(R.string.LEADERBOARD_ID), points);
-						startActivityForResult(gameClient.getLeaderboardIntent(getString(R.string.LEADERBOARD_ID)), REQUEST_LEADERBOARD);
+						//gameClient.submitScore(getString(R.string.LEADERBOARD_ID), points);
+						startActivityForResult(gameClient.getLeaderboardIntent(getString(R.string.LEADERBOARD_ID_1_MIN)), REQUEST_LEADERBOARD);
+						//startActivityForResult(gameClient.getLeaderboardIntent(getString(R.string.LEADERBOARD_ID)), REQUEST_LEADERBOARD);
 					}
 					Log.d("POINTS", points.toString());
 					
@@ -128,7 +150,7 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
 					
 				}
 			}
-		});
+		});*/
 		
 		this.signInButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -180,13 +202,13 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
 
 	@Override
 	public void onConnectionFailed(ConnectionResult result) {
-		// TODO Auto-generated method stub
+		Toast.makeText(this, "Unable to connect to google play services - connection failed.", Toast.LENGTH_LONG).show();
 		
 	}
 
 	@Override
 	public void onConnected(Bundle connectionHint) {
-		Toast.makeText(this, "You're in.", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "Able to connect to google play services.", Toast.LENGTH_SHORT).show();
 		// TODO Auto-generated method stub
 		
 	}

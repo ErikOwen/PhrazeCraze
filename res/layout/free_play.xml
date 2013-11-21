@@ -1,0 +1,109 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FreePlay" >
+
+    <RelativeLayout 
+        android:id="@+id/topBarFreePlay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/black"
+        android:layout_alignParentTop="true">
+
+        <ImageButton 
+	     	android:id="@+id/homeButtonFreePlay"
+	        android:layout_width="40sp"
+			android:layout_height="40sp"
+			android:layout_alignParentLeft="true"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="10sp"
+			android:background="@drawable/home_icon_temp" />
+        <TextView
+		    android:id="@+id/phrazeStreakText"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="10sp"
+			android:text="@string/currentStreak"
+			android:textSize="24sp"
+			android:textColor="@color/green" />
+    </RelativeLayout>
+    
+	<ScrollView
+		android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:background="@color/background"
+	    android:layout_below="@id/topBarFreePlay">
+
+	    <RelativeLayout 
+			android:layout_width="match_parent"
+	    	android:layout_height="150sp"
+	    	android:layout_marginTop="20sp"
+
+			android:background="@drawable/phrazeborder" >
+        
+        	<TextView 
+            	android:id="@+id/phrazeTextFreePlay"
+            	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:layout_centerInParent="true"
+            	android:textAlignment="gravity"
+            	android:gravity="center_horizontal"
+            	android:textColor="@color/black"
+            	android:singleLine="false"
+            	android:layout_marginLeft="30dp"
+            	android:layout_marginRight="30dp"
+            	android:textSize="40sp"
+            	android:text="@string/defaultPhraze"/>
+        
+    	</RelativeLayout>
+    </ScrollView>
+    
+    <RelativeLayout 
+       	android:layout_width="match_parent"
+	   	android:layout_height="wrap_content"
+	   	android:layout_alignParentBottom="true">
+       
+       	<LinearLayout 
+ 			android:layout_width="match_parent"
+	   		android:layout_height="wrap_content"
+	   		android:background="@color/black"
+	   		android:layout_above="@+id/editTextLayoutFreePlay"
+	   		android:gravity="center_horizontal"
+	   		android:orientation="horizontal">
+	   
+       		<ImageButton 
+	       		android:id="@+id/skipButtonFreePlay"
+	       		android:layout_width="120sp"
+				android:layout_height="40sp"
+				android:layout_marginRight="10sp"
+				android:background="@drawable/skip_button_selector"
+				android:text="Skip" />
+	   		<ImageButton 
+	       		android:id="@+id/submitButtonFreePlay"
+	       		android:layout_width="120sp"
+				android:layout_height="40sp"
+				android:layout_marginLeft="10sp"
+				android:background="@drawable/submit_button_selector"
+				android:text="Submit" />
+    	</LinearLayout>
+    
+    	<LinearLayout
+       		android:id="@+id/editTextLayoutFreePlay"
+ 			android:layout_width="match_parent"
+	   		android:layout_height="wrap_content"
+	   		android:layout_alignParentBottom="true"
+	   		android:orientation="horizontal">
+ 			<EditText
+ 			    android:id="@+id/answerInputFreePlay"
+	  	    	android:layout_width="fill_parent"
+	  	    	android:layout_height="fill_parent"
+	  	    	android:hint="Enter Your Answer Here"/>
+    	</LinearLayout>
+    	
+    </RelativeLayout>
+
+</RelativeLayout>

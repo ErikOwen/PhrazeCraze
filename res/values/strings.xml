@@ -4,7 +4,10 @@
     <string name="app_name">Phraze Craze</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="LEADERBOARD_ID">CgkI7qLXncMNEAIQAA</string>
+    <string name="LEADERBOARD_ID_OLD">CgkI7qLXncMNEAIQAA</string>
+    <string name="LEADERBOARD_ID_1_MIN"> CgkI7qLXncMNEAIQCQ</string>
+    <string name="LEADERBOARD_ID_2_MIN">CgkI7qLXncMNEAIQCA</string>
+    <string name="LEADERBOARD_ID_3_MIN">CgkI7qLXncMNEAIQCg</string>
     <string name="APP_ID">464724021614</string>
     <string name="title_activity_pre_timed_play">Phraze Craze Timed Play</string>
     <string name="pre_timed_play_banner">Timed Play</string>
@@ -30,7 +33,9 @@
     <string name="title_activity_instructions">Instructions</string>
     <string name="title_activity_timed_play_game_over">TimedPlayGameOver</string>
     <string name="gameOver">Game Over!</string>
-    <string name="completedPhrazes">Congratulations, you completed 5 Phrazes!</string>
-	<string name="newHighScore">New High Score!</string>
-	
+    <string name="completedPhrazes">Congratulations, you completed</string>
+    <string name="newHighScore">New High Score!</string>
+    <string name="title_activity_free_play">FreePlay</string>
+    <string name="currentStreak">Current Streak:</string>
+
 </resources>

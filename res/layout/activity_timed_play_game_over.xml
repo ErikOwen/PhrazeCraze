@@ -12,7 +12,7 @@
 		android:layout_alignParentTop="true"
 		android:paddingTop="15sp"
 		android:layout_centerHorizontal="true"
-		android:textSize="40sp"
+		android:textSize="60sp"
 		android:textColor="@color/green"
 		android:text="@string/gameOver" />
 	

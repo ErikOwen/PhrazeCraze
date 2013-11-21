@@ -2,6 +2,7 @@ package bev.and.owe;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.games.GamesClient;
 import com.google.example.games.basegameutils.BaseGameActivity;
 
@@ -25,6 +26,9 @@ public class TimedPlayGameOver extends BaseGameActivity implements GooglePlaySer
 	private int phrazesCompleted;
 	private int gameTime;
 	protected GamesClient gameClient;
+	private final int ONE_MIN = 1;
+	private final int TWO_MIN = 2;
+	private final int THREE_MIN = 3;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +37,15 @@ public class TimedPlayGameOver extends BaseGameActivity implements GooglePlaySer
 		Bundle bundle = getIntent().getExtras();
 		this.phrazesCompleted = bundle.getInt("correctAnswers");
 		this.gameTime = bundle.getInt("timeSelected");
-
-		gameClient = new GamesClient.Builder(getBaseContext(), this, this).create();
+		
+		this.gameClient = new GamesClient.Builder(getBaseContext(), this, this).create();
 		beginUserInitiatedSignIn();
 		
 		initLayout();
 		
 		initOnClickListeners();
+		
+		//checkAndSubmitHighScore();
 		
 	}
 
@@ -57,18 +63,33 @@ public class TimedPlayGameOver extends BaseGameActivity implements GooglePlaySer
 		this.completedPhrazesNotification.setTypeface(font);
 		this.highScoreNotification.setTypeface(font);
 		
-		checkAndSubmitHighScore();
-	}
-	
-	private void checkAndSubmitHighScore() {
-		if (isSignedIn()) {
-			gameClient.connect();
-			gameClient.submitScore(getString(R.string.LEADERBOARD_ID), this.phrazesCompleted);
+		if (this.phrazesCompleted == 1) {
+			this.completedPhrazesNotification.setText(getResources().getString(R.string.completedPhrazes) + " " + this.phrazesCompleted + " phrazes in " + this.gameTime + " minute!");
 		}
 		else {
-			this.highScoreNotification.setVisibility(View.GONE);
+			this.completedPhrazesNotification.setText(getResources().getString(R.string.completedPhrazes) + " " + this.phrazesCompleted + " phrazes in " + this.gameTime + " minutes!");
 		}
 	}
+	
+	/*private void checkAndSubmitHighScore() {
+		//if (isSignedIn()) {
+			Toast.makeText(this, "checkAndSubmitHighScore thinks i'm signed in", Toast.LENGTH_LONG).show();
+			if (this.gameTime == ONE_MIN) {
+				Toast.makeText(this, "High score submitted", Toast.LENGTH_LONG).show();
+				gameClient.submitScore(getString(R.string.LEADERBOARD_ID_2_MIN), this.phrazesCompleted);
+			}
+			else if (this.gameTime == TWO_MIN) {
+				gameClient.submitScore(getString(R.string.LEADERBOARD_ID_2_MIN), this.phrazesCompleted);
+			}
+			else if (this.gameTime == THREE_MIN) {
+				//gameClient.submitScore(getString(R.string.LEADERBOARD_ID_3_MIN), this.phrazesCompleted);
+			}
+		//}
+		//else {
+			//Toast.makeText(this, "Not signed in according to games client!", Toast.LENGTH_LONG).show();
+		//	this.highScoreNotification.setVisibility(View.GONE);
+		//}
+	}*/
 	
 	private void initOnClickListeners() {
 		this.newGameButton.setOnClickListener(new OnClickListener() {
@@ -97,26 +118,39 @@ public class TimedPlayGameOver extends BaseGameActivity implements GooglePlaySer
 
 	@Override
 	public void onSignInFailed() {
-		// TODO Auto-generated method stub
+		//Toast.makeText(this, "sign in failed", Toast.LENGTH_SHORT).show();
 		
 	}
 
 	@Override
 	public void onSignInSucceeded() {
-		// TODO Auto-generated method stub
+		if (!gameClient.isConnected()) {
+			   gameClient.connect();
+			   //Toast.makeText(this, "sign in succeeded!", Toast.LENGTH_SHORT).show();
+		}
 		
 	}
 
 	@Override
 	public void onConnectionFailed(ConnectionResult arg0) {
-		// TODO Auto-generated method stub
+		//Toast.makeText(this, "Could not connect to Google Play.", Toast.LENGTH_SHORT).show();
 		
 	}
 
 	@Override
 	public void onConnected(Bundle arg0) {
 		// TODO Auto-generated method stub
-		Toast.makeText(this, "Successfully connected to Google Play.", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(this, "Successfully connected to Google Play.", Toast.LENGTH_SHORT).show();
+		if (this.gameTime == ONE_MIN) {
+			Toast.makeText(this, "2min High score submitted", Toast.LENGTH_LONG).show();
+			gameClient.submitScore(getString(R.string.LEADERBOARD_ID_1_MIN), this.phrazesCompleted);
+		}
+		else if (this.gameTime == TWO_MIN) {
+			gameClient.submitScore(getString(R.string.LEADERBOARD_ID_2_MIN), this.phrazesCompleted);
+		}
+		else if (this.gameTime == THREE_MIN) {
+			gameClient.submitScore(getString(R.string.LEADERBOARD_ID_3_MIN), this.phrazesCompleted);
+		}
 	}
 
 	@Override

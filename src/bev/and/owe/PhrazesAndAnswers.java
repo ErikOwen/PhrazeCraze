@@ -395,7 +395,7 @@ public class PhrazesAndAnswers {
 		phrases[151] = "Apple in my eye";
 		phrases[152] = "Pick up line";
 		phrases[153] = "Styrofoam";
-		phrases[154] = "Bubble rap";
+		phrases[154] = "Bubble wrap";
 		phrases[155] = "Native American";
 		phrases[156] = "Animated movie";
 		phrases[157] = "Starbucks Coffee";

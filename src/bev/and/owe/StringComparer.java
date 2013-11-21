@@ -4,6 +4,11 @@ public class StringComparer {
 	
 	// Method derived from Levenshtein distance
 	public static int stringChecker (String s, String t) {
+		s = s.trim();
+		s = s.toLowerCase();
+		t = t.trim();
+		t = t.toLowerCase();
+		
 		if (s == null || t == null) {
 			throw new IllegalArgumentException("Strings must not be null");
 		}
