@@ -22,7 +22,7 @@
     <string name="phrazesCompleted">Score:</string>
     <string name="title_activity_timed_play_paused">TimedPlayPaused</string>
     <string name="paused">Game Paused</string>
-    <string name="phrazesFinished">Phrazes completed: </string>
+    <string name="phrazesFinished">Score: </string>
     <string name="timeRemaining">Time Remaining: </string>
 
 </resources>

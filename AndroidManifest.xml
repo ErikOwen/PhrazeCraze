@@ -36,8 +36,7 @@
         </activity>
         <activity
             android:name="bev.and.owe.TimedPlay"
-            android:label=""
-            android:windowSoftInputMode="stateVisible|adjustResize" >
+            android:label="" >
         </activity>
         <activity
             android:name="bev.and.owe.Settings"
