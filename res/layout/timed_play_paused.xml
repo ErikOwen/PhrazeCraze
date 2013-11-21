@@ -39,7 +39,7 @@
 		android:text="@string/timeRemaining" />
 	
 	<Button 
-	    android:id="@+id/resumeGameButton"
+	    android:id="@+id/suggestPhrazeButton"
 	    android:layout_width="200sp"
 		android:layout_height="60sp"
 		android:layout_below="@id/timeLeftText"
@@ -49,10 +49,10 @@
 		android:text="Resume" />
 	
 	<Button 
-	    android:id="@+id/leaveGameButton"
+	    android:id="@+id/buyPhrazeButton"
 	    android:layout_width="200sp"
 		android:layout_height="60sp"
-		android:layout_below="@id/resumeGameButton"
+		android:layout_below="@id/suggestPhrazeButton"
 		android:paddingTop="15sp"
 		android:layout_centerHorizontal="true"
 		android:textSize="20sp"

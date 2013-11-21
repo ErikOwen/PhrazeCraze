@@ -11,11 +11,11 @@ import android.widget.EditText;
 
 public class Settings extends Activity {
 	
-	private Button suggestButton;
-	private EditText phrazeField;
-	private EditText answerField;
-	private String sugPhraze;
-	private String sugAnswer;
+	private Button instructionsButton;
+	private Button suggestPhrazeButton;
+	private Button buyMorePhrazeButton;
+
+	
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -25,22 +25,34 @@ public class Settings extends Activity {
 	}
 
 	private void initOnClickListeners() {
-		this.suggestButton.setOnClickListener(new OnClickListener() {
+		this.instructionsButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				sugPhraze = phrazeField.getText().toString();
-			    sugAnswer = answerField.getText().toString();
-			    Log.d("SUGGESTEDPHRAZE", "Suggested Phraze: " + sugPhraze + "\nSuggested Answer: " + sugAnswer);
+				Intent instructionsScreen = new Intent(Settings.this, Instructions.class);
+				Settings.this.startActivityForResult(instructionsScreen, 1);
 			}
 		});
+		this.suggestPhrazeButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+				Intent suggestPhrazeScreen = new Intent(Settings.this, SuggestPhraze.class);
+				Settings.this.startActivityForResult(suggestPhrazeScreen, 1);
+			}
+		});
+		this.buyMorePhrazeButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+			
+			}
+		});
+		
 		
 	}
 
 	private void initLayout() {
 		setContentView(R.layout.settings);
+		instructionsButton = (Button) findViewById(R.id.instructionsButton);
+		suggestPhrazeButton = (Button) findViewById(R.id.suggestPhrazeButton);
+		buyMorePhrazeButton = (Button) findViewById(R.id.buyPhrazeButton);
 		
-		suggestButton = (Button) findViewById(R.id.suggestButton);
-		phrazeField = (EditText) findViewById(R.id.suggest_phraze);
-		answerField = (EditText) findViewById(R.id.suggest_answer);
+		
 
 	}
 	

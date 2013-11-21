@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="bev.and.owe"
+    android:installLocation="preferExternal"
     android:versionCode="1"
-    android:versionName="1.0"
-    android:installLocation="preferExternal" >
+    android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="7"
@@ -45,6 +45,14 @@
         <activity
             android:name="bev.and.owe.TimedPlayPaused"
             android:label="@string/title_activity_timed_play_paused" >
+        </activity>
+        <activity
+            android:name="bev.and.owe.Instructions"
+            android:label="@string/title_activity_instructions" >
+        </activity>
+        <activity
+            android:name="bev.and.owe.SuggestPhraze"
+            android:label="@string/title_suggest_phraze" >
         </activity>
     </application>
 
