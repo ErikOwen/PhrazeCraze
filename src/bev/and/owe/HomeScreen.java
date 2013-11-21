@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import bev.and.owe.*;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.games.GamesClient;
 import com.google.android.gms.plus.PlusClient;
@@ -26,7 +28,7 @@ import com.google.android.gms.appstate.*;
 import com.google.example.games.basegameutils.BaseGameActivity;
 
 
-public class HomeScreen extends BaseGameActivity {
+public class HomeScreen extends BaseGameActivity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener{
 
 	protected ImageButton timedPlay_button;
 	protected ImageButton freePlay_button;
@@ -39,6 +41,7 @@ public class HomeScreen extends BaseGameActivity {
 	
 	protected Button signInButton;
 	protected Button signOutButton;
+	protected int REQUEST_LEADERBOARD = 20;
 
 	
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,12 @@ public class HomeScreen extends BaseGameActivity {
 		initLayout();
 		initOnClickListeners();
 		initAddLeaderboard();
+		gameClient = new GamesClient.Builder(getBaseContext(), this, this).create();
+		if (isSignedIn()) {
+			gameClient.connect();
+		} else {
+			Toast.makeText(this, "Please sign in", Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	@Override
@@ -108,6 +117,10 @@ public class HomeScreen extends BaseGameActivity {
 				String pointString = pointValue.getText().toString();
 				try {
 					Integer points = Integer.parseInt(pointString);
+					if (isSignedIn()) {
+						gameClient.submitScore(getString(R.string.LEADERBOARD_ID), points);
+						startActivityForResult(gameClient.getLeaderboardIntent(getString(R.string.LEADERBOARD_ID)), REQUEST_LEADERBOARD);
+					}
 					Log.d("POINTS", points.toString());
 					
 				} catch (Exception e) {
@@ -157,9 +170,29 @@ public class HomeScreen extends BaseGameActivity {
 
 	@Override
 	public void onSignInSucceeded() {
-		
-		
+		if (!gameClient.isConnected()) {
+		   gameClient.connect();
+		}
 		// TODO Create a new GamesClient
+		
+	}
+
+	@Override
+	public void onConnectionFailed(ConnectionResult result) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onConnected(Bundle connectionHint) {
+		Toast.makeText(this, "You're in.", Toast.LENGTH_SHORT).show();
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDisconnected() {
+		// TODO Auto-generated method stub
 		
 	}
 
