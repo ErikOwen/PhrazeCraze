@@ -87,14 +87,14 @@ public class PreTimedPlay extends Activity {
 		this.menuButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				Intent returnHomeScreenActivity = new Intent(PreTimedPlay.this, HomeScreen.class);
-				PreTimedPlay.this.startActivity(returnHomeScreenActivity);
+				startActivity(returnHomeScreenActivity);
 			}
 		});
 		this.startButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				Intent startTimedPlayActivity = new Intent(PreTimedPlay.this, TimedPlay.class);
 				startTimedPlayActivity.putExtra("secondsLeft", timeSelected);
-				PreTimedPlay.this.startActivity(startTimedPlayActivity);
+				startActivity(startTimedPlayActivity);
 			}
 		});
 	}

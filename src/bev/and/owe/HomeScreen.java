@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.inputmethod.InputMethodManager;
@@ -39,25 +40,37 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
 	protected Button pointButton;
 	protected TextView pointValue;
 	
-	protected Button signInButton;
-	protected Button signOutButton;
+	protected ImageButton signInOutButton;
+	protected ImageButton signOutButton;
 	protected int REQUEST_LEADERBOARD = 20;
+	protected boolean isSignedIn;
 
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
 		initLayout();
 		initOnClickListeners();
 		initAddLeaderboard();
 		
-		gameClient = new GamesClient.Builder(getBaseContext(), this, this).create();
-		if (isSignedIn()) {
-			gameClient.connect();
-		}
-		else {
-			Toast.makeText(this, "Please sign in", Toast.LENGTH_SHORT).show();
-		}
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (isSignedIn() == true) {
+        	signInOutButton.setImageDrawable(getResources().getDrawable(R.drawable.sign_out_selector));
+        }
+        else {
+        	signInOutButton.setImageDrawable(getResources().getDrawable(R.drawable.sign_in_selector));
+        }
+		
+		this.timedPlay_button.setImageDrawable(getResources().getDrawable(R.drawable.timed_play_button_selector));
+		this.freePlay_button.setImageDrawable(getResources().getDrawable(R.drawable.free_play_button_selector));
+		this.highScores_button.setImageDrawable(getResources().getDrawable(R.drawable.scores_button_selector));
+		this.settings_button.setImageDrawable(getResources().getDrawable(R.drawable.settings_button_selector));
 	}
 
 	@Override
@@ -75,13 +88,7 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
 		this.freePlay_button = (ImageButton) findViewById(R.id.free_play_button);
 		this.highScores_button = (ImageButton) findViewById(R.id.high_scores_button);
 		this.settings_button = (ImageButton) findViewById(R.id.settings_button);
-		
-		//this.timedPlay_button.setBackgroundResource(R.drawable.timed_play_button);
-		
-		//this.pointButton = (Button) findViewById(R.id.pointButton);
-		//this.pointValue = (TextView) findViewById(R.id.pointValue);
-		this.signInButton = (Button) findViewById(R.id.signInButton);
-		this.signOutButton = (Button) findViewById(R.id.signOutButton);
+		this.signInOutButton = (ImageButton) findViewById(R.id.signInOutButton);
 	}
 	
 	protected void initOnClickListeners(){
@@ -110,8 +117,6 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
 		
 		this.highScores_button.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				highScores_button.setImageResource(R.drawable.settings_button_pushed);
-				
 				if (isSignedIn()) {
 					startActivityForResult(gameClient.getLeaderboardIntent(getString(R.string.LEADERBOARD_ID_1_MIN)), REQUEST_LEADERBOARD);
 				}
@@ -125,69 +130,34 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
 	}
 	
 	protected void initAddLeaderboard() {
-		int connectionResult = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-		switch (connectionResult) {
-		case 0:
-			Toast.makeText(this, "Google Play Services: Success", Toast.LENGTH_LONG).show();
-			break;
-		default:
-			Toast.makeText(this, "Error code: " + connectionResult, Toast.LENGTH_LONG).show();
-			break;
+		this.gameClient = new GamesClient.Builder(getBaseContext(), this, this).create();
+		
+		if (isSignedIn()) {
+			gameClient.connect();
+			this.signInOutButton.setImageDrawable(getResources().getDrawable(R.drawable.sign_out_selector));
 		}
-		/*this.pointButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View view) {
-				String pointString = pointValue.getText().toString();
-				try {
-					Integer points = Integer.parseInt(pointString);
-					if (isSignedIn()) {
-						//gameClient.submitScore(getString(R.string.LEADERBOARD_ID), points);
-						startActivityForResult(gameClient.getLeaderboardIntent(getString(R.string.LEADERBOARD_ID_1_MIN)), REQUEST_LEADERBOARD);
-						//startActivityForResult(gameClient.getLeaderboardIntent(getString(R.string.LEADERBOARD_ID)), REQUEST_LEADERBOARD);
-					}
-					Log.d("POINTS", points.toString());
-					
-				} catch (Exception e) {
-					
-				}
-			}
-		});*/
+		else {
+			this.signInOutButton.setImageDrawable(getResources().getDrawable(R.drawable.sign_in_selector));
+		}
 		
-		this.signInButton.setOnClickListener(new View.OnClickListener() {
+		this.signInOutButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // start the asynchronous sign in flow
-                beginUserInitiatedSignIn();
+                if (isSignedIn() == true) {
+                	signOut();
+                	Toast.makeText(getBaseContext(), "Signed out of Google Play", Toast.LENGTH_SHORT).show();
+                	signInOutButton.setImageDrawable(getResources().getDrawable(R.drawable.sign_in_selector));
+                }
+                else {
+                	 beginUserInitiatedSignIn();;
+                }
             }
         });
-		
-		this.signOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            	if (isSignedIn()) {
-                    signOut();
-                    Toast.makeText(getBaseContext(), "Sign out successful", Toast.LENGTH_SHORT).show();
-            	}
-           
-            }
-        });
-        
 	}
-	
-	/*
-	public void setSigninButtonState() {        
-        if(isSignedIn()) {
-            findViewById(R.id.signOutButton).setVisibility(View.VISIBLE);
-            findViewById(R.id.signInButton).setVisibility(View.GONE);
-        } else {
-            findViewById(R.id.signOutButton).setVisibility(View.GONE);
-            findViewById(R.id.signInButton).setVisibility(View.VISIBLE);          
-        }           
-    }
-    */
-
 	
 	@Override
 	public void onSignInFailed() {
-		// TODO Tell them to sign in again
+		Toast.makeText(this, "Google Play sign in failed", Toast.LENGTH_LONG).show();
+		this.signInOutButton.setImageDrawable(getResources().getDrawable(R.drawable.sign_in_selector));
 		
 	}
 
@@ -196,26 +166,25 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
 		if (!gameClient.isConnected()) {
 		   gameClient.connect();
 		}
-		// TODO Create a new GamesClient
+		this.signInOutButton.setImageDrawable(getResources().getDrawable(R.drawable.sign_out_selector));
 		
 	}
 
 	@Override
 	public void onConnectionFailed(ConnectionResult result) {
-		Toast.makeText(this, "Unable to connect to google play services - connection failed.", Toast.LENGTH_LONG).show();
+		Toast.makeText(this, "Unable to connect to Google Play Leaderbaords - connection failed.", Toast.LENGTH_LONG).show();
 		
 	}
 
 	@Override
 	public void onConnected(Bundle connectionHint) {
-		Toast.makeText(this, "Able to connect to google play services.", Toast.LENGTH_SHORT).show();
-		// TODO Auto-generated method stub
+		//Toast.makeText(this, "Able to connect to Google Play Leaderboards", Toast.LENGTH_SHORT).show();
 		
 	}
 
 	@Override
 	public void onDisconnected() {
-		// TODO Auto-generated method stub
+		Toast.makeText(this, "Disconnected from Google Play Leaderboards", Toast.LENGTH_SHORT).show();
 		
 	}
 

@@ -70,7 +70,7 @@ public class TimedPlayPaused extends Activity {
 		this.menuButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				Intent returnHomeScreenActivity = new Intent(TimedPlayPaused.this, HomeScreen.class);
-				TimedPlayPaused.this.startActivity(returnHomeScreenActivity);
+				startActivity(returnHomeScreenActivity);
 			}
 		});
 	}

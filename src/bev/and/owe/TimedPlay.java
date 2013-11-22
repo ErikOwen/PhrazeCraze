@@ -101,7 +101,7 @@ public class TimedPlay extends Activity {
 				pauseScreenActivity.putExtra("secondsLeft", stringToSeconds((String) timerDisplay.getText()));
 				pauseScreenActivity.putExtra("phrazesCompleted", phrazesCompleted);
 				
-				TimedPlay.this.startActivityForResult(pauseScreenActivity, 1);
+				startActivityForResult(pauseScreenActivity, 1);
 			}
 		});
 		

@@ -23,7 +23,8 @@
 
         <activity
             android:name="bev.and.owe.HomeScreen"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,31 +33,43 @@
         </activity>
         <activity
             android:name="bev.and.owe.PreTimedPlay"
-            android:label="@string/title_activity_pre_timed_play" >
+            android:label="@string/title_activity_pre_timed_play"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="bev.and.owe.TimedPlay"
-            android:label="" >
+            android:label="" 
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="bev.and.owe.Settings"
-            android:label="@string/title_activity_settings" >
+            android:label="@string/title_activity_settings"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="bev.and.owe.TimedPlayPaused"
-            android:label="@string/title_activity_timed_play_paused" >
+            android:label="@string/title_activity_timed_play_paused"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="bev.and.owe.Instructions"
-            android:label="@string/title_activity_instructions" >
+            android:label="@string/title_activity_instructions"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="bev.and.owe.SuggestPhraze"
-            android:label="@string/title_suggest_phraze" >
+            android:label="@string/title_suggest_phraze"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="bev.and.owe.TimedPlayGameOver"
-            android:label="@string/title_activity_timed_play_game_over" >
+            android:label="@string/title_activity_timed_play_game_over"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="bev.and.owe.FreePlay"
+            android:label="@string/title_activity_free_play"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 
