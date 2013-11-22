@@ -42,7 +42,7 @@
         android:gravity="center_vertical"
         android:text="@string/oneMin"
         android:textColor="@color/green"
-        android:textSize="15sp" />
+        android:textSize="25sp" />
 	<CheckBox
         android:id="@+id/checkBox2min"
         android:layout_width="wrap_content"
@@ -51,7 +51,8 @@
         android:layout_centerHorizontal="true"
         android:gravity="center_vertical"
         android:text="@string/twoMin" 
-        android:textColor="@color/green"/>
+        android:textColor="@color/green"
+        android:textSize="25sp" />
 	<CheckBox
         android:id="@+id/checkBox3min"
         android:layout_width="wrap_content"
@@ -60,7 +61,8 @@
         android:layout_centerHorizontal="true"
         android:gravity="center_vertical"
         android:text="@string/threeMin"
-        android:textColor="@color/green" />
+        android:textColor="@color/green"
+        android:textSize="25sp" />
 
 	<LinearLayout
 	    android:layout_width="match_parent"

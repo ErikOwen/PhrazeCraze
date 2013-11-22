@@ -118,7 +118,9 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
 		this.highScores_button.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				if (isSignedIn()) {
-					startActivityForResult(gameClient.getLeaderboardIntent(getString(R.string.LEADERBOARD_ID_1_MIN)), REQUEST_LEADERBOARD);
+					//startActivityForResult(gameClient.getLeaderboardIntent(getString(R.string.LEADERBOARD_ID_1_MIN)), REQUEST_LEADERBOARD);
+					Intent highScoresIntent = new Intent(HomeScreen.this, HighScores.class);
+					startActivity(highScoresIntent);
 				}
 				else {
 					Toast.makeText(getBaseContext(), "You must sign in to view high scores.", Toast.LENGTH_LONG).show();
@@ -148,7 +150,7 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
                 	signInOutButton.setImageDrawable(getResources().getDrawable(R.drawable.sign_in_selector));
                 }
                 else {
-                	 beginUserInitiatedSignIn();;
+                	 beginUserInitiatedSignIn();
                 }
             }
         });

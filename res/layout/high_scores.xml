@@ -1,0 +1,57 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".HighScores" >
+
+    <RelativeLayout 
+        android:id="@+id/HighScoresButtonLayout"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentTop="true">
+        
+        <TextView
+        	android:id="@+id/highScoresBanner"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_gravity="center"
+        	android:paddingLeft="10sp"
+        	android:paddingRight="10sp"
+        	android:layout_centerHorizontal="true"
+        	android:layout_alignParentTop="true"
+        	android:layout_marginTop="30sp"
+        	android:text="@string/highScores"
+        	android:textColor="@color/green"
+        	android:textSize="75sp" />
+        
+	    <Button 
+	        android:id="@+id/oneMinHighScoreButton"
+	        android:layout_width="210sp"
+			android:layout_height="70sp"
+			android:layout_below="@id/highScoresBanner"
+			android:layout_marginTop="50sp"
+			android:layout_centerHorizontal="true"
+			android:text="1 Minute High Scores" />
+	    
+	    <Button 
+	        android:id="@+id/twoMinHighScoreButton"
+	        android:layout_width="210sp"
+			android:layout_height="70sp"
+			android:layout_below="@id/oneMinHighScoreButton"
+			android:layout_marginTop="30sp"
+			android:layout_centerHorizontal="true"
+			android:text="2 Minutes High Scores" />
+	    
+		<Button 
+	        android:id="@+id/threeMinHighScoreButton"
+	        android:layout_width="210sp"
+			android:layout_height="70sp"
+			android:layout_below="@id/twoMinHighScoreButton"
+			android:layout_marginTop="30sp"
+			android:layout_centerHorizontal="true"
+			android:text="3 Minutes High Scores" />
+	    	    
+    </RelativeLayout>
+
+</RelativeLayout>

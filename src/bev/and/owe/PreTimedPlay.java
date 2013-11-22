@@ -48,7 +48,9 @@ public class PreTimedPlay extends Activity {
 		
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
 		this.preTimedPlayBanner.setTypeface(font);
-		
+		this.oneMinCheckBox.setTypeface(font);
+		this.twoMinCheckBox.setTypeface(font);
+		this.threeMinCheckBox.setTypeface(font);
 		this.twoMinCheckBox.setChecked(true);
 		this.timeSelected = TWO_MIN;
 	}
@@ -60,6 +62,7 @@ public class PreTimedPlay extends Activity {
 				if(isChecked) {
 					twoMinCheckBox.setChecked(false);
 					threeMinCheckBox.setChecked(false);
+					
 					timeSelected = ONE_MIN;
 				}
 			}
