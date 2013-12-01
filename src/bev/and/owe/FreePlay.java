@@ -69,7 +69,7 @@ public class FreePlay extends Activity {
 		this.homeButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				Intent homeScreenActivity = new Intent(FreePlay.this, HomeScreen.class);
-				FreePlay.this.startActivity(homeScreenActivity);
+				startActivity(homeScreenActivity);
 			}
 		});
 		

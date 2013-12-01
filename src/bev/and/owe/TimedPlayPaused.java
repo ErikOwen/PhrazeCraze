@@ -59,18 +59,16 @@ public class TimedPlayPaused extends Activity {
 			public void onClick(View view) {
 				Intent returnToGameIntent = new Intent();
 				returnToGameIntent.putExtra("secondsLeft", secondsLeft);
+				returnToGameIntent.putExtra("phrazesCompleted", phrazesCompleted);
 				setResult(RESULT_OK, returnToGameIntent);        
 				finish();
-				/*Intent returnToGameActivity = new Intent(TimedPlayPaused.this, HomeScreen.class);
-				returnToGameActivity.putExtra("secondsLeft, value);
-				PreTimedPlay.this.startActivity(returnHomeScreenActivity);*/
 			}
 		});
 		
 		this.menuButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				Intent returnHomeScreenActivity = new Intent(TimedPlayPaused.this, HomeScreen.class);
-				TimedPlayPaused.this.startActivity(returnHomeScreenActivity);
+				startActivity(returnHomeScreenActivity);
 			}
 		});
 	}
@@ -81,5 +79,14 @@ public class TimedPlayPaused extends Activity {
 		getMenuInflater().inflate(R.menu.timed_play_paused, menu);
 		return true;
 	}
+	
+    @Override
+    public void onBackPressed () {
+		Intent returnToGameIntent = new Intent();
+		returnToGameIntent.putExtra("secondsLeft", secondsLeft);
+		returnToGameIntent.putExtra("phrazesCompleted", phrazesCompleted);
+		setResult(RESULT_OK, returnToGameIntent);        
+		finish();
+    }
 
 }

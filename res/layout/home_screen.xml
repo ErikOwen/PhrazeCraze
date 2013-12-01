@@ -4,20 +4,20 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical">
-	<RelativeLayout 
-	    android:layout_width="match_parent"
-    	android:layout_height="wrap_content">
-	    <ImageView
-        	android:id="@+id/image_view"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:layout_centerHorizontal="true"
-        	android:adjustViewBounds="true"
-        	android:gravity="center_horizontal"
-        	android:scaleType="fitCenter"
-        	android:src="@drawable/pclogo" >
-    	</ImageView>
-	</RelativeLayout>
+        <RelativeLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:adjustViewBounds="true"
+                android:gravity="center_horizontal"
+                android:scaleType="fitCenter"
+                android:src="@drawable/pclogo" >
+            </ImageView>
+        </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -27,8 +27,8 @@
 
         <ImageButton
             android:id="@+id/timed_play_button"
-			android:layout_width="120sp"
-			android:layout_height="40sp"
+                        android:layout_width="120sp"
+                        android:layout_height="40sp"
             android:background="@drawable/timed_play_button_selector"
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="10sp"
@@ -37,9 +37,9 @@
 
         <ImageButton
             android:id="@+id/free_play_button"
-			android:layout_width="120sp"
-			android:layout_height="40sp"
-            android:background="@drawable/free_play_button"
+                        android:layout_width="120sp"
+                        android:layout_height="40sp"
+            android:background="@drawable/free_play_button_selector"
             android:layout_alignParentRight="true"
             android:layout_toRightOf="@+id/free_play_button"
             android:layout_marginBottom="10sp"
@@ -48,73 +48,42 @@
 
         <ImageButton
             android:id="@+id/high_scores_button"
-			android:layout_width="120sp"
-			android:layout_height="40sp"
-            android:background="@drawable/scores_button"
+                        android:layout_width="120sp"
+                        android:layout_height="40sp"
+            android:background="@drawable/scores_button_selector"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/timed_play_button"
-            android:layout_marginBottom="10sp"
             android:scaleType="fitXY" >   
         </ImageButton>        
         
         <ImageButton
             android:id="@+id/settings_button"
-			android:layout_width="120sp"
-			android:layout_height="40sp"
-            android:background="@drawable/settings_button"
+                        android:layout_width="120sp"
+                        android:layout_height="40sp"
+            android:background="@drawable/settings_button_selector"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/free_play_button"
-            android:layout_marginBottom="10sp"
             android:scaleType="fitXY" >   
         </ImageButton> 
     </RelativeLayout>
 
-    <!--<TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <Button
-            android:id="@+id/pointButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="TestLeaderBoard" />
-
-        <EditText
-            android:id="@+id/pointValue"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:ems="10"
-            android:text="20" />
-
-    </LinearLayout>  -->
-
-    <LinearLayout
+           <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_marginTop="30sp" >
 
-        <Button
-            android:id="@+id/signInButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="70sp"
-            android:text="Sign In" />
+        
+                 <ImageButton
+            android:id="@+id/signInOutButton"
+            android:layout_width="240sp"
+            android:layout_height="40sp"
+            android:background="@drawable/sign_out_selector"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="10sp"
+            android:scaleType="fitXY" />
 
-        <Button
-            android:id="@+id/signOutButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50sp"
-            android:text="Sign Out" />
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

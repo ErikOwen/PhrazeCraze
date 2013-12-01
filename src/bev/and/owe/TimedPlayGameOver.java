@@ -96,7 +96,7 @@ public class TimedPlayGameOver extends BaseGameActivity implements GooglePlaySer
 			public void onClick(View view) {
 				Intent newGameActivity = new Intent(TimedPlayGameOver.this, PreTimedPlay.class);
 				
-				TimedPlayGameOver.this.startActivity(newGameActivity);
+				startActivity(newGameActivity);
 			}
 		});
 		
@@ -104,7 +104,7 @@ public class TimedPlayGameOver extends BaseGameActivity implements GooglePlaySer
 			public void onClick(View view) {
 				Intent mainMenuActivity = new Intent(TimedPlayGameOver.this, HomeScreen.class);
 				
-				TimedPlayGameOver.this.startActivity(mainMenuActivity);
+				startActivity(mainMenuActivity);
 			}
 		});
 	}

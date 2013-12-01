@@ -37,5 +37,7 @@
     <string name="newHighScore">New High Score!</string>
     <string name="title_activity_free_play">FreePlay</string>
     <string name="currentStreak">Current Streak:</string>
+    <string name="title_activity_high_scores">HighScores</string>
+    <string name="highScores">High Scores</string>
 
 </resources>

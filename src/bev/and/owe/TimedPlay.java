@@ -28,7 +28,6 @@ import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class TimedPlay extends Activity {
-
 	private Menu timedMenu;
 	private ImageButton pauseButton;
 	private TextView timerDisplay;
@@ -45,66 +44,65 @@ public class TimedPlay extends Activity {
 	private String currentAnswer;
 	private final int MILLISECONDS_PER_SECOND = 1000;
 	private final int SECONDS_PER_MINUTE = 60;
-	
+
 	@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        
-        initLayout();
-        initOnClickListeners();
-        
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        
-        this.phrazesCompleted = 0;
-        Bundle bundle = getIntent().getExtras();
-        this.secondsLeft = bundle.getInt("secondsLeft");
-        this.initialTimeSelected = this.secondsLeft / SECONDS_PER_MINUTE;
-        startTimer(this.secondsLeft);
-        
-    }
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+		initLayout();
+		initOnClickListeners();
+
+		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+		this.phrazesCompleted = 0;
+		Bundle bundle = getIntent().getExtras();
+		this.secondsLeft = bundle.getInt("secondsLeft");
+		this.initialTimeSelected = this.secondsLeft / SECONDS_PER_MINUTE;
+		startTimer(this.secondsLeft);
+
+	}
 
 	@Override
 	public void onPause() {
-	    super.onPause();  // Always call the superclass method first
-	    this.timer.cancel();
+		super.onPause();  // Always call the superclass method first
+		this.timer.cancel();
 	}
 
 	private void initLayout() {
-    	setContentView(R.layout.timed_play);
-    	
-    	this.phrazeText = (TextView) findViewById(R.id.phrazeText);
-    	this.skipPhraze = (ImageButton) findViewById(R.id.skipButton);
-    	this.submitAnswer = (ImageButton) findViewById(R.id.submitButton);
-    	this.pauseButton = (ImageButton) findViewById(R.id.pauseButton);
-    	this.timerDisplay = (TextView) findViewById(R.id.timeLeft);
-    	this.phrazesCompletedDisplay = (TextView) findViewById(R.id.completedPhrazesText);
-    	this.userAnswer = (EditText) findViewById(R.id.answerInput);
-    	
+		setContentView(R.layout.timed_play);
+
+		this.phrazeText = (TextView) findViewById(R.id.phrazeText);
+		this.skipPhraze = (ImageButton) findViewById(R.id.skipButton);
+		this.submitAnswer = (ImageButton) findViewById(R.id.submitButton);
+		this.pauseButton = (ImageButton) findViewById(R.id.pauseButton);
+		this.timerDisplay = (TextView) findViewById(R.id.timeLeft);
+		this.phrazesCompletedDisplay = (TextView) findViewById(R.id.completedPhrazesText);
+		this.userAnswer = (EditText) findViewById(R.id.answerInput);
+
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
 		this.phrazeText.setTypeface(font);
-		
+
 		PhrazePack pack = PhrazesAndAnswers.getRandomPhrazePack();
 		this.currentPhraze = pack.getPhraze();
 		this.currentAnswer = pack.getAnswer();
-		
+
 		this.phrazeText.setText(this.currentPhraze);
 		this.phrazesCompletedDisplay.setText(getResources().getString(R.string.phrazesFinished) + " " + this.phrazesCompleted);
-    }
+	}
 
 	protected void initOnClickListeners() {
 		this.pauseButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				Intent pauseScreenActivity = new Intent(TimedPlay.this, TimedPlayPaused.class);
-				Toast.makeText(getBaseContext(), "How many seconds left method thinks: " + stringToSeconds((String) timerDisplay.getText()), Toast.LENGTH_SHORT).show();
-				
+
 				pauseScreenActivity.putExtra("secondsLeft", stringToSeconds((String) timerDisplay.getText()));
 				pauseScreenActivity.putExtra("phrazesCompleted", phrazesCompleted);
-				
-				TimedPlay.this.startActivityForResult(pauseScreenActivity, 1);
+
+				startActivityForResult(pauseScreenActivity, 1);
 			}
 		});
-		
+
 		this.submitAnswer.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				if (StringComparer.stringChecker(userAnswer.getText().toString(), currentAnswer) < 15) {
@@ -115,18 +113,18 @@ public class TimedPlay extends Activity {
 				else {
 					Toast.makeText(getBaseContext(), "Incorrect answer", Toast.LENGTH_SHORT).show();
 				}
-				
+
 				userAnswer.getText().clear();
 				PhrazePack pack = PhrazesAndAnswers.getRandomPhrazePack();
 				currentPhraze = pack.getPhraze();
 				currentAnswer = pack.getAnswer();
 				phrazeText.setText(currentPhraze);
-				
+
 				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 				imm.hideSoftInputFromWindow(userAnswer.getWindowToken(), 0);
 			}
 		});
-		
+
 		this.userAnswer.setOnKeyListener(new OnKeyListener() {
 			@Override
 			public boolean onKey(View view, int keyCode, KeyEvent event) {
@@ -140,16 +138,16 @@ public class TimedPlay extends Activity {
 						else {
 							Toast.makeText(getBaseContext(), "Incorrect answer", Toast.LENGTH_SHORT).show();
 						}
-						
+
 						userAnswer.getText().clear();
 						PhrazePack pack = PhrazesAndAnswers.getRandomPhrazePack();
 						currentPhraze = pack.getPhraze();
 						currentAnswer = pack.getAnswer();
 						phrazeText.setText(currentPhraze);
-						
+
 						InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 						imm.hideSoftInputFromWindow(userAnswer.getWindowToken(), 0);
-						
+
 						return true;
 					}
 				}
@@ -163,58 +161,58 @@ public class TimedPlay extends Activity {
 				currentPhraze = pack.getPhraze();
 				currentAnswer = pack.getAnswer();
 				phrazeText.setText(currentPhraze);
-				
+
 				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 				imm.hideSoftInputFromWindow(userAnswer.getWindowToken(), 0);
 			}
 		});
 	}
-	
-    private void startTimer(int timerLength) {
-    	this.timer = new CountDownTimer(timerLength * MILLISECONDS_PER_SECOND, MILLISECONDS_PER_SECOND) {
-    	    @Override
-    	    public void onFinish()
-    	    {
-    	        timerDisplay.setText("Done!");
-    	        Intent gameOverIntent = new Intent(TimedPlay.this, TimedPlayGameOver.class);
-    	        gameOverIntent.putExtra("correctAnswers", phrazesCompleted);
-    	        gameOverIntent.putExtra("timeSelected", initialTimeSelected);
-    	        startActivity(gameOverIntent);
-    	    }
 
-    	    @Override
-    	    public void onTick(final long millisUntilFinished)
-    	    {
-    	    	timerDisplay.setText("Time: " + ((millisUntilFinished / MILLISECONDS_PER_SECOND) / SECONDS_PER_MINUTE) + ":" + String.format("%02d", ((millisUntilFinished / MILLISECONDS_PER_SECOND) % SECONDS_PER_MINUTE)));
-    	    }
-    	}.start();
-    	/*this.timer = new MyCountdownTimer(timerLength * MILLISECONDS_PER_SECOND, MILLISECONDS_PER_SECOND, this.timerDisplay);
-    	this.timer.start();*/
-    }
-    
-    private int stringToSeconds(String str) {
-    	int spaceIndex = str.indexOf(' ');
-    	int colonIndex = str.indexOf(':', spaceIndex);
-    	String minutesString = str.substring(spaceIndex + 1, colonIndex);
-    	String secondsString = str.substring(colonIndex + 1, str.length());
-    	
-    	Integer minutes = Integer.parseInt(minutesString);
-    	Integer seconds = Integer.parseInt(secondsString);
-    	
-    	return (minutes.intValue() * SECONDS_PER_MINUTE) + seconds.intValue();
-    }
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.timed_play, menu);
-        
-        return true;
-    }
-    
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	if (requestCode == 1) {
-    		this.secondsLeft = data.getIntExtra("secondsLeft", 60);
-    	    startTimer(this.secondsLeft);
-    	}
+	private void startTimer(int timerLength) {
+		this.timer = new CountDownTimer(timerLength * MILLISECONDS_PER_SECOND, MILLISECONDS_PER_SECOND) {
+			@Override
+			public void onFinish()
+			{
+				timerDisplay.setText("Done!");
+				Intent gameOverIntent = new Intent(TimedPlay.this, TimedPlayGameOver.class);
+				gameOverIntent.putExtra("correctAnswers", phrazesCompleted);
+				gameOverIntent.putExtra("timeSelected", initialTimeSelected);
+				startActivity(gameOverIntent);
+			}
+
+			@Override
+			public void onTick(final long millisUntilFinished)
+			{
+				timerDisplay.setText("Time: " + ((millisUntilFinished / MILLISECONDS_PER_SECOND) / SECONDS_PER_MINUTE) + ":" + String.format("%02d", ((millisUntilFinished / MILLISECONDS_PER_SECOND) % SECONDS_PER_MINUTE)));
+			}
+		}.start();
+		/*this.timer = new MyCountdownTimer(timerLength * MILLISECONDS_PER_SECOND, MILLISECONDS_PER_SECOND, this.timerDisplay);
+            this.timer.start();*/
+	}
+
+	private int stringToSeconds(String str) {
+		int spaceIndex = str.indexOf(' ');
+		int colonIndex = str.indexOf(':', spaceIndex);
+		String minutesString = str.substring(spaceIndex + 1, colonIndex);
+		String secondsString = str.substring(colonIndex + 1, str.length());
+
+		Integer minutes = Integer.parseInt(minutesString);
+		Integer seconds = Integer.parseInt(secondsString);
+
+		return (minutes.intValue() * SECONDS_PER_MINUTE) + seconds.intValue();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.timed_play, menu);
+
+		return true;
+	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == 1) {
+			this.secondsLeft = data.getIntExtra("secondsLeft", 60);
+			startTimer(this.secondsLeft);
+		}
 	}
 }
