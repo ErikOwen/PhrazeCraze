@@ -45,8 +45,8 @@ public class TimedPlayPaused extends Activity {
 		this.pauseGameBanner = (TextView) findViewById(R.id.pausedText);
 		this.phrazesCompletedText = (TextView) findViewById(R.id.completedPhrazesText);
 		this.timeLeftText = (TextView) findViewById(R.id.timeLeftText);
-		this.resumeButton = (Button) findViewById(R.id.resumeGameButton);
-		this.menuButton = (Button) findViewById(R.id.leaveGameButton);
+		this.resumeButton = (Button) findViewById(R.id.suggestPhrazeButton);
+		this.menuButton = (Button) findViewById(R.id.buyPhrazeButton);
 		
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
 		this.pauseGameBanner.setTypeface(font);
