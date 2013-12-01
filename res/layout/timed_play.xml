@@ -26,7 +26,7 @@
 	        android:layout_width="40sp"
 			android:layout_height="40sp"
 			android:layout_centerInParent="true"
-			android:background="@drawable/pause_button_temp" />
+			android:background="@drawable/pause_button_selector" />
 		<TextView
 		    android:id="@+id/timeLeft"
 			android:layout_width="wrap_content"
@@ -45,10 +45,9 @@
 
 	    <RelativeLayout 
 			android:layout_width="match_parent"
-	    	android:layout_height="150sp"
+	    	android:layout_height="wrap_content"
 	    	android:layout_marginTop="20sp"
-
-			android:background="@drawable/phrazeborder" >
+	    	android:background="@drawable/phraze_background" >
         
         	<TextView 
             	android:id="@+id/phrazeText"
@@ -67,48 +66,30 @@
     	</RelativeLayout>
     </ScrollView>
     
-    <RelativeLayout 
+    <LinearLayout 
        	android:layout_width="match_parent"
 	   	android:layout_height="wrap_content"
+	   	android:orientation="horizontal"
 	   	android:layout_alignParentBottom="true">
-       
-       	<LinearLayout 
- 			android:layout_width="match_parent"
-	   		android:layout_height="wrap_content"
-	   		android:background="@color/black"
-	   		android:layout_above="@+id/editTextLayout"
-	   		android:gravity="center_horizontal"
-	   		android:orientation="horizontal">
-	   
-       		<ImageButton 
-	       		android:id="@+id/skipButton"
-	       		android:layout_width="120sp"
-				android:layout_height="40sp"
-				android:layout_marginRight="10sp"
-				android:background="@drawable/skip_button_selector"
-				android:text="Skip" />
-	   		<ImageButton 
-	       		android:id="@+id/submitButton"
-	       		android:layout_width="120sp"
-				android:layout_height="40sp"
-				android:layout_marginLeft="10sp"
-				android:background="@drawable/submit_button_selector"
-				android:text="Submit" />
-    	</LinearLayout>
-    
-    	<LinearLayout
-       		android:id="@+id/editTextLayout"
- 			android:layout_width="match_parent"
-	   		android:layout_height="wrap_content"
-	   		android:layout_alignParentBottom="true"
-	   		android:orientation="horizontal">
+           
+	
  			<EditText
  			    android:id="@+id/answerInput"
-	  	    	android:layout_width="fill_parent"
-	  	    	android:layout_height="fill_parent"
+	  	    	android:layout_width="0px"
+	  	    	android:layout_height="wrap_content"
+	  	    	android:layout_weight="6"
+	  	    	android:singleLine="true"
+    			android:imeOptions="actionGo"
 	  	    	android:hint="Enter Your Answer Here"/>
-    	</LinearLayout>
+ 			
+			<ImageButton 
+	       		android:id="@+id/skipButton"
+	       		android:layout_width="0px"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:paddingLeft="5sp"
+				android:background="@drawable/skip_button_selector" />
     	
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>

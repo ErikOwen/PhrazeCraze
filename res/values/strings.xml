@@ -39,5 +39,6 @@
     <string name="currentStreak">Current Streak:</string>
     <string name="title_activity_high_scores">HighScores</string>
     <string name="highScores">High Scores</string>
+    <string name="phrazeCraze"> Phraze Craze</string>
 
 </resources>

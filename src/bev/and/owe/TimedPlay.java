@@ -34,7 +34,7 @@ public class TimedPlay extends Activity {
 	private TextView phrazesCompletedDisplay;
 	private TextView phrazeText;
 	private ImageButton skipPhraze;
-	private ImageButton submitAnswer;
+	//private ImageButton submitAnswer;
 	private EditText userAnswer;
 	private CountDownTimer timer;
 	private int phrazesCompleted;
@@ -74,7 +74,7 @@ public class TimedPlay extends Activity {
 
 		this.phrazeText = (TextView) findViewById(R.id.phrazeText);
 		this.skipPhraze = (ImageButton) findViewById(R.id.skipButton);
-		this.submitAnswer = (ImageButton) findViewById(R.id.submitButton);
+		//this.submitAnswer = (ImageButton) findViewById(R.id.submitButton);
 		this.pauseButton = (ImageButton) findViewById(R.id.pauseButton);
 		this.timerDisplay = (TextView) findViewById(R.id.timeLeft);
 		this.phrazesCompletedDisplay = (TextView) findViewById(R.id.completedPhrazesText);
@@ -103,7 +103,7 @@ public class TimedPlay extends Activity {
 			}
 		});
 
-		this.submitAnswer.setOnClickListener(new OnClickListener() {
+		/*this.submitAnswer.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				if (StringComparer.stringChecker(userAnswer.getText().toString(), currentAnswer) < 15) {
 					phrazesCompleted++;
@@ -123,7 +123,7 @@ public class TimedPlay extends Activity {
 				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 				imm.hideSoftInputFromWindow(userAnswer.getWindowToken(), 0);
 			}
-		});
+		});*/
 
 		this.userAnswer.setOnKeyListener(new OnKeyListener() {
 			@Override

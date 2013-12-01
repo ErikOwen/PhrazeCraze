@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -37,6 +38,8 @@ public class PreTimedPlay extends Activity {
 	}
 	
 	protected void initLayout() {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
 		setContentView(R.layout.pre_timed_play);
 		
 		this.preTimedPlayBanner = (TextView) findViewById(R.id.pre_timedplay_banner);

@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
@@ -39,6 +41,7 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
 	protected GamesClient gameClient;
 	protected Button pointButton;
 	protected TextView pointValue;
+	protected TextView homeScreenTitle;
 	
 	protected ImageButton signInOutButton;
 	protected ImageButton signOutButton;
@@ -49,7 +52,6 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		initLayout();
 		initOnClickListeners();
@@ -82,6 +84,8 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
 	}
 	
 	protected void initLayout() {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
 		setContentView(R.layout.home_screen);
 		
 		this.timedPlay_button = (ImageButton) findViewById(R.id.timed_play_button);
@@ -89,6 +93,10 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
 		this.highScores_button = (ImageButton) findViewById(R.id.high_scores_button);
 		this.settings_button = (ImageButton) findViewById(R.id.settings_button);
 		this.signInOutButton = (ImageButton) findViewById(R.id.signInOutButton);
+		this.homeScreenTitle = (TextView) findViewById(R.id.homeScreenTitle);
+		
+		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
+		this.homeScreenTitle.setTypeface(font);
 	}
 	
 	protected void initOnClickListeners(){

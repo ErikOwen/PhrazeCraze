@@ -1,4 +1,5 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/homeScreenRootView"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,21 +8,32 @@
         <RelativeLayout 
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            
+            <TextView 
+                android:id="@+id/homeScreenTitle"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/phrazeCraze"
+                android:textColor="@color/green"
+                android:textSize="65sp"/>
             <ImageView
                 android:id="@+id/image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="255sp"
+                android:layout_height="300sp"
                 android:layout_centerHorizontal="true"
                 android:adjustViewBounds="true"
                 android:gravity="center_horizontal"
                 android:scaleType="fitCenter"
-                android:src="@drawable/pclogo" >
+                android:paddingTop="100sp"
+                android:src="@drawable/mark" >
             </ImageView>
         </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/signInOutLayout"
         android:paddingLeft="16dp"
         android:paddingRight="16dp" >
 
@@ -37,8 +49,8 @@
 
         <ImageButton
             android:id="@+id/free_play_button"
-                        android:layout_width="120sp"
-                        android:layout_height="40sp"
+            android:layout_width="120sp"
+            android:layout_height="40sp"
             android:background="@drawable/free_play_button_selector"
             android:layout_alignParentRight="true"
             android:layout_toRightOf="@+id/free_play_button"
@@ -69,9 +81,12 @@
 
 
            <RelativeLayout
+        android:id="@+id/signInOutLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20sp"
         android:layout_marginTop="30sp" >
 
         
@@ -86,4 +101,4 @@
 
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>
