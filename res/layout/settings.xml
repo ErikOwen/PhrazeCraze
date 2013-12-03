@@ -5,10 +5,11 @@
     android:background="@color/background"
     tools:context=".TimedPlayPaused" >
 
-	<Button
+	<ImageButton
 	    android:id="@+id/buyPhrazeButton"
-	    android:layout_width="200sp"
-	    android:layout_height="60sp"
+	    android:layout_width="240sp"
+	    android:layout_height="80sp"
+	    android:background="@drawable/purchase_phrazes_selector"
 	    android:layout_alignParentBottom="true"
 	    android:layout_centerHorizontal="true"
 	    android:layout_marginBottom="100dp"
@@ -16,10 +17,11 @@
 	    android:text="@string/buy_phraze"
 	    android:textSize="20sp" />
 
-	<Button
+	<ImageButton
 	    android:id="@+id/suggestPhrazeButton"
-	    android:layout_width="200sp"
-	    android:layout_height="60sp"
+	    android:layout_width="240sp"
+	    android:layout_height="80sp"
+	    android:background="@drawable/suggest_phrazes_selector"
 	    android:layout_above="@+id/buyPhrazeButton"
 	    android:layout_alignLeft="@+id/buyPhrazeButton"
 	    android:layout_marginBottom="54dp"
@@ -27,10 +29,11 @@
 	    android:text="@string/suggest_phraze"
 	    android:textSize="20sp" />
 
-	<Button
+	<ImageButton
 	    android:id="@+id/instructionsButton"
-	    android:layout_width="200sp"
-	    android:layout_height="60sp"
+	    android:layout_width="240sp"
+	    android:layout_height="80sp"
+	    android:background="@drawable/instructions_button_selector"
 	    android:layout_above="@+id/suggestPhrazeButton"
 	    android:layout_alignLeft="@+id/suggestPhrazeButton"
 	    android:layout_marginBottom="57dp"

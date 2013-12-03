@@ -12,17 +12,19 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class TimedPlayGameOver extends BaseGameActivity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
 	private TextView gameOverBanner;
 	private TextView completedPhrazesNotification;
-	private TextView highScoreNotification;
-	private Button newGameButton;
-	private Button mainMenuButton;
+	//private TextView highScoreNotification;
+	private ImageButton newGameButton;
+	private ImageButton mainMenuButton;
 	private int phrazesCompleted;
 	private int gameTime;
 	protected GamesClient gameClient;
@@ -33,6 +35,7 @@ public class TimedPlayGameOver extends BaseGameActivity implements GooglePlaySer
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 				
 		Bundle bundle = getIntent().getExtras();
 		this.phrazesCompleted = bundle.getInt("correctAnswers");
@@ -54,14 +57,14 @@ public class TimedPlayGameOver extends BaseGameActivity implements GooglePlaySer
 		
 		this.gameOverBanner = (TextView) findViewById(R.id.gameOverText);
 		this.completedPhrazesNotification = (TextView) findViewById(R.id.gameOverCompletedPhrazes);
-		this.highScoreNotification = (TextView) findViewById(R.id.possibleHighScore);
-		this.newGameButton = (Button) findViewById(R.id.playAgainButton);
-		this.mainMenuButton = (Button) findViewById(R.id.returnHomeButton);
+		//this.highScoreNotification = (TextView) findViewById(R.id.possibleHighScore);
+		this.newGameButton = (ImageButton) findViewById(R.id.playAgainButton);
+		this.mainMenuButton = (ImageButton) findViewById(R.id.returnHomeButton);
 		
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
 		this.gameOverBanner.setTypeface(font);
 		this.completedPhrazesNotification.setTypeface(font);
-		this.highScoreNotification.setTypeface(font);
+		//this.highScoreNotification.setTypeface(font);
 		
 		if (this.phrazesCompleted == 1) {
 			this.completedPhrazesNotification.setText(getResources().getString(R.string.completedPhrazes) + " " + this.phrazesCompleted + " phrazes in " + this.gameTime + " minute!");
@@ -142,7 +145,7 @@ public class TimedPlayGameOver extends BaseGameActivity implements GooglePlaySer
 		// TODO Auto-generated method stub
 		//Toast.makeText(this, "Successfully connected to Google Play.", Toast.LENGTH_SHORT).show();
 		if (this.gameTime == ONE_MIN) {
-			Toast.makeText(this, "2min High score submitted", Toast.LENGTH_LONG).show();
+			//Toast.makeText(this, "2min High score submitted", Toast.LENGTH_LONG).show();
 			gameClient.submitScore(getString(R.string.LEADERBOARD_ID_1_MIN), this.phrazesCompleted);
 		}
 		else if (this.gameTime == TWO_MIN) {

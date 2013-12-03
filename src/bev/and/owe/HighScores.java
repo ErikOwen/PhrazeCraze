@@ -55,19 +55,34 @@ public class HighScores extends BaseGameActivity implements GooglePlayServicesCl
 	private void initOnClickListeners() {
 		this.oneMinScores.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				startActivityForResult(gameClient.getLeaderboardIntent(getString(R.string.LEADERBOARD_ID_1_MIN)), REQUEST_LEADERBOARD);
+				if (isSignedIn()) {
+					startActivityForResult(gameClient.getLeaderboardIntent(getString(R.string.LEADERBOARD_ID_1_MIN)), REQUEST_LEADERBOARD);
+				}
+				else {
+					Toast.makeText(getBaseContext(), "Unable to connect to Google Play Leaderboards at this time: not signed in.", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 		
 		this.twoMinScores.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				startActivityForResult(gameClient.getLeaderboardIntent(getString(R.string.LEADERBOARD_ID_2_MIN)), REQUEST_LEADERBOARD);
+				if (isSignedIn()) {
+					startActivityForResult(gameClient.getLeaderboardIntent(getString(R.string.LEADERBOARD_ID_2_MIN)), REQUEST_LEADERBOARD);
+				}
+				else {
+					Toast.makeText(getBaseContext(), "Unable to connect to Google Play Leaderboards at this time: not signed in.", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 		
 		this.threeMinScores.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				startActivityForResult(gameClient.getLeaderboardIntent(getString(R.string.LEADERBOARD_ID_3_MIN)), REQUEST_LEADERBOARD);
+				if (isSignedIn()) {
+					startActivityForResult(gameClient.getLeaderboardIntent(getString(R.string.LEADERBOARD_ID_3_MIN)), REQUEST_LEADERBOARD);
+				}
+				else {
+					Toast.makeText(getBaseContext(), "Unable to connect to Google Play Leaderboards at this time: not signed in.", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 	}
@@ -101,7 +116,7 @@ public class HighScores extends BaseGameActivity implements GooglePlayServicesCl
 
 	@Override
 	public void onConnected(Bundle arg0) {
-		Toast.makeText(this, "Able to connect to Google Play Leaderboards", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(this, "Able to connect to Google Play Leaderboards", Toast.LENGTH_SHORT).show();
 		initOnClickListeners();
 		
 	}

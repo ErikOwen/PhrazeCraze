@@ -2,12 +2,14 @@ package bev.and.owe;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class SuggestPhraze extends Activity {
 	
@@ -30,6 +32,16 @@ public class SuggestPhraze extends Activity {
 				sugPhraze = phrazeField.getText().toString();
 			    sugAnswer = answerField.getText().toString();
 			    Log.d("SUGGESTEDPHRAZE", "Suggested Phraze: " + sugPhraze + "\nSuggested Answer: " + sugAnswer);
+			    
+			    if (sugPhraze.equals(null) && sugAnswer.equals(null)) {
+			    	Toast.makeText(getBaseContext(), "You must fill out both fields before submitting your phraze.", Toast.LENGTH_SHORT).show();
+			    }
+			    else {
+			    	Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto","erik@jelo.com", null));
+			    	emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Phraze Suggestion");
+			    	startActivity(Intent.createChooser(emailIntent, "Send email..."));
+			    	emailIntent.putExtra(Intent.EXTRA_TEXT, "Phraze: " + sugPhraze + "\n" + "Answer: " + sugAnswer);
+			    }
 			}
 		});
 		

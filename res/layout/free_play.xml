@@ -40,10 +40,9 @@
 
 	    <RelativeLayout 
 			android:layout_width="match_parent"
-	    	android:layout_height="150sp"
+	    	android:layout_height="wrap_content"
 	    	android:layout_marginTop="20sp"
-
-			android:background="@drawable/phrazeborder" >
+	    	android:background="@drawable/phraze_background" >
         
         	<TextView 
             	android:id="@+id/phrazeTextFreePlay"
@@ -62,48 +61,30 @@
     	</RelativeLayout>
     </ScrollView>
     
-    <RelativeLayout 
+    <LinearLayout 
        	android:layout_width="match_parent"
 	   	android:layout_height="wrap_content"
+	   	android:orientation="horizontal"
 	   	android:layout_alignParentBottom="true">
-       
-       	<LinearLayout 
- 			android:layout_width="match_parent"
-	   		android:layout_height="wrap_content"
-	   		android:background="@color/black"
-	   		android:layout_above="@+id/editTextLayoutFreePlay"
-	   		android:gravity="center_horizontal"
-	   		android:orientation="horizontal">
-	   
-       		<ImageButton 
-	       		android:id="@+id/skipButtonFreePlay"
-	       		android:layout_width="120sp"
-				android:layout_height="40sp"
-				android:layout_marginRight="10sp"
-				android:background="@drawable/skip_button_selector"
-				android:text="Skip" />
-	   		<ImageButton 
-	       		android:id="@+id/submitButtonFreePlay"
-	       		android:layout_width="120sp"
-				android:layout_height="40sp"
-				android:layout_marginLeft="10sp"
-				android:background="@drawable/submit_button_selector"
-				android:text="Submit" />
-    	</LinearLayout>
-    
-    	<LinearLayout
-       		android:id="@+id/editTextLayoutFreePlay"
- 			android:layout_width="match_parent"
-	   		android:layout_height="wrap_content"
-	   		android:layout_alignParentBottom="true"
-	   		android:orientation="horizontal">
+           
+	
  			<EditText
  			    android:id="@+id/answerInputFreePlay"
-	  	    	android:layout_width="fill_parent"
-	  	    	android:layout_height="fill_parent"
+	  	    	android:layout_width="0px"
+	  	    	android:layout_height="wrap_content"
+	  	    	android:layout_weight="6"
+	  	    	android:singleLine="true"
+    			android:imeOptions="actionGo"
 	  	    	android:hint="Enter Your Answer Here"/>
-    	</LinearLayout>
+ 			
+			<ImageButton 
+	       		android:id="@+id/skipButtonFreePlay"
+	       		android:layout_width="0px"
+				android:layout_height="match_parent"
+				android:layout_weight="1"
+				android:paddingLeft="5sp"
+				android:background="@drawable/skip_button_selector" />
     	
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>

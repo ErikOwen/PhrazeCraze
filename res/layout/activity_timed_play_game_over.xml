@@ -30,38 +30,27 @@
 		android:textSize="25sp"
 		android:textColor="@color/green"
 		android:text="@string/completedPhrazes" />
-
-	<TextView
-	    android:id="@+id/possibleHighScore"
-	    android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_below="@id/gameOverCompletedPhrazes"
-		android:paddingTop="15sp"
-		android:textAlignment="gravity"
-        android:gravity="center_horizontal"
-		android:layout_centerHorizontal="true"
-		android:textSize="25sp"
-		android:textColor="@color/green"
-		android:text="@string/newHighScore" />
 	
-	<Button 
+	<ImageButton 
 	    android:id="@+id/playAgainButton"
-	    android:layout_width="200sp"
-		android:layout_height="60sp"
-		android:layout_below="@id/possibleHighScore"
+        android:layout_width="120sp"
+        android:layout_height="40sp"
+		android:layout_below="@id/gameOverCompletedPhrazes"
 		android:layout_marginTop="50sp"
 		android:layout_centerHorizontal="true"
-		android:textSize="20sp"
-		android:text="Play Again" />
+		android:background="@drawable/play_again_button_selector"
+		android:scaleType="fitXY" />
 	
-	<Button 
+	<ImageButton 
 	    android:id="@+id/returnHomeButton"
-	    android:layout_width="200sp"
-		android:layout_height="60sp"
+        android:layout_width="120sp"
+        android:layout_height="40sp"
 		android:layout_below="@id/playAgainButton"
 		android:paddingTop="15sp"
 		android:layout_centerHorizontal="true"
-		android:textSize="20sp"
-		android:text="Main Menu" />
+		android:layout_marginTop="30sp"
+		android:layout_marginBottom="30sp"
+		android:background="@drawable/main_menu_button_selector"
+		android:scaleType="fitXY" />
 
 </RelativeLayout>

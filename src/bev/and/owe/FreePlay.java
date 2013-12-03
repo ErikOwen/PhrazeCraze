@@ -50,7 +50,7 @@ public class FreePlay extends Activity {
 		this.phrazeText = (TextView) findViewById(R.id.phrazeTextFreePlay);
 		this.homeButton = (ImageButton) findViewById(R.id.homeButtonFreePlay);
 		this.skipPhraze = (ImageButton) findViewById(R.id.skipButtonFreePlay);
-		this.submitAnswer = (ImageButton) findViewById(R.id.submitButtonFreePlay);
+		//this.submitAnswer = (ImageButton) findViewById(R.id.submitButtonFreePlay);
 		this.userAnswer = (EditText) findViewById(R.id.answerInputFreePlay);
 		
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
@@ -73,7 +73,7 @@ public class FreePlay extends Activity {
 			}
 		});
 		
-		this.submitAnswer.setOnClickListener(new OnClickListener() {
+		/*this.submitAnswer.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				if (StringComparer.stringChecker(userAnswer.getText().toString(), currentAnswer) < 15) {
 					currentStreak++;
@@ -94,7 +94,7 @@ public class FreePlay extends Activity {
 				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 				imm.hideSoftInputFromWindow(userAnswer.getWindowToken(), 0);
 			}
-		});
+		});*/
 		
 		this.userAnswer.setOnKeyListener(new OnKeyListener() {
 			@Override
