@@ -52,7 +52,6 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		
 		initLayout();
 		initOnClickListeners();
 		initAddLeaderboard();
@@ -69,10 +68,6 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
         	signInOutButton.setImageDrawable(getResources().getDrawable(R.drawable.sign_in_selector));
         }
 		
-		this.timedPlay_button.setImageDrawable(getResources().getDrawable(R.drawable.timed_play_button_selector));
-		this.freePlay_button.setImageDrawable(getResources().getDrawable(R.drawable.free_play_button_selector));
-		this.highScores_button.setImageDrawable(getResources().getDrawable(R.drawable.scores_button_selector));
-		this.settings_button.setImageDrawable(getResources().getDrawable(R.drawable.settings_button_selector));
 	}
 
 	@Override
@@ -102,31 +97,27 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
 	protected void initOnClickListeners(){
 		this.timedPlay_button.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				timedPlay_button.setImageResource(R.drawable.timed_play_button_pushed);
 				Intent startTimedPlayActivity = new Intent(HomeScreen.this, PreTimedPlay.class);
-				HomeScreen.this.startActivity(startTimedPlayActivity);
+				startActivity(startTimedPlayActivity);
 			}
 		});
 		this.freePlay_button.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				freePlay_button.setImageResource(R.drawable.free_play_button_pushed);
 				Intent startFreePlayActivity = new Intent(HomeScreen.this, FreePlay.class);
-				HomeScreen.this.startActivity(startFreePlayActivity);
+				startActivity(startFreePlayActivity);
 			}
 		});
 		
 		this.settings_button.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				settings_button.setImageResource(R.drawable.settings_button_pushed);
 				Intent settingsScreen = new Intent(HomeScreen.this, Settings.class);
-				HomeScreen.this.startActivity(settingsScreen);
+				startActivity(settingsScreen);
 			}
 		});
 		
 		this.highScores_button.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
 				if (isSignedIn()) {
-					//startActivityForResult(gameClient.getLeaderboardIntent(getString(R.string.LEADERBOARD_ID_1_MIN)), REQUEST_LEADERBOARD);
 					Intent highScoresIntent = new Intent(HomeScreen.this, HighScores.class);
 					startActivity(highScoresIntent);
 				}
