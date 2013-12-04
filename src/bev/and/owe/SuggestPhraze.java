@@ -22,6 +22,7 @@ public class SuggestPhraze extends Activity {
 	private String sugAnswer;
 
 	protected void onCreate(Bundle savedInstanceState) {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		
 		initLayout();
@@ -50,7 +51,6 @@ public class SuggestPhraze extends Activity {
 	}
 
 	private void initLayout() {
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.submit_phraze);
 		
 		this.suggestButton = (ImageButton) findViewById(R.id.suggestButton);

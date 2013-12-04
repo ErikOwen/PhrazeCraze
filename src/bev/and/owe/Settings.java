@@ -22,6 +22,7 @@ public class Settings extends Activity {
 	
 
 	protected void onCreate(Bundle savedInstanceState) {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		
 		initLayout();
@@ -51,7 +52,6 @@ public class Settings extends Activity {
 	}
 
 	private void initLayout() {
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.settings);
 		this.settingsTextBanner = (TextView) findViewById(R.id.settingsText);
 		this.instructionsButton = (ImageButton) findViewById(R.id.instructionsButton);

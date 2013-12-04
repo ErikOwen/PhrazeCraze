@@ -35,6 +35,7 @@ public class PreTimedPlay extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		
 		initLayout();
@@ -42,8 +43,6 @@ public class PreTimedPlay extends Activity {
 	}
 	
 	protected void initLayout() {
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		
 		setContentView(R.layout.pre_timed_play);
 		
 		this.preTimedPlayBanner = (TextView) findViewById(R.id.pre_timedplay_banner);
