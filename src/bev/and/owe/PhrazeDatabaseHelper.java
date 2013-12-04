@@ -10,6 +10,7 @@ public class PhrazeDatabaseHelper extends SQLiteOpenHelper {
 	
 	public static final int DATABASE_VERSION = 1;
 
+
 	public PhrazeDatabaseHelper(Context context, String name,
 			CursorFactory factory, int version) {
 		super(context, name, factory, version);
