@@ -33,8 +33,9 @@ public class TimedPlayGameOver extends BaseGameActivity implements GooglePlaySer
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-				
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+		super.onCreate(savedInstanceState);				
 		Bundle bundle = getIntent().getExtras();
 		this.phrazesCompleted = bundle.getInt("correctAnswers");
 		this.gameTime = bundle.getInt("timeSelected");
@@ -47,11 +48,9 @@ public class TimedPlayGameOver extends BaseGameActivity implements GooglePlaySer
 		initOnClickListeners();
 		
 		//checkAndSubmitHighScore();
-		
 	}
 
 	private void initLayout() {
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_timed_play_game_over);
 		
 		this.gameOverBanner = (TextView) findViewById(R.id.gameOverText);

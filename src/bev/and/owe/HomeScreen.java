@@ -50,8 +50,9 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
 
 	
 	protected void onCreate(Bundle savedInstanceState) {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+
 		super.onCreate(savedInstanceState);
-		
 		initLayout();
 		initOnClickListeners();
 		initAddLeaderboard();
@@ -79,7 +80,6 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
 	}
 	
 	protected void initLayout() {
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		setContentView(R.layout.home_screen);
 		
