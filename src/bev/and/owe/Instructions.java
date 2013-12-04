@@ -14,13 +14,13 @@ public class Instructions extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		
 		initLayout();
 	}
 	
 	private void initLayout() {
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.instructions);
 		
 		this.instructionsBanner = (TextView) findViewById(R.id.instructionsTextHeading);

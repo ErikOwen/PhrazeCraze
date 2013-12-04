@@ -1,15 +1,5 @@
 package bev.and.owe;
 
-import java.util.Arrays;
-import java.util.HashSet;
-
-import edu.calpoly.android.lab4.JokeTable;
-
-
-import bev.and.owe.PhrazeTable;
-
-import bev.and.owe.PhrazeDatabaseHelper;
-
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
