@@ -19,8 +19,8 @@
     <string name="title_suggest_phraze">Contribute A Phraze</string>
     <string name="defaultPhraze">Knew Your Cane Keys</string>
     <string name="suggest_phraze">Suggest A Phraze</string>
-    <string name="suggest_phraze_hint">Suggest a Phraze Here!</string>
-    <string name="suggest_answer_hint">Suggest a Answer Here!</string>
+    <string name="suggest_phraze_hint">Type in Phraze Here!</string>
+    <string name="suggest_answer_hint">Type in Answer Here!</string>
     <string name="pause">Pause Game</string>
     <string name="timer">Time: </string>
     <string name="phrazesCompleted">Score:</string>
@@ -33,12 +33,15 @@
     <string name="title_activity_instructions">Instructions</string>
     <string name="title_activity_timed_play_game_over">TimedPlayGameOver</string>
     <string name="gameOver">Game Over!</string>
-    <string name="completedPhrazes">Congratulations, you completed</string>
+    <string name="completedPhrazes">You completed</string>
     <string name="newHighScore">New High Score!</string>
     <string name="title_activity_free_play">FreePlay</string>
     <string name="currentStreak">Current Streak:</string>
     <string name="title_activity_high_scores">HighScores</string>
     <string name="highScores">High Scores</string>
     <string name="phrazeCraze"> Phraze Craze</string>
+    <string name="suggestAPhraze">Suggest a Phraze</string>
+    <string name="instructions">Instructions</string>
+    <string name="skipsLeft">Number of skips left: </string>
 
 </resources>

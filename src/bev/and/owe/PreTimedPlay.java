@@ -26,6 +26,10 @@ public class PreTimedPlay extends Activity {
 	private final int ONE_MIN = 60;
 	private final int TWO_MIN = 120;
 	private final int THREE_MIN = 180;
+	private final int ONE_SKIPS = 1;
+	private final int TWO_SKIPS = 2;
+	private final int THREE_SKIPS = 3;
+	private int numSkips;
 	private int timeSelected;
 	
 	
@@ -56,6 +60,7 @@ public class PreTimedPlay extends Activity {
 		this.threeMinCheckBox.setTypeface(font);
 		this.twoMinCheckBox.setChecked(true);
 		this.timeSelected = TWO_MIN;
+		this.numSkips = TWO_SKIPS;
 	}
 
 	protected void initOnClickListeners() {
@@ -65,8 +70,8 @@ public class PreTimedPlay extends Activity {
 				if(isChecked) {
 					twoMinCheckBox.setChecked(false);
 					threeMinCheckBox.setChecked(false);
-					
 					timeSelected = ONE_MIN;
+					numSkips = ONE_SKIPS;
 				}
 			}
 		});
@@ -77,6 +82,7 @@ public class PreTimedPlay extends Activity {
 					oneMinCheckBox.setChecked(false);
 					threeMinCheckBox.setChecked(false);
 					timeSelected = TWO_MIN;
+					numSkips = TWO_SKIPS;
 				}
 			}
 		});
@@ -87,6 +93,7 @@ public class PreTimedPlay extends Activity {
 					oneMinCheckBox.setChecked(false);
 					twoMinCheckBox.setChecked(false);
 					timeSelected = THREE_MIN;
+					numSkips = THREE_SKIPS;
 				}
 			}
 		});
@@ -100,6 +107,8 @@ public class PreTimedPlay extends Activity {
 			public void onClick(View view) {
 				Intent startTimedPlayActivity = new Intent(PreTimedPlay.this, TimedPlay.class);
 				startTimedPlayActivity.putExtra("secondsLeft", timeSelected);
+				startTimedPlayActivity.putExtra("remainingSkips", numSkips);
+				
 				startActivity(startTimedPlayActivity);
 			}
 		});

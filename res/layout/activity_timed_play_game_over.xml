@@ -21,20 +21,29 @@
 	    android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_below="@id/gameOverText"
-		android:paddingTop="50sp"
+		android:paddingTop="70sp"
 		android:textAlignment="gravity"
         android:gravity="center_horizontal"
         android:layout_marginLeft="30sp"
         android:layout_marginRight="30sp"
 		android:layout_centerHorizontal="true"
-		android:textSize="25sp"
+		android:textSize="30sp"
 		android:textColor="@color/green"
 		android:text="@string/completedPhrazes" />
 	
+	<LinearLayout
+	    android:id="@+id/timedPlayGameOverButtonLayout"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:layout_centerHorizontal="true"
+	    android:layout_marginBottom="20sp"
+	    android:orientation="vertical" >
+	
 	<ImageButton 
 	    android:id="@+id/playAgainButton"
-        android:layout_width="120sp"
-        android:layout_height="40sp"
+        android:layout_width="150sp"
+        android:layout_height="50sp"
 		android:layout_below="@id/gameOverCompletedPhrazes"
 		android:layout_marginTop="50sp"
 		android:layout_centerHorizontal="true"
@@ -43,14 +52,15 @@
 	
 	<ImageButton 
 	    android:id="@+id/returnHomeButton"
-        android:layout_width="120sp"
-        android:layout_height="40sp"
+        android:layout_width="150sp"
+        android:layout_height="50sp"
 		android:layout_below="@id/playAgainButton"
 		android:paddingTop="15sp"
 		android:layout_centerHorizontal="true"
-		android:layout_marginTop="30sp"
-		android:layout_marginBottom="30sp"
+		android:layout_marginTop="10sp"
 		android:background="@drawable/main_menu_button_selector"
 		android:scaleType="fitXY" />
+	
+	</LinearLayout>
 
 </RelativeLayout>

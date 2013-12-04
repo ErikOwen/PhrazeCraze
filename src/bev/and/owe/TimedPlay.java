@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,6 +41,7 @@ public class TimedPlay extends Activity {
 	private int phrazesCompleted;
 	private int secondsLeft;
 	private int initialTimeSelected;
+	private int skipsLeft;
 	private String currentPhraze;
 	private String currentAnswer;
 	private final int MILLISECONDS_PER_SECOND = 1000;
@@ -57,6 +59,7 @@ public class TimedPlay extends Activity {
 
 		this.phrazesCompleted = 0;
 		Bundle bundle = getIntent().getExtras();
+		this.skipsLeft = bundle.getInt("remainingSkips");
 		this.secondsLeft = bundle.getInt("secondsLeft");
 		this.initialTimeSelected = this.secondsLeft / SECONDS_PER_MINUTE;
 		startTimer(this.secondsLeft);
@@ -98,6 +101,7 @@ public class TimedPlay extends Activity {
 
 				pauseScreenActivity.putExtra("secondsLeft", stringToSeconds((String) timerDisplay.getText()));
 				pauseScreenActivity.putExtra("phrazesCompleted", phrazesCompleted);
+				pauseScreenActivity.putExtra("remainingSkips", skipsLeft);
 
 				startActivityForResult(pauseScreenActivity, 1);
 			}
@@ -156,11 +160,32 @@ public class TimedPlay extends Activity {
 		});
 		this.skipPhraze.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-				userAnswer.getText().clear();
-				PhrazePack pack = PhrazesAndAnswers.getRandomPhrazePack();
-				currentPhraze = pack.getPhraze();
-				currentAnswer = pack.getAnswer();
-				phrazeText.setText(currentPhraze);
+				if (skipsLeft > 0) {
+					userAnswer.getText().clear();
+					PhrazePack pack = PhrazesAndAnswers.getRandomPhrazePack();
+					currentPhraze = pack.getPhraze();
+					currentAnswer = pack.getAnswer();
+					phrazeText.setText(currentPhraze);
+					skipsLeft--;
+				}
+				else {
+					int numSkipsAllowed = 0;
+					String skipPlural = "skips";
+					if (initialTimeSelected == 1) {
+						numSkipsAllowed = 1;
+						skipPlural = "skip";
+					}
+					else if (initialTimeSelected == 2) {
+						numSkipsAllowed = 2;
+					}
+					else if (initialTimeSelected == 3){
+						numSkipsAllowed = 3;
+					}
+					else {
+						Log.w("PhrazeCraze", "ERROR! TimedPlay thinks the initial time selected was not 1, 2, or 3.");
+					}
+					Toast.makeText(getBaseContext(), "Only " + numSkipsAllowed + " " + skipPlural + " allowed for " + initialTimeSelected + " Minute Timed Play", Toast.LENGTH_SHORT).show();
+				}
 
 				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 				imm.hideSoftInputFromWindow(userAnswer.getWindowToken(), 0);
@@ -212,6 +237,9 @@ public class TimedPlay extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1) {
 			this.secondsLeft = data.getIntExtra("secondsLeft", 60);
+			this.phrazesCompleted = data.getIntExtra("phrazesCompleted", 0);
+			this.skipsLeft = data.getIntExtra("remainingSkips", 0);
+			
 			startTimer(this.secondsLeft);
 		}
 	}

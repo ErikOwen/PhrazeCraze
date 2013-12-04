@@ -22,7 +22,6 @@ import android.widget.Toast;
 public class TimedPlayGameOver extends BaseGameActivity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
 	private TextView gameOverBanner;
 	private TextView completedPhrazesNotification;
-	//private TextView highScoreNotification;
 	private ImageButton newGameButton;
 	private ImageButton mainMenuButton;
 	private int phrazesCompleted;
@@ -35,7 +34,6 @@ public class TimedPlayGameOver extends BaseGameActivity implements GooglePlaySer
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 				
 		Bundle bundle = getIntent().getExtras();
 		this.phrazesCompleted = bundle.getInt("correctAnswers");
@@ -53,46 +51,25 @@ public class TimedPlayGameOver extends BaseGameActivity implements GooglePlaySer
 	}
 
 	private void initLayout() {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_timed_play_game_over);
 		
 		this.gameOverBanner = (TextView) findViewById(R.id.gameOverText);
 		this.completedPhrazesNotification = (TextView) findViewById(R.id.gameOverCompletedPhrazes);
-		//this.highScoreNotification = (TextView) findViewById(R.id.possibleHighScore);
 		this.newGameButton = (ImageButton) findViewById(R.id.playAgainButton);
 		this.mainMenuButton = (ImageButton) findViewById(R.id.returnHomeButton);
 		
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
 		this.gameOverBanner.setTypeface(font);
 		this.completedPhrazesNotification.setTypeface(font);
-		//this.highScoreNotification.setTypeface(font);
 		
-		if (this.phrazesCompleted == 1) {
-			this.completedPhrazesNotification.setText(getResources().getString(R.string.completedPhrazes) + " " + this.phrazesCompleted + " phrazes in " + this.gameTime + " minute!");
-		}
-		else {
-			this.completedPhrazesNotification.setText(getResources().getString(R.string.completedPhrazes) + " " + this.phrazesCompleted + " phrazes in " + this.gameTime + " minutes!");
-		}
+		String phrazePlural, minutePlural;
+		
+		phrazePlural = (this.phrazesCompleted == 1) ? "phraze" : "phrazes";
+		minutePlural = (this.gameTime == ONE_MIN) ? "minute" : "minutes";
+		
+		this.completedPhrazesNotification.setText(getResources().getString(R.string.completedPhrazes) + " " + this.phrazesCompleted + " " + phrazePlural + " in " + this.gameTime + " " + minutePlural + "!");
 	}
-	
-	/*private void checkAndSubmitHighScore() {
-		//if (isSignedIn()) {
-			Toast.makeText(this, "checkAndSubmitHighScore thinks i'm signed in", Toast.LENGTH_LONG).show();
-			if (this.gameTime == ONE_MIN) {
-				Toast.makeText(this, "High score submitted", Toast.LENGTH_LONG).show();
-				gameClient.submitScore(getString(R.string.LEADERBOARD_ID_2_MIN), this.phrazesCompleted);
-			}
-			else if (this.gameTime == TWO_MIN) {
-				gameClient.submitScore(getString(R.string.LEADERBOARD_ID_2_MIN), this.phrazesCompleted);
-			}
-			else if (this.gameTime == THREE_MIN) {
-				//gameClient.submitScore(getString(R.string.LEADERBOARD_ID_3_MIN), this.phrazesCompleted);
-			}
-		//}
-		//else {
-			//Toast.makeText(this, "Not signed in according to games client!", Toast.LENGTH_LONG).show();
-		//	this.highScoreNotification.setVisibility(View.GONE);
-		//}
-	}*/
 	
 	private void initOnClickListeners() {
 		this.newGameButton.setOnClickListener(new OnClickListener() {

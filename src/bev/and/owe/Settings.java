@@ -2,6 +2,7 @@ package bev.and.owe;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,9 +11,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class Settings extends Activity {
-	
+	private TextView settingsTextBanner;
 	private ImageButton instructionsButton;
 	private ImageButton suggestPhrazeButton;
 	private ImageButton buyMorePhrazeButton;
@@ -21,7 +23,6 @@ public class Settings extends Activity {
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
 		initLayout();
 		initOnClickListeners();
@@ -50,10 +51,15 @@ public class Settings extends Activity {
 	}
 
 	private void initLayout() {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.settings);
-		instructionsButton = (ImageButton) findViewById(R.id.instructionsButton);
-		suggestPhrazeButton = (ImageButton) findViewById(R.id.suggestPhrazeButton);
-		buyMorePhrazeButton = (ImageButton) findViewById(R.id.buyPhrazeButton);
+		this.settingsTextBanner = (TextView) findViewById(R.id.settingsText);
+		this.instructionsButton = (ImageButton) findViewById(R.id.instructionsButton);
+		this.suggestPhrazeButton = (ImageButton) findViewById(R.id.suggestPhrazeButton);
+		this.buyMorePhrazeButton = (ImageButton) findViewById(R.id.buyPhrazeButton);
+		
+		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
+		this.settingsTextBanner.setTypeface(font);
 	}
 	
 
