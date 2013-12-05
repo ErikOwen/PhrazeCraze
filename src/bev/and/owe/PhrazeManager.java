@@ -23,7 +23,7 @@ public class PhrazeManager implements android.support.v4.app.LoaderManager.Loade
 	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
 		String auth = "beva.and.owe.contentprovider";
 		String base = "phraze_table";
-		String[] projection = {PhrazeTable.PHRAZE_KEY_ID, PhrazeTable.PHRAZE_KEY_TEXT, PhrazeTable.PHRAZE_KEY_ANSWER, PhrazeTable.PHRAZE_KEY_SEEN};
+		String[] projection = {PhrazeTable.PHRAZE_KEY_ID, PhrazeTable.PHRAZE_KEY_TEXT, PhrazeTable.PHRAZE_KEY_ANSWER, PhrazeTable.PHRAZE_KEY_TIMES_SEEN};
         
 		Uri uri = Uri.parse("content://" + auth + "/" + base + "/" + "seen/" +  UNSEEN);
 		CursorLoader cursor = new CursorLoader(context, uri, projection, null, projection, null);

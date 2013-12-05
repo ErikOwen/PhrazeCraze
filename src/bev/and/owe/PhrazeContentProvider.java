@@ -3,9 +3,7 @@ package bev.and.owe;
 import java.util.Arrays;
 import java.util.HashSet;
 
-
 import bev.and.owe.PhrazeTable;
-
 import bev.and.owe.PhrazeDatabaseHelper;
 
 import android.content.ContentProvider;
@@ -24,6 +22,8 @@ public class PhrazeContentProvider extends ContentProvider {
 	/** Values for the URIMatcher. */
 	private static final int PHRAZE_ID = 1;
 	private static final int PHRAZE_SEEN = 2;
+	private static final int PHRAZE_HAS_BEEN_SEEN = 1;
+	private static final int PHRAZE_HAS_NOT_BEEN_SEEN = 0;
 	
 	/** The authority for this content provider. */
 	private static final String AUTHORITY = "bev.and.owe.contentprovider";
@@ -43,13 +43,13 @@ public class PhrazeContentProvider extends ContentProvider {
 	private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 	static {
 		sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/phrazes/#", PHRAZE_ID);
-		sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/seen/#", PHRAZE_SEEN);
+		//sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/seen/#", PHRAZE_SEEN);
 	}
 	
 	@Override
 	public boolean onCreate() {
-		database = new PhrazeDatabaseHelper(this.getContext(), PhrazeDatabaseHelper.DATABASE_NAME, null, PhrazeDatabaseHelper.DATABASE_VERSION);
-		return false;
+		database = new PhrazeDatabaseHelper(getContext(), PhrazeDatabaseHelper.DATABASE_NAME, null, PhrazeDatabaseHelper.DATABASE_VERSION);
+		return true;
 	}
 	
 	
@@ -62,9 +62,8 @@ public class PhrazeContentProvider extends ContentProvider {
 		/** Use a helper class to perform a query for us. */
 		 SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 		 
-		 ///////////
-		 //////////////////** need to do a projection check here **/
-		 ///////////
+		 /** Make sure the projection is proper before querying. */
+		 checkColumns(projection);
 		
 	    /** Set up helper to query our jokes table. */
 		queryBuilder.setTables(PhrazeTable.DATABASE_TABLE_PHRAZE);
@@ -73,16 +72,18 @@ public class PhrazeContentProvider extends ContentProvider {
 		int uriType = sURIMatcher.match(uri);
 		
 		switch(uriType) {
-		case PHRAZE_SEEN:
-			 /** Fetch the last segment of the URI, which should be a filter number. */
-			 String seen = uri.getLastPathSegment();
-			 if (seen.equals(PhrazeManager.UNSEEN))
-			    queryBuilder.appendWhere(PhrazeTable.PHRAZE_KEY_SEEN + "=" + PhrazeManager.UNSEEN);
-			 else if (seen.equals(PhrazeManager.SEEN)){
-				queryBuilder.appendWhere(PhrazeTable.PHRAZE_KEY_SEEN + "=" + PhrazeManager.SEEN);
-			 } else {
+			case PHRAZE_ID:
+				/** Fetch the last segment of the URI, which should be a filter number. */
+				String seen = uri.getLastPathSegment();
+				if (seen.equals(PHRAZE_HAS_NOT_BEEN_SEEN))
+					queryBuilder.appendWhere(PhrazeTable.PHRAZE_KEY_TIMES_SEEN + "=" + PHRAZE_HAS_NOT_BEEN_SEEN);
+				else if (seen.equals(PHRAZE_HAS_BEEN_SEEN)){
+					//Need to modify query below to query for the phraze that has been seen the least
+					queryBuilder.appendWhere(PhrazeTable.PHRAZE_KEY_TIMES_SEEN + "=" + PhrazeManager.SEEN);
+				}
+				else {
 				 selection = null;
-			 }
+				}
 		     break;
 		default:
 			 throw new IllegalArgumentException("Unknown URI: " + uri + " and lastSegment was " + uriType + "when we wanted " + PHRAZE_ID);
@@ -186,6 +187,25 @@ public class PhrazeContentProvider extends ContentProvider {
 	@Override
 	public String getType(Uri uri) {
 		return null;
+	}
+	
+	/**
+	 * Verifies the correct set of columns to return data from when performing a query.
+	 * 
+	 * @param projection
+	 * 						The set of columns about to be queried.
+	 */
+	private void checkColumns(String[] projection) {
+		String[] available = { PhrazeTable.PHRAZE_KEY_ID, PhrazeTable.PHRAZE_KEY_TEXT, PhrazeTable.PHRAZE_KEY_ANSWER, PhrazeTable.PHRAZE_KEY_TIMES_SEEN, PhrazeTable.PHRAZE_KEY_COMPLETED };
+		
+		if(projection != null) {
+			HashSet<String> requestedColumns = new HashSet<String>(Arrays.asList(projection));
+			HashSet<String> availableColumns = new HashSet<String>(Arrays.asList(available));
+			
+			if(!availableColumns.containsAll(requestedColumns))	{
+				throw new IllegalArgumentException("Unknown columns in projection");
+			}
+		}
 	}
 	
 }
