@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
@@ -30,6 +31,9 @@ public class TimedPlayGameOver extends BaseGameActivity implements GooglePlaySer
 	private final int ONE_MIN = 1;
 	private final int TWO_MIN = 2;
 	private final int THREE_MIN = 3;
+	private final int FIVE_PHRAZES_COMPLETED = 5;
+	private final int TEN_PHRAZES_COMPLETED = 10;
+	private final int FIFTEEN_PHRAZES_COMPLETED = 15;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +51,6 @@ public class TimedPlayGameOver extends BaseGameActivity implements GooglePlaySer
 		
 		initOnClickListeners();
 		
-		//checkAndSubmitHighScore();
 	}
 
 	private void initLayout() {
@@ -86,6 +89,27 @@ public class TimedPlayGameOver extends BaseGameActivity implements GooglePlaySer
 				startActivity(mainMenuActivity);
 			}
 		});
+	}
+	
+	private void checkForAchievements() {
+		Log.w("PhrazeCraze", "Signed into gp leaderboards");
+		switch (this.gameTime) {
+		case ONE_MIN:
+			if (this.phrazesCompleted >= FIVE_PHRAZES_COMPLETED) {
+				this.gameClient.unlockAchievement(getString(R.string.oneMinAchievement));
+			}
+		break;
+		case TWO_MIN:
+			if (this.phrazesCompleted >= TEN_PHRAZES_COMPLETED) {
+				this.gameClient.unlockAchievement(getString(R.string.twoMinAchievement));
+			}
+		break;
+		case THREE_MIN:
+			if (this.phrazesCompleted >= FIFTEEN_PHRAZES_COMPLETED) {
+				this.gameClient.unlockAchievement(getString(R.string.threeMinAchievement));
+			}
+		break;
+		}
 	}
 	
 	@Override
@@ -130,6 +154,8 @@ public class TimedPlayGameOver extends BaseGameActivity implements GooglePlaySer
 		else if (this.gameTime == THREE_MIN) {
 			gameClient.submitScore(getString(R.string.LEADERBOARD_ID_3_MIN), this.phrazesCompleted);
 		}
+		
+		checkForAchievements();
 	}
 
 	@Override

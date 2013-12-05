@@ -40,7 +40,7 @@ public class FreePlay extends Activity {
 		
 		initLayout();
 		initOnClickListeners();
-
+		
 	}
 
 	private void initLayout() {

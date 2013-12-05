@@ -23,6 +23,7 @@ public class HighScores extends BaseGameActivity implements GooglePlayServicesCl
 	private ImageButton oneMinScores;
 	private ImageButton twoMinScores;
 	private ImageButton threeMinScores;
+	private Button viewAchievements;
 	private GamesClient gameClient;
 	private final int REQUEST_LEADERBOARD = 20;
 	
@@ -47,9 +48,11 @@ public class HighScores extends BaseGameActivity implements GooglePlayServicesCl
 		this.oneMinScores = (ImageButton) findViewById(R.id.oneMinHighScoreButton);
 		this.twoMinScores = (ImageButton) findViewById(R.id.twoMinHighScoreButton);
 		this.threeMinScores = (ImageButton) findViewById(R.id.threeMinHighScoreButton);
+		this.viewAchievements = (Button) findViewById(R.id.achievementsButton);
 		
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
 		this.highScoresBanner.setTypeface(font);
+		this.viewAchievements.setTypeface(font);
 	}
 	
 	private void initOnClickListeners() {
@@ -79,6 +82,17 @@ public class HighScores extends BaseGameActivity implements GooglePlayServicesCl
 			public void onClick(View view) {
 				if (isSignedIn()) {
 					startActivityForResult(gameClient.getLeaderboardIntent(getString(R.string.LEADERBOARD_ID_3_MIN)), REQUEST_LEADERBOARD);
+				}
+				else {
+					Toast.makeText(getBaseContext(), "Unable to connect to Google Play Leaderboards at this time: not signed in.", Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
+		
+		this.viewAchievements.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+				if (isSignedIn()) {
+					startActivityForResult(gameClient.getAchievementsIntent(), 0);
 				}
 				else {
 					Toast.makeText(getBaseContext(), "Unable to connect to Google Play Leaderboards at this time: not signed in.", Toast.LENGTH_SHORT).show();

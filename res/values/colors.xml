@@ -3,4 +3,6 @@
     <color name="background">#0F1031</color>
     <color name="green">#A4CE39</color>
     <color name="black">#000000</color>
+    <color name="orange">#F8991D</color>
+    <color name="white">#FFFFFF</color>
 </resources>
