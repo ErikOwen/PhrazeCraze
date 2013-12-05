@@ -33,8 +33,8 @@ public class PhrazeTable {
 			PHRAZE_KEY_ID + " integer primary key autoincrement, " +
 			PHRAZE_KEY_TEXT + " text not null, " +
 			PHRAZE_KEY_ANSWER + " text not null, " +
-			PHRAZE_KEY_TIMES_SEEN + " integer default 0," +
-			PHRAZE_KEY_COMPLETED + "integer default 0);";
+			PHRAZE_KEY_TIMES_SEEN + " integer default 0, " +
+			PHRAZE_KEY_COMPLETED + " integer default 0);";
 	
 	public static final String DATABASE_DROP = "drop table if exists " + DATABASE_TABLE_PHRAZE;
 	
