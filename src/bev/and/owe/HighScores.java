@@ -14,14 +14,16 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class HighScores extends BaseGameActivity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener{
 	private TextView highScoresBanner;
-	private Button oneMinScores;
-	private Button twoMinScores;
-	private Button threeMinScores;
+	private ImageButton oneMinScores;
+	private ImageButton twoMinScores;
+	private ImageButton threeMinScores;
+	private Button viewAchievements;
 	private GamesClient gameClient;
 	private final int REQUEST_LEADERBOARD = 20;
 	
@@ -43,12 +45,14 @@ public class HighScores extends BaseGameActivity implements GooglePlayServicesCl
 		setContentView(R.layout.high_scores);
 		
 		this.highScoresBanner = (TextView) findViewById(R.id.highScoresBanner);
-		this.oneMinScores = (Button) findViewById(R.id.oneMinHighScoreButton);
-		this.twoMinScores = (Button) findViewById(R.id.twoMinHighScoreButton);
-		this.threeMinScores = (Button) findViewById(R.id.threeMinHighScoreButton);
+		this.oneMinScores = (ImageButton) findViewById(R.id.oneMinHighScoreButton);
+		this.twoMinScores = (ImageButton) findViewById(R.id.twoMinHighScoreButton);
+		this.threeMinScores = (ImageButton) findViewById(R.id.threeMinHighScoreButton);
+		this.viewAchievements = (Button) findViewById(R.id.achievementsButton);
 		
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
 		this.highScoresBanner.setTypeface(font);
+		this.viewAchievements.setTypeface(font);
 	}
 	
 	private void initOnClickListeners() {
@@ -78,6 +82,17 @@ public class HighScores extends BaseGameActivity implements GooglePlayServicesCl
 			public void onClick(View view) {
 				if (isSignedIn()) {
 					startActivityForResult(gameClient.getLeaderboardIntent(getString(R.string.LEADERBOARD_ID_3_MIN)), REQUEST_LEADERBOARD);
+				}
+				else {
+					Toast.makeText(getBaseContext(), "Unable to connect to Google Play Leaderboards at this time: not signed in.", Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
+		
+		this.viewAchievements.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+				if (isSignedIn()) {
+					startActivityForResult(gameClient.getAchievementsIntent(), 0);
 				}
 				else {
 					Toast.makeText(getBaseContext(), "Unable to connect to Google Play Leaderboards at this time: not signed in.", Toast.LENGTH_SHORT).show();
