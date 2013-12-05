@@ -46,5 +46,7 @@
     <string name="oneMinAchievement">CgkI7qLXncMNEAIQCw</string>
     <string name="twoMinAchievement">CgkI7qLXncMNEAIQDg</string>
     <string name="threeMinAchievement">CgkI7qLXncMNEAIQDw</string>
+    <string name="overOneHundredAchievement">CgkI7qLXncMNEAIQEA</string>
+    <string name="tenInARowAchievement">CgkI7qLXncMNEAIQEQ</string>
 
 </resources>

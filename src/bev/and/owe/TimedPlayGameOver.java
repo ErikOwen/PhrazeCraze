@@ -37,6 +37,7 @@ public class TimedPlayGameOver extends BaseGameActivity implements GooglePlaySer
 	private final int FIVE_PHRAZES_COMPLETED = 5;
 	private final int TEN_PHRAZES_COMPLETED = 10;
 	private final int FIFTEEN_PHRAZES_COMPLETED = 15;
+	private final int ONE_HUNDRED_PHRAZES_ACHIEVEMENT = 100;
 	private Cursor curs;
     private String auth = "bev.and.owe.contentprovider";
     private String base = "phraze_table";
@@ -101,7 +102,7 @@ public class TimedPlayGameOver extends BaseGameActivity implements GooglePlaySer
 	private void checkForAchievements() {
 		Log.w("PhrazeCraze", "Signed into gp leaderboards");
 		
-		/** Check out how many phrazes are completed **/
+		/** Check to see how many phrazes are completed **/
 		int numCompleted = 0;
         Uri uri = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/0");
 		String[] projection = {PhrazeTable.PHRAZE_KEY_ID, PhrazeTable.PHRAZE_KEY_TEXT, PhrazeTable.PHRAZE_KEY_ANSWER, PhrazeTable.PHRAZE_KEY_TIMES_SEEN, PhrazeTable.PHRAZE_KEY_COMPLETED};
@@ -109,7 +110,11 @@ public class TimedPlayGameOver extends BaseGameActivity implements GooglePlaySer
 		curs = getContentResolver().query(uri, projection, whereClause, projection, null);
 		numCompleted = curs.getCount();
 		Log.d("COMPLETED", "" + numCompleted);
-		/** Done **/
+		
+		if (numCompleted >= ONE_HUNDRED_PHRAZES_ACHIEVEMENT) {
+			this.gameClient.unlockAchievement(getString(R.string.overOneHundredAchievement));
+		}
+
 		switch (this.gameTime) {
 		case ONE_MIN:
 			if (this.phrazesCompleted >= FIVE_PHRAZES_COMPLETED) {

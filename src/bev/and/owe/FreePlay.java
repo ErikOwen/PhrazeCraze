@@ -1,8 +1,14 @@
 package bev.and.owe;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.games.GamesClient;
+import com.google.example.games.basegameutils.BaseGameActivity;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -21,7 +27,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class FreePlay extends Activity {
+public class FreePlay extends BaseGameActivity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
 	private TextView currentStreakText;
 	private TextView phrazeText;
 	private ImageButton homeButton;
@@ -32,29 +38,47 @@ public class FreePlay extends Activity {
 	private String currentAnswer;
 	private int currentStreak;
 	private Cursor curs;
-	
+	private ContentValues cv;
+    private String auth = "bev.and.owe.contentprovider";
+    private String base = "phraze_table";
+    private String[] projection;
+    private static final int TEN_STREAK_ACHIEVEMENT = 10;
+    protected GamesClient gameClient;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		
 		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-		
 		this.currentStreak = 0;	
+		this.gameClient = new GamesClient.Builder(getBaseContext(), this, this).create();
+		
+		getPhrazesFromDB();
+		initLayout();
+		initOnClickListeners();
+		
+	}
+
+	private void getPhrazesFromDB() {
+		this.cv = new ContentValues();
 		String auth = "bev.and.owe.contentprovider";
 		String base = "phraze_table";
 		String[] projection = {PhrazeTable.PHRAZE_KEY_ID, PhrazeTable.PHRAZE_KEY_TEXT, PhrazeTable.PHRAZE_KEY_ANSWER, PhrazeTable.PHRAZE_KEY_TIMES_SEEN};
         
 		Uri uri = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/0");
 		
-		curs = getContentResolver().query(uri, projection, null, projection, PhrazeTable.PHRAZE_KEY_TIMES_SEEN);
-        
+		this.curs = getContentResolver().query(uri, projection, null, projection, PhrazeTable.PHRAZE_KEY_TIMES_SEEN);
 		
-		initLayout();
-		initOnClickListeners();
-		
+		if (curs.moveToFirst()) {
+			this.currentPhraze = this.curs.getString(PhrazeTable.PHRAZE_COL_TEXT);
+			this.currentAnswer = this.curs.getString(PhrazeTable.PHRAZE_COL_ANSWER);
+		}
+		else {
+			Toast.makeText(this, "Something went terribly wrong.", Toast.LENGTH_SHORT).show();
+		}
 	}
-
+	
 	private void initLayout() {
 		setContentView(R.layout.free_play);
 		
@@ -68,13 +92,6 @@ public class FreePlay extends Activity {
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
 		this.phrazeText.setTypeface(font);
 		this.currentStreakText.setTypeface(font);
-		
-		if (curs.moveToFirst()) {
-			this.currentPhraze = curs.getString(PhrazeTable.PHRAZE_COL_TEXT);
-			this.currentAnswer = curs.getString(PhrazeTable.PHRAZE_COL_ANSWER);
-		} else {
-			Toast.makeText(this, "Something went terribly wrong.", Toast.LENGTH_SHORT).show();
-		}
 		
 		this.phrazeText.setText(this.currentPhraze);
 		this.currentStreakText.setText(getResources().getString(R.string.currentStreak) + " " + this.currentStreak);
@@ -118,6 +135,11 @@ public class FreePlay extends Activity {
 					if (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
 						if (StringComparer.stringChecker(userAnswer.getText().toString(), currentAnswer) < 15) {
 							currentStreak++;
+							cv.put(PhrazeTable.PHRAZE_KEY_COMPLETED, 1);
+							if (isSignedIn() && currentStreak >= TEN_STREAK_ACHIEVEMENT) {
+								gameClient.unlockAchievement(getString(R.string.tenInARowAchievement));
+							}
+							
 							Toast.makeText(getBaseContext(), "Correct!", Toast.LENGTH_SHORT).show();
 						}
 						else {
@@ -127,10 +149,19 @@ public class FreePlay extends Activity {
 						currentStreakText.setText(getResources().getString(R.string.currentStreak) + " " + currentStreak);
 						
 						userAnswer.getText().clear();
+						
+						/** Update the DB to add one to the "Seen" column **/
+						cv.put(PhrazeTable.PHRAZE_KEY_TIMES_SEEN, curs.getInt(PhrazeTable.PHRAZE_COL_TIMES_SEEN) + 1);
+						Uri uri = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/" + curs.getInt(PhrazeTable.PHRAZE_COL_ID));
+
+						getContentResolver().update(uri, cv, null, null);
+						cv.clear();
+						
 						if (curs.moveToNext()) {
 							currentPhraze = curs.getString(PhrazeTable.PHRAZE_COL_TEXT);
 							currentAnswer = curs.getString(PhrazeTable.PHRAZE_COL_ANSWER);
-						} else {
+						}
+						else {
 							Toast.makeText(getBaseContext(), "Something went terribly wrong.", Toast.LENGTH_SHORT).show();
 						}
 
@@ -149,10 +180,19 @@ public class FreePlay extends Activity {
 			public void onClick(View view) {
 				Toast.makeText(getBaseContext(), "Answer was: " + currentAnswer, Toast.LENGTH_SHORT).show();
 				userAnswer.getText().clear();
+				
+				/** Update the DB to add one to the "Seen" column **/
+				cv.put(PhrazeTable.PHRAZE_KEY_TIMES_SEEN, curs.getInt(PhrazeTable.PHRAZE_COL_TIMES_SEEN) + 1);
+				Uri uri = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/" + curs.getInt(PhrazeTable.PHRAZE_COL_ID));
+
+				getContentResolver().update(uri, cv, null, null);
+				cv.clear();
+				
 				if (curs.moveToNext()) {
 					currentPhraze = curs.getString(PhrazeTable.PHRAZE_COL_TEXT);
 					currentAnswer = curs.getString(PhrazeTable.PHRAZE_COL_ANSWER);
-				} else {
+				}
+				else {
 					Toast.makeText(getBaseContext(), "Something went terribly wrong.", Toast.LENGTH_SHORT).show();
 				}
 				phrazeText.setText(currentPhraze);
@@ -171,6 +211,37 @@ public class FreePlay extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.free_play, menu);
 		return true;
+	}
+
+	@Override
+	public void onSignInFailed() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSignInSucceeded() {
+		if (!gameClient.isConnected()) {
+			   gameClient.connect();
+		}
+		
+	}
+
+	@Override
+	public void onConnectionFailed(ConnectionResult arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onConnected(Bundle arg0) {
+		// TODO Auto-generated method stub	
+	}
+
+	@Override
+	public void onDisconnected() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

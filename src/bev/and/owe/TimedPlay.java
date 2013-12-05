@@ -61,13 +61,8 @@ public class TimedPlay extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
-		cv = new ContentValues();
-		String[] proj = {PhrazeTable.PHRAZE_KEY_ID, PhrazeTable.PHRAZE_KEY_TEXT, PhrazeTable.PHRAZE_KEY_ANSWER, PhrazeTable.PHRAZE_KEY_TIMES_SEEN, PhrazeTable.PHRAZE_KEY_COMPLETED};
-        projection = proj;
-		Uri uri = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/0");
-		
-		curs = getContentResolver().query(uri, projection, null, projection, PhrazeTable.PHRAZE_KEY_TIMES_SEEN);
 
+		getPhrazesFromDB();
 		initLayout();
 		initOnClickListeners();
 
@@ -79,7 +74,6 @@ public class TimedPlay extends Activity {
 		this.secondsLeft = bundle.getInt("secondsLeft");
 		this.initialTimeSelected = this.secondsLeft / SECONDS_PER_MINUTE;
 		startTimer(this.secondsLeft);
-
 	}
 
 	@Override
@@ -113,6 +107,15 @@ public class TimedPlay extends Activity {
 		
 		startTimer(this.secondsLeft);
 	}*/
+	
+	private void getPhrazesFromDB() {
+		this.cv = new ContentValues();
+		String[] proj = {PhrazeTable.PHRAZE_KEY_ID, PhrazeTable.PHRAZE_KEY_TEXT, PhrazeTable.PHRAZE_KEY_ANSWER, PhrazeTable.PHRAZE_KEY_TIMES_SEEN, PhrazeTable.PHRAZE_KEY_COMPLETED};
+        this.projection = proj;
+		Uri uri = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/0");
+		
+		this.curs = getContentResolver().query(uri, projection, null, projection, PhrazeTable.PHRAZE_KEY_TIMES_SEEN);
+	}
 	
 	private void initLayout() {
 		setContentView(R.layout.timed_play);
@@ -152,28 +155,6 @@ public class TimedPlay extends Activity {
 			}
 		});
 
-		/*this.submitAnswer.setOnClickListener(new OnClickListener() {
-			public void onClick(View view) {
-				if (StringComparer.stringChecker(userAnswer.getText().toString(), currentAnswer) < 15) {
-					phrazesCompleted++;
-					phrazesCompletedDisplay.setText(getResources().getString(R.string.phrazesFinished) + " " + phrazesCompleted);
-					Toast.makeText(getBaseContext(), "Correct!", Toast.LENGTH_SHORT).show();
-				}
-				else {
-					Toast.makeText(getBaseContext(), "Incorrect answer", Toast.LENGTH_SHORT).show();
-				}
-
-				userAnswer.getText().clear();
-				PhrazePack pack = PhrazesAndAnswers.getRandomPhrazePack();
-				currentPhraze = pack.getPhraze();
-				currentAnswer = pack.getAnswer();
-				phrazeText.setText(currentPhraze);
-
-				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-				imm.hideSoftInputFromWindow(userAnswer.getWindowToken(), 0);
-			}
-		});*/
-
 		this.userAnswer.setOnKeyListener(new OnKeyListener() {
 			@Override
 			public boolean onKey(View view, int keyCode, KeyEvent event) {
@@ -197,20 +178,19 @@ public class TimedPlay extends Activity {
 
 						getContentResolver().update(uri, cv, null, null);
 						cv.clear();
-						/** Done **/
+						/*Done with DB work*/
 						
 						userAnswer.getText().clear();
+						
 						if (curs.moveToNext()) {
 							currentPhraze = curs.getString(PhrazeTable.PHRAZE_COL_TEXT);
 							currentAnswer = curs.getString(PhrazeTable.PHRAZE_COL_ANSWER);
-						} else {
+						}
+						else {
 							Toast.makeText(getBaseContext(), "Something went terribly wrong.", Toast.LENGTH_SHORT).show();
-						}						
-						phrazeText.setText(currentPhraze);
-                        
-						/** Update the DB to add one to the "Seen" column **/
-
+						}
 						
+						phrazeText.setText(currentPhraze);
 						
 						InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 						imm.hideSoftInputFromWindow(userAnswer.getWindowToken(), 0);
@@ -225,6 +205,14 @@ public class TimedPlay extends Activity {
 			public void onClick(View view) {
 				if (skipsLeft > 0) {
 					userAnswer.getText().clear();
+					
+					/** Update the DB to add one to the "Seen" column **/
+					cv.put(PhrazeTable.PHRAZE_KEY_TIMES_SEEN, curs.getInt(PhrazeTable.PHRAZE_COL_TIMES_SEEN) + 1);
+					Uri uri = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/" + curs.getInt(PhrazeTable.PHRAZE_COL_ID));
+
+					getContentResolver().update(uri, cv, null, null);
+					cv.clear();
+					
 					if (curs.moveToNext()) {
 						currentPhraze = curs.getString(PhrazeTable.PHRAZE_COL_TEXT);
 						currentAnswer = curs.getString(PhrazeTable.PHRAZE_COL_ANSWER);
