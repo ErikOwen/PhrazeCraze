@@ -28,6 +28,7 @@ public class TimedPlayPaused extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		
 		Bundle bundle = getIntent().getExtras();
@@ -46,7 +47,6 @@ public class TimedPlayPaused extends Activity {
 	}
 
 	private void initLayout() {
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.timed_play_paused);
 		
 		this.pauseGameBanner = (TextView) findViewById(R.id.pausedText);

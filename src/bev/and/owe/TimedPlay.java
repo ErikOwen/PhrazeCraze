@@ -10,6 +10,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -49,8 +50,8 @@ public class TimedPlay extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		super.onCreate(savedInstanceState);
 
 		initLayout();
 		initOnClickListeners();
@@ -68,10 +69,36 @@ public class TimedPlay extends Activity {
 
 	@Override
 	public void onPause() {
-		super.onPause();  // Always call the superclass method first
+		super.onPause();
+		Log.w("PhrazeCraze", "On pause was called.");
 		this.timer.cancel();
-	}
+		this.timer = null;
+		
+		/*SharedPreferences phrazeGameState = getSharedPreferences("phrazeState", MODE_PRIVATE);
+		SharedPreferences.Editor editor = phrazeGameState.edit();
+		
+		editor.putInt("secondsLeft", stringToSeconds((String) timerDisplay.getText()));
+		editor.putInt("initialGameTime", this.initialTimeSelected);
+		editor.putInt("phrazesCompleted", this.phrazesCompleted);
+		editor.putInt("remainingSkips", this.skipsLeft);
 
+		editor.commit();*/
+	}
+	
+	/*@Override
+	public void onResume() {
+		super.onResume();
+		Log.w("PhrazeCraze", "On resume was called.");
+		
+		SharedPreferences phrazeGameState = this.getSharedPreferences("phrazeState", MODE_PRIVATE);
+		this.secondsLeft = phrazeGameState.getInt("secondsLeft", 0);
+		this.initialTimeSelected = phrazeGameState.getInt("initialGameTime", 2);
+		this.phrazesCompleted = phrazeGameState.getInt("phrazesCompleted", 0);
+		this.skipsLeft = phrazeGameState.getInt("remainingSkips", 0);
+		
+		startTimer(this.secondsLeft);
+	}*/
+	
 	private void initLayout() {
 		setContentView(R.layout.timed_play);
 
@@ -211,8 +238,6 @@ public class TimedPlay extends Activity {
 				timerDisplay.setText("Time: " + ((millisUntilFinished / MILLISECONDS_PER_SECOND) / SECONDS_PER_MINUTE) + ":" + String.format("%02d", ((millisUntilFinished / MILLISECONDS_PER_SECOND) % SECONDS_PER_MINUTE)));
 			}
 		}.start();
-		/*this.timer = new MyCountdownTimer(timerLength * MILLISECONDS_PER_SECOND, MILLISECONDS_PER_SECOND, this.timerDisplay);
-            this.timer.start();*/
 	}
 
 	private int stringToSeconds(String str) {
