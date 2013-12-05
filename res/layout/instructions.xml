@@ -5,25 +5,36 @@
     android:background="@color/background"
     tools:context=".TimedPlayPaused" >
 
-    <TextView
-		android:id="@+id/instructionsTextHeading"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignParentTop="true"
-		android:paddingTop="15sp"
-		android:layout_centerHorizontal="true"
-		android:textSize="70sp"
-		android:textColor="@color/green"
-		android:text="@string/instructions" />
+    <ScrollView 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background">
+        <RelativeLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            
+                <TextView
+					android:id="@+id/instructionsTextHeading"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignParentTop="true"
+					android:paddingTop="10sp"
+					android:layout_centerHorizontal="true"
+					android:textSize="70sp"
+					android:textColor="@color/green"
+					android:text="@string/instructions" />
     
-    <TextView
-        android:id="@+id/instructionsTextBody"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/green"
-        android:layout_below="@id/instructionsTextHeading"
-        android:layout_marginTop="20sp"
-        android:text="Playing Phraze Craze is easy! When you start a game, you will be presented with a Phraze. You try and solve the phraze by sounding it out phonetically to make another phraze. When you think you have the phraze, type it in the answer box and hit submit. If you get it right, you&apos;ll rack up some points and be presented with the next phraze. It&apos;s that easy!"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+    			<TextView
+        			android:id="@+id/instructionsTextBody"
+        			android:layout_width="wrap_content"
+        			android:layout_height="wrap_content"
+        			android:textColor="@color/green"
+        			android:layout_below="@id/instructionsTextHeading"
+        			android:layout_marginTop="20sp"
+        			android:text="@string/instructionsBody"
+        			android:textAppearance="?android:attr/textAppearanceLarge" />
+            
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

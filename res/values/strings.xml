@@ -48,5 +48,7 @@
     <string name="threeMinAchievement">CgkI7qLXncMNEAIQDw</string>
     <string name="overOneHundredAchievement">CgkI7qLXncMNEAIQEA</string>
     <string name="tenInARowAchievement">CgkI7qLXncMNEAIQEQ</string>
+    <string name="instructionsBody">\tPlaying Phraze Craze is easy! The goal of the game is to find the common phrase hidden underneath the group of random words.\n\tIn Timed Play Mode, the objective is to get as many of these Phrazes correct as possible in the time duration. The user is given a certain number of skips (depending on the game time chosen) where they can go to the next Phraze if they are stuck.
+In Free Play Mode, the user can take their time to try and decipher the Phrazes. There is no time limit, but the user can challenge him or herself by trying to increase their streak of correctly answered Phrazes.\n\tHighscores are available in Timed Play Mode when the user is signed in. There are achievements to be unlocked in both Timed Play and Free Play modes.\n\tIf you have any questions, concerns, or feedback feel free to send an email using the \"Suggest a Phraze\" page. Also, new Phraze submissions are always appreciated!\n</string>
 
 </resources>

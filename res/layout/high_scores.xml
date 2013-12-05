@@ -32,7 +32,7 @@
 			android:background="@drawable/one_minutescores_button_selector"
 			android:layout_below="@id/highScoresBanner"
 			android:layout_marginTop="70sp"
-			android:layout_centerHorizontal="true"
+			android:layout_centerInParent="true"
 			android:text="1 Minute High Scores" />
 	    
 	    <ImageButton 
@@ -42,7 +42,7 @@
 			android:layout_below="@id/oneMinHighScoreButton"
 			android:background="@drawable/two_minutescores_button_selector"
 			android:layout_marginTop="50sp"
-			android:layout_centerHorizontal="true"
+			android:layout_centerInParent="true"
 			android:text="2 Minutes High Scores" />
 	    
 		<ImageButton 
@@ -52,7 +52,7 @@
 			android:layout_below="@id/twoMinHighScoreButton"
 			android:background="@drawable/three_minutescores_button_selector"
 			android:layout_marginTop="50sp"
-			android:layout_centerHorizontal="true"
+			android:layout_centerInParent="true"
 			android:text="3 Minutes High Scores" />
 		
 		<Button 
@@ -61,7 +61,7 @@
             android:layout_height="40sp"
 			android:layout_below="@id/threeMinHighScoreButton"
 			android:layout_marginTop="50sp"
-			android:layout_centerHorizontal="true"
+			android:layout_centerInParent="true"
 			android:text="View Achievements"
 			android:textColor="@color/white"
 			android:background="@color/orange"

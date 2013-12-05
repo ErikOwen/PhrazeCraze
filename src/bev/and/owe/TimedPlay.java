@@ -83,6 +83,16 @@ public class TimedPlay extends Activity {
 		this.timer.cancel();
 		this.timer = null;
 		
+		
+		if (!this.pauseButton.isPressed()) {
+			Intent pauseScreenActivity = new Intent(TimedPlay.this, TimedPlayPaused.class);
+
+			pauseScreenActivity.putExtra("secondsLeft", stringToSeconds((String) timerDisplay.getText()));
+			pauseScreenActivity.putExtra("phrazesCompleted", phrazesCompleted);
+			pauseScreenActivity.putExtra("remainingSkips", skipsLeft);
+
+			startActivityForResult(pauseScreenActivity, 1);
+		}
 		/*SharedPreferences phrazeGameState = getSharedPreferences("phrazeState", MODE_PRIVATE);
 		SharedPreferences.Editor editor = phrazeGameState.edit();
 		

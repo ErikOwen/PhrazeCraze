@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Settings extends Activity {
 	private TextView settingsTextBanner;
@@ -44,7 +45,7 @@ public class Settings extends Activity {
 		});
 		this.buyMorePhrazeButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View view) {
-			
+				Toast.makeText(getBaseContext(), "This feature will come in a future update.", Toast.LENGTH_LONG).show();
 			}
 		});
 		
