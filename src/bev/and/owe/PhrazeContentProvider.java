@@ -3,8 +3,6 @@ package bev.and.owe;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import edu.calpoly.android.lab4.JokeTable;
-
 
 import bev.and.owe.PhrazeTable;
 
@@ -25,6 +23,7 @@ public class PhrazeContentProvider extends ContentProvider {
 
 	/** Values for the URIMatcher. */
 	private static final int PHRAZE_ID = 1;
+	private static final int PHRAZE_SEEN = 2;
 	
 	/** The authority for this content provider. */
 	private static final String AUTHORITY = "bev.and.owe.contentprovider";
@@ -44,6 +43,7 @@ public class PhrazeContentProvider extends ContentProvider {
 	private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 	static {
 		sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/phrazes/#", PHRAZE_ID);
+		sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/seen/#", PHRAZE_SEEN);
 	}
 	
 	@Override
@@ -73,14 +73,28 @@ public class PhrazeContentProvider extends ContentProvider {
 		int uriType = sURIMatcher.match(uri);
 		
 		switch(uriType) {
-		case PHRAZE_ID:
+		case PHRAZE_SEEN:
+			 /** Fetch the last segment of the URI, which should be a filter number. */
+			 String seen = uri.getLastPathSegment();
+			 if (seen.equals(PhrazeManager.UNSEEN))
+			    queryBuilder.appendWhere(PhrazeTable.PHRAZE_KEY_SEEN + "=" + PhrazeManager.UNSEEN);
+			 else if (seen.equals(PhrazeManager.SEEN)){
+				queryBuilder.appendWhere(PhrazeTable.PHRAZE_KEY_SEEN + "=" + PhrazeManager.SEEN);
+			 } else {
+				 selection = null;
+			 }
 		     break;
 		default:
 			 throw new IllegalArgumentException("Unknown URI: " + uri + " and lastSegment was " + uriType + "when we wanted " + PHRAZE_ID);
 		}
+		
+		SQLiteDatabase db = this.database.getWritableDatabase();
+		Cursor cursor = queryBuilder.query(db, projection, selection, null, null, null, null);
+
+		/** Set the cursor to automatically alert listeners for content/view refreshing. */
+		cursor.setNotificationUri(getContext().getContentResolver(), uri);
 		 
-		 
-		return null;
+		return cursor;
 	}
 
 	@Override
