@@ -8,7 +8,6 @@ import bev.and.owe.PhrazeTable;
 
 import bev.and.owe.PhrazeDatabaseHelper;
 
->>>>>>> 45ae87c14f39abe2a83c20a17079932ae0b06404
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
