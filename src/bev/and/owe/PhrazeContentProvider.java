@@ -43,7 +43,6 @@ public class PhrazeContentProvider extends ContentProvider {
 	private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 	static {
 		sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/phrazes/#", PHRAZE_ID);
-		//sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/seen/#", PHRAZE_SEEN);
 	}
 	
 	@Override
@@ -53,8 +52,6 @@ public class PhrazeContentProvider extends ContentProvider {
 	}
 	
 	
-	/////I'm a little confused on what we'll need a query for.
-	/////I think we'll use it for retrieving phrases. Will come back to it.
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
@@ -68,29 +65,8 @@ public class PhrazeContentProvider extends ContentProvider {
 	    /** Set up helper to query our jokes table. */
 		queryBuilder.setTables(PhrazeTable.DATABASE_TABLE_PHRAZE);
 		
-		/** Match the passed-in URI to an expected URI format. */
-		int uriType = sURIMatcher.match(uri);
-		
-		switch(uriType) {
-			case PHRAZE_ID:
-				/** Fetch the last segment of the URI, which should be a filter number. */
-				String seen = uri.getLastPathSegment();
-				if (seen.equals(PHRAZE_HAS_NOT_BEEN_SEEN))
-					queryBuilder.appendWhere(PhrazeTable.PHRAZE_KEY_TIMES_SEEN + "=" + PHRAZE_HAS_NOT_BEEN_SEEN);
-				else if (seen.equals(PHRAZE_HAS_BEEN_SEEN)){
-					//Need to modify query below to query for the phraze that has been seen the least
-					queryBuilder.appendWhere(PhrazeTable.PHRAZE_KEY_TIMES_SEEN + "=" + PhrazeManager.SEEN);
-				}
-				else {
-				 selection = null;
-				}
-		     break;
-		default:
-			 throw new IllegalArgumentException("Unknown URI: " + uri + " and lastSegment was " + uriType + "when we wanted " + PHRAZE_ID);
-		}
-		
 		SQLiteDatabase db = this.database.getWritableDatabase();
-		Cursor cursor = queryBuilder.query(db, projection, selection, null, null, null, null);
+		Cursor cursor = queryBuilder.query(db, projection, selection, null, null, null, PhrazeTable.PHRAZE_KEY_TIMES_SEEN);
 
 		/** Set the cursor to automatically alert listeners for content/view refreshing. */
 		cursor.setNotificationUri(getContext().getContentResolver(), uri);
