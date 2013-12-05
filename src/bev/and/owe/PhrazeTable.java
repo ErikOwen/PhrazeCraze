@@ -21,12 +21,16 @@ public class PhrazeTable {
 	
 	public static final String PHRAZE_KEY_SEEN = "phraze_seen";
 	public static final int PHRAZE_COL_SEEN = PHRAZE_COL_ID + 3;
+	
+	public static final String PHRAZE_KEY_COMPLETED = "phraze_completed";
+	public static final int PHRAZE_COL_COMPLETED = PHRAZE_COL_ID + 4;
 
 	public static final String DATABASE_CREATE = "create table " + DATABASE_TABLE_PHRAZE + " (" +
 			PHRAZE_KEY_ID + " integer primary key autoincrement, " +
 			PHRAZE_KEY_TEXT + " text not null, " +
 			PHRAZE_KEY_ANSWER + " text not null, " +
-			PHRAZE_KEY_SEEN + " integer default 0);";
+			PHRAZE_KEY_SEEN + " integer default 0," +
+			PHRAZE_KEY_COMPLETED + "integer default 0);";
 	
 	public static final String DATABASE_DROP = "drop table if exists " + DATABASE_TABLE_PHRAZE;
 	

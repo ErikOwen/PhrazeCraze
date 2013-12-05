@@ -3,12 +3,9 @@ package bev.and.owe;
 import java.util.Arrays;
 import java.util.HashSet;
 
-
+import edu.calpoly.android.lab4.JokeTable;
 import bev.and.owe.PhrazeTable;
-
 import bev.and.owe.PhrazeDatabaseHelper;
-
->>>>>>> 45ae87c14f39abe2a83c20a17079932ae0b06404
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
@@ -49,8 +46,8 @@ public class PhrazeContentProvider extends ContentProvider {
 	
 	@Override
 	public boolean onCreate() {
-		database = new PhrazeDatabaseHelper(this.getContext(), PhrazeDatabaseHelper.DATABASE_NAME, null, PhrazeDatabaseHelper.DATABASE_VERSION);
-		return false;
+		database = new PhrazeDatabaseHelper(getContext(), PhrazeDatabaseHelper.DATABASE_NAME, null, PhrazeDatabaseHelper.DATABASE_VERSION);
+		return true;
 	}
 	
 	
@@ -63,9 +60,8 @@ public class PhrazeContentProvider extends ContentProvider {
 		/** Use a helper class to perform a query for us. */
 		 SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 		 
-		 ///////////
-		 //////////////////** need to do a projection check here **/
-		 ///////////
+		 /** Make sure the projection is proper before querying. */
+		 checkColumns(projection);
 		
 	    /** Set up helper to query our jokes table. */
 		queryBuilder.setTables(PhrazeTable.DATABASE_TABLE_PHRAZE);
@@ -187,6 +183,25 @@ public class PhrazeContentProvider extends ContentProvider {
 	@Override
 	public String getType(Uri uri) {
 		return null;
+	}
+	
+	/**
+	 * Verifies the correct set of columns to return data from when performing a query.
+	 * 
+	 * @param projection
+	 * 						The set of columns about to be queried.
+	 */
+	private void checkColumns(String[] projection) {
+		String[] available = { PhrazeTable.PHRAZE_KEY_ID, PhrazeTable.PHRAZE_KEY_TEXT, PhrazeTable.PHRAZE_KEY_ANSWER, PhrazeTable.PHRAZE_KEY_SEEN, PhrazeTable.PHRAZE_KEY_COMPLETED };
+		
+		if(projection != null) {
+			HashSet<String> requestedColumns = new HashSet<String>(Arrays.asList(projection));
+			HashSet<String> availableColumns = new HashSet<String>(Arrays.asList(available));
+			
+			if(!availableColumns.containsAll(requestedColumns))	{
+				throw new IllegalArgumentException("Unknown columns in projection");
+			}
+		}
 	}
 	
 }
