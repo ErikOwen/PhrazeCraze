@@ -157,7 +157,7 @@ public class HomeScreen extends BaseGameActivity implements GooglePlayServicesCl
 	
 	@Override
 	public void onSignInFailed() {
-		Toast.makeText(this, "Google Play sign in failed", Toast.LENGTH_LONG).show();
+		//Toast.makeText(this, "Google Play sign in failed", Toast.LENGTH_LONG).show();
 		this.signInOutButton.setImageDrawable(getResources().getDrawable(R.drawable.sign_in_selector));
 		
 	}

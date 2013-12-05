@@ -14,14 +14,15 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class HighScores extends BaseGameActivity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener{
 	private TextView highScoresBanner;
-	private Button oneMinScores;
-	private Button twoMinScores;
-	private Button threeMinScores;
+	private ImageButton oneMinScores;
+	private ImageButton twoMinScores;
+	private ImageButton threeMinScores;
 	private GamesClient gameClient;
 	private final int REQUEST_LEADERBOARD = 20;
 	
@@ -43,9 +44,9 @@ public class HighScores extends BaseGameActivity implements GooglePlayServicesCl
 		setContentView(R.layout.high_scores);
 		
 		this.highScoresBanner = (TextView) findViewById(R.id.highScoresBanner);
-		this.oneMinScores = (Button) findViewById(R.id.oneMinHighScoreButton);
-		this.twoMinScores = (Button) findViewById(R.id.twoMinHighScoreButton);
-		this.threeMinScores = (Button) findViewById(R.id.threeMinHighScoreButton);
+		this.oneMinScores = (ImageButton) findViewById(R.id.oneMinHighScoreButton);
+		this.twoMinScores = (ImageButton) findViewById(R.id.twoMinHighScoreButton);
+		this.threeMinScores = (ImageButton) findViewById(R.id.threeMinHighScoreButton);
 		
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
 		this.highScoresBanner.setTypeface(font);

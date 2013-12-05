@@ -19,7 +19,7 @@
 			android:layout_alignParentLeft="true"
 			android:layout_centerVertical="true"
 			android:layout_marginLeft="10sp"
-			android:background="@drawable/home_icon_temp" />
+			android:background="@drawable/small_home_button_selector" />
         <TextView
 		    android:id="@+id/phrazeStreakText"
 			android:layout_width="wrap_content"
