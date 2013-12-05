@@ -6,8 +6,6 @@ import com.google.android.gms.games.GamesClient;
 import com.google.example.games.basegameutils.BaseGameActivity;
 
 import android.os.Bundle;
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.Menu;
 import android.view.View;

@@ -479,9 +479,11 @@ public class PhrazesAndAnswers {
 	
 	public ArrayList<PhrazePack> getAllPhrazes() {
 		ArrayList<PhrazePack> list = new ArrayList<PhrazePack>();
-		for (int i = 0; i < phrases.size(); i++) {
-			list.add(new PhrazePack(phrases.get(i), mixedphrases.get(i)));
+		
+		for (int iter = 0; iter < phrases.size(); iter++) {
+			list.add(new PhrazePack(phrases.get(iter), mixedphrases.get(iter)));
 		}
+		
 		return list;
 	}
 

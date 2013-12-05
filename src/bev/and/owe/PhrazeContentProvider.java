@@ -128,7 +128,7 @@ public class PhrazeContentProvider extends ContentProvider {
         	throw new IllegalArgumentException("Unknown URI: " + uri);
 	    }
 		
-		return 0;
+		return numDelRows;
 	}
 	
 	

@@ -1,45 +1,34 @@
 package bev.and.owe;
 
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
-import android.support.v4.internal.view.SupportMenuItem;
-import android.support.v4.view.MenuItemCompat;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class TimedPlay extends Activity {
-	private Menu timedMenu;
 	private ImageButton pauseButton;
 	private TextView timerDisplay;
 	private TextView phrazesCompletedDisplay;
 	private TextView phrazeText;
 	private ImageButton skipPhraze;
-	//private ImageButton submitAnswer;
 	private EditText userAnswer;
 	private CountDownTimer timer;
 	private int phrazesCompleted;
@@ -84,39 +73,18 @@ public class TimedPlay extends Activity {
 		this.timer = null;
 		
 		
-		if (!this.pauseButton.isPressed()) {
+		if (!this.pauseButton.isPressed() && !timerDisplay.getText().equals("Done!")) {
 			Intent pauseScreenActivity = new Intent(TimedPlay.this, TimedPlayPaused.class);
 
+			Log.w("PhrazeCraze", "timerDisplay says: " + timerDisplay.getText());
 			pauseScreenActivity.putExtra("secondsLeft", stringToSeconds((String) timerDisplay.getText()));
 			pauseScreenActivity.putExtra("phrazesCompleted", phrazesCompleted);
 			pauseScreenActivity.putExtra("remainingSkips", skipsLeft);
 
 			startActivityForResult(pauseScreenActivity, 1);
 		}
-		/*SharedPreferences phrazeGameState = getSharedPreferences("phrazeState", MODE_PRIVATE);
-		SharedPreferences.Editor editor = phrazeGameState.edit();
-		
-		editor.putInt("secondsLeft", stringToSeconds((String) timerDisplay.getText()));
-		editor.putInt("initialGameTime", this.initialTimeSelected);
-		editor.putInt("phrazesCompleted", this.phrazesCompleted);
-		editor.putInt("remainingSkips", this.skipsLeft);
 
-		editor.commit();*/
 	}
-	
-	/*@Override
-	public void onResume() {
-		super.onResume();
-		Log.w("PhrazeCraze", "On resume was called.");
-		
-		SharedPreferences phrazeGameState = this.getSharedPreferences("phrazeState", MODE_PRIVATE);
-		this.secondsLeft = phrazeGameState.getInt("secondsLeft", 0);
-		this.initialTimeSelected = phrazeGameState.getInt("initialGameTime", 2);
-		this.phrazesCompleted = phrazeGameState.getInt("phrazesCompleted", 0);
-		this.skipsLeft = phrazeGameState.getInt("remainingSkips", 0);
-		
-		startTimer(this.secondsLeft);
-	}*/
 	
 	private void getPhrazesFromDB() {
 		this.cv = new ContentValues();
@@ -132,7 +100,6 @@ public class TimedPlay extends Activity {
 
 		this.phrazeText = (TextView) findViewById(R.id.phrazeText);
 		this.skipPhraze = (ImageButton) findViewById(R.id.skipButton);
-		//this.submitAnswer = (ImageButton) findViewById(R.id.submitButton);
 		this.pauseButton = (ImageButton) findViewById(R.id.pauseButton);
 		this.timerDisplay = (TextView) findViewById(R.id.timeLeft);
 		this.phrazesCompletedDisplay = (TextView) findViewById(R.id.completedPhrazesText);
