@@ -153,6 +153,9 @@ public class PhrazeContentProvider extends ContentProvider {
 		case PHRAZE_ID:
 			String id = uri.getLastPathSegment();
 			String whereClause = PhrazeTable.PHRAZE_KEY_ID + "=" + id;
+			if (selection != null) {
+				whereClause += " AND " + selection;
+			}
 			
 			numUpdateRows = sqlDB.update(PhrazeTable.DATABASE_TABLE_PHRAZE, values, whereClause, null);
 			break;

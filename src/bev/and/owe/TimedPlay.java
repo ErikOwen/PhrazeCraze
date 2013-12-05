@@ -53,16 +53,17 @@ public class TimedPlay extends Activity {
 	private Cursor curs;
     private String auth = "bev.and.owe.contentprovider";
     private String base = "phraze_table";
-
+    private ContentValues cv;
+    private String[] projection; 
  
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
-		
-		String[] projection = {PhrazeTable.PHRAZE_KEY_ID, PhrazeTable.PHRAZE_KEY_TEXT, PhrazeTable.PHRAZE_KEY_ANSWER, PhrazeTable.PHRAZE_KEY_TIMES_SEEN};
-        
+		cv = new ContentValues();
+		String[] proj = {PhrazeTable.PHRAZE_KEY_ID, PhrazeTable.PHRAZE_KEY_TEXT, PhrazeTable.PHRAZE_KEY_ANSWER, PhrazeTable.PHRAZE_KEY_TIMES_SEEN, PhrazeTable.PHRAZE_KEY_COMPLETED};
+        projection = proj;
 		Uri uri = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/0");
 		
 		curs = getContentResolver().query(uri, projection, null, projection, PhrazeTable.PHRAZE_KEY_TIMES_SEEN);
@@ -182,17 +183,20 @@ public class TimedPlay extends Activity {
 							phrazesCompleted++;
 							phrazesCompletedDisplay.setText(getResources().getString(R.string.phrazesFinished) + " " + phrazesCompleted);
 							Toast.makeText(getBaseContext(), "Correct!", Toast.LENGTH_SHORT).show();
+							/** Update DB to list phraze answered correctly **/
+							cv.put(PhrazeTable.PHRAZE_KEY_COMPLETED, 1);
+							
 						}
 						else {
 							Toast.makeText(getBaseContext(), "Incorrect answer", Toast.LENGTH_SHORT).show();
 						}
 						
 						/** Update the DB to add one to the "Seen" column **/
-						ContentValues cv = new ContentValues();
 						cv.put(PhrazeTable.PHRAZE_KEY_TIMES_SEEN, curs.getInt(PhrazeTable.PHRAZE_COL_TIMES_SEEN) + 1);
 						Uri uri = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/" + curs.getInt(PhrazeTable.PHRAZE_COL_ID));
 
 						getContentResolver().update(uri, cv, null, null);
+						cv.clear();
 						/** Done **/
 						
 						userAnswer.getText().clear();
