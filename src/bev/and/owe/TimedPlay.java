@@ -1,5 +1,6 @@
 package bev.and.owe;
 
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -8,9 +9,11 @@ import android.annotation.TargetApi;
 import android.support.v4.internal.view.SupportMenuItem;
 import android.support.v4.view.MenuItemCompat;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -47,11 +50,22 @@ public class TimedPlay extends Activity {
 	private String currentAnswer;
 	private final int MILLISECONDS_PER_SECOND = 1000;
 	private final int SECONDS_PER_MINUTE = 60;
+	private Cursor curs;
+    private String auth = "bev.and.owe.contentprovider";
+    private String base = "phraze_table";
+
+ 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
+		
+		String[] projection = {PhrazeTable.PHRAZE_KEY_ID, PhrazeTable.PHRAZE_KEY_TEXT, PhrazeTable.PHRAZE_KEY_ANSWER, PhrazeTable.PHRAZE_KEY_TIMES_SEEN};
+        
+		Uri uri = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/0");
+		
+		curs = getContentResolver().query(uri, projection, null, projection, PhrazeTable.PHRAZE_KEY_TIMES_SEEN);
 
 		initLayout();
 		initOnClickListeners();
@@ -113,9 +127,12 @@ public class TimedPlay extends Activity {
 		Typeface font  = Typeface.createFromAsset(getAssets(), "Dimbo.ttf");
 		this.phrazeText.setTypeface(font);
 
-		PhrazePack pack = PhrazesAndAnswers.getRandomPhrazePack();
-		this.currentPhraze = pack.getPhraze();
-		this.currentAnswer = pack.getAnswer();
+		if (curs.moveToFirst()) {
+			this.currentPhraze = curs.getString(PhrazeTable.PHRAZE_COL_TEXT);
+			this.currentAnswer = curs.getString(PhrazeTable.PHRAZE_COL_ANSWER);
+		} else {
+			Toast.makeText(this, "Something went terribly wrong.", Toast.LENGTH_SHORT).show();
+		}
 
 		this.phrazeText.setText(this.currentPhraze);
 		this.phrazesCompletedDisplay.setText(getResources().getString(R.string.phrazesFinished) + " " + this.phrazesCompleted);
@@ -169,13 +186,28 @@ public class TimedPlay extends Activity {
 						else {
 							Toast.makeText(getBaseContext(), "Incorrect answer", Toast.LENGTH_SHORT).show();
 						}
+						
+						/** Update the DB to add one to the "Seen" column **/
+						ContentValues cv = new ContentValues();
+						cv.put(PhrazeTable.PHRAZE_KEY_TIMES_SEEN, curs.getInt(PhrazeTable.PHRAZE_COL_TIMES_SEEN) + 1);
+						Uri uri = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/" + curs.getInt(PhrazeTable.PHRAZE_COL_ID));
 
+						getContentResolver().update(uri, cv, null, null);
+						/** Done **/
+						
 						userAnswer.getText().clear();
-						PhrazePack pack = PhrazesAndAnswers.getRandomPhrazePack();
-						currentPhraze = pack.getPhraze();
-						currentAnswer = pack.getAnswer();
+						if (curs.moveToNext()) {
+							currentPhraze = curs.getString(PhrazeTable.PHRAZE_COL_TEXT);
+							currentAnswer = curs.getString(PhrazeTable.PHRAZE_COL_ANSWER);
+						} else {
+							Toast.makeText(getBaseContext(), "Something went terribly wrong.", Toast.LENGTH_SHORT).show();
+						}						
 						phrazeText.setText(currentPhraze);
+                        
+						/** Update the DB to add one to the "Seen" column **/
 
+						
+						
 						InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 						imm.hideSoftInputFromWindow(userAnswer.getWindowToken(), 0);
 
@@ -189,9 +221,13 @@ public class TimedPlay extends Activity {
 			public void onClick(View view) {
 				if (skipsLeft > 0) {
 					userAnswer.getText().clear();
-					PhrazePack pack = PhrazesAndAnswers.getRandomPhrazePack();
-					currentPhraze = pack.getPhraze();
-					currentAnswer = pack.getAnswer();
+					if (curs.moveToNext()) {
+						currentPhraze = curs.getString(PhrazeTable.PHRAZE_COL_TEXT);
+						currentAnswer = curs.getString(PhrazeTable.PHRAZE_COL_ANSWER);
+						Log.d("PHRAZES", currentPhraze + " and " + currentAnswer);
+					} else {
+						Toast.makeText(getBaseContext(), "Something went terribly wrong.", Toast.LENGTH_SHORT).show();
+					}			
 					phrazeText.setText(currentPhraze);
 					skipsLeft--;
 				}

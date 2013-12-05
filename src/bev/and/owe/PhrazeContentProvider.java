@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.util.Log;
 
 public class PhrazeContentProvider extends ContentProvider {
 	
@@ -21,7 +22,6 @@ public class PhrazeContentProvider extends ContentProvider {
 
 	/** Values for the URIMatcher. */
 	private static final int PHRAZE_ID = 1;
-	private static final int PHRAZE_SEEN = 2;
 	private static final int PHRAZE_HAS_BEEN_SEEN = 1;
 	private static final int PHRAZE_HAS_NOT_BEEN_SEEN = 0;
 	
@@ -31,7 +31,7 @@ public class PhrazeContentProvider extends ContentProvider {
 	/** The database table to read from and write to, and also the root path for use in the URI matcher.
 	 * This is essentially a label to a two-dimensional array in the database filled with rows of phrazes
 	 * whose columns contain phraze data. */
-	private static final String BASE_PATH = "joke_table";
+	private static final String BASE_PATH = "phraze_table";
 	
 	/** This provider's content location. Used by accessing applications to
 	 * interact with this provider. */
@@ -48,6 +48,10 @@ public class PhrazeContentProvider extends ContentProvider {
 	@Override
 	public boolean onCreate() {
 		database = new PhrazeDatabaseHelper(getContext(), PhrazeDatabaseHelper.DATABASE_NAME, null, PhrazeDatabaseHelper.DATABASE_VERSION);
+		if (database == null) {
+			Log.d("CREATED", "database is null..");
+		}
+		Log.d("CREATED", "created database");
 		return true;
 	}
 	

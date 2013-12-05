@@ -1,10 +1,13 @@
 package bev.and.owe;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Typeface;
+import android.support.v4.content.Loader;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -28,6 +31,7 @@ public class FreePlay extends Activity {
 	private String currentPhraze;
 	private String currentAnswer;
 	private int currentStreak;
+	private Cursor curs;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,14 @@ public class FreePlay extends Activity {
 		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		
 		this.currentStreak = 0;	
+		String auth = "bev.and.owe.contentprovider";
+		String base = "phraze_table";
+		String[] projection = {PhrazeTable.PHRAZE_KEY_ID, PhrazeTable.PHRAZE_KEY_TEXT, PhrazeTable.PHRAZE_KEY_ANSWER, PhrazeTable.PHRAZE_KEY_TIMES_SEEN};
+        
+		Uri uri = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/0");
+		
+		curs = getContentResolver().query(uri, projection, null, projection, PhrazeTable.PHRAZE_KEY_TIMES_SEEN);
+        
 		
 		initLayout();
 		initOnClickListeners();
@@ -57,9 +69,12 @@ public class FreePlay extends Activity {
 		this.phrazeText.setTypeface(font);
 		this.currentStreakText.setTypeface(font);
 		
-		PhrazePack pack = PhrazesAndAnswers.getRandomPhrazePack();
-		this.currentPhraze = pack.getPhraze();
-		this.currentAnswer = pack.getAnswer();
+		if (curs.moveToFirst()) {
+			this.currentPhraze = curs.getString(PhrazeTable.PHRAZE_COL_TEXT);
+			this.currentAnswer = curs.getString(PhrazeTable.PHRAZE_COL_ANSWER);
+		} else {
+			Toast.makeText(this, "Something went terribly wrong.", Toast.LENGTH_SHORT).show();
+		}
 		
 		this.phrazeText.setText(this.currentPhraze);
 		this.currentStreakText.setText(getResources().getString(R.string.currentStreak) + " " + this.currentStreak);
@@ -112,9 +127,13 @@ public class FreePlay extends Activity {
 						currentStreakText.setText(getResources().getString(R.string.currentStreak) + " " + currentStreak);
 						
 						userAnswer.getText().clear();
-						PhrazePack pack = PhrazesAndAnswers.getRandomPhrazePack();
-						currentPhraze = pack.getPhraze();
-						currentAnswer = pack.getAnswer();
+						if (curs.moveToNext()) {
+							currentPhraze = curs.getString(PhrazeTable.PHRAZE_COL_TEXT);
+							currentAnswer = curs.getString(PhrazeTable.PHRAZE_COL_ANSWER);
+						} else {
+							Toast.makeText(getBaseContext(), "Something went terribly wrong.", Toast.LENGTH_SHORT).show();
+						}
+
 						phrazeText.setText(currentPhraze);
 						
 						InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -130,9 +149,12 @@ public class FreePlay extends Activity {
 			public void onClick(View view) {
 				Toast.makeText(getBaseContext(), "Answer was: " + currentAnswer, Toast.LENGTH_SHORT).show();
 				userAnswer.getText().clear();
-				PhrazePack pack = PhrazesAndAnswers.getRandomPhrazePack();
-				currentPhraze = pack.getPhraze();
-				currentAnswer = pack.getAnswer();
+				if (curs.moveToNext()) {
+					currentPhraze = curs.getString(PhrazeTable.PHRAZE_COL_TEXT);
+					currentAnswer = curs.getString(PhrazeTable.PHRAZE_COL_ANSWER);
+				} else {
+					Toast.makeText(getBaseContext(), "Something went terribly wrong.", Toast.LENGTH_SHORT).show();
+				}
 				phrazeText.setText(currentPhraze);
 				
 				currentStreak = 0;

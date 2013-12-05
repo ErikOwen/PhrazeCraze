@@ -1,5 +1,9 @@
 package bev.and.owe;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -36,6 +40,17 @@ public class PhrazeTable {
 	
 	public static void onCreate(SQLiteDatabase database) {
 		database.execSQL(DATABASE_CREATE);
+		ContentValues cv = new ContentValues();
+		PhrazesAndAnswers paa = new PhrazesAndAnswers();
+		ArrayList<PhrazePack> phrazePacks = paa.getAllPhrazes();
+		Iterator<PhrazePack> iter = phrazePacks.iterator();
+		while (iter.hasNext()) {
+			PhrazePack pp = iter.next();
+			cv.put(PHRAZE_KEY_TEXT, pp.getPhraze());
+			cv.put(PHRAZE_KEY_ANSWER, pp.getAnswer());
+			database.insert(DATABASE_TABLE_PHRAZE, null, cv);
+			cv.clear();
+		}
 	}
 
 	public static void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
