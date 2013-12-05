@@ -134,7 +134,14 @@ public class TimedPlay extends Activity {
 		if (curs.moveToFirst()) {
 			this.currentPhraze = curs.getString(PhrazeTable.PHRAZE_COL_TEXT);
 			this.currentAnswer = curs.getString(PhrazeTable.PHRAZE_COL_ANSWER);
-		} else {
+			
+			/** Update the DB to add one to the "Seen" column **/
+			cv.put(PhrazeTable.PHRAZE_KEY_TIMES_SEEN, curs.getInt(PhrazeTable.PHRAZE_COL_TIMES_SEEN) + 1);
+			Uri uriSeen = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/" + curs.getInt(PhrazeTable.PHRAZE_COL_ID));
+			getContentResolver().update(uriSeen, cv, null, null);
+			cv.clear();
+		}
+		else {
 			Toast.makeText(this, "Something went terribly wrong.", Toast.LENGTH_SHORT).show();
 		}
 
@@ -164,27 +171,29 @@ public class TimedPlay extends Activity {
 							phrazesCompleted++;
 							phrazesCompletedDisplay.setText(getResources().getString(R.string.phrazesFinished) + " " + phrazesCompleted);
 							Toast.makeText(getBaseContext(), "Correct!", Toast.LENGTH_SHORT).show();
+							
 							/** Update DB to list phraze answered correctly **/
 							cv.put(PhrazeTable.PHRAZE_KEY_COMPLETED, 1);
+							Uri uri = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/" + curs.getInt(PhrazeTable.PHRAZE_COL_ID));
+							getContentResolver().update(uri, cv, null, null);
+							cv.clear();
 							
 						}
 						else {
 							Toast.makeText(getBaseContext(), "Incorrect answer", Toast.LENGTH_SHORT).show();
 						}
 						
-						/** Update the DB to add one to the "Seen" column **/
-						cv.put(PhrazeTable.PHRAZE_KEY_TIMES_SEEN, curs.getInt(PhrazeTable.PHRAZE_COL_TIMES_SEEN) + 1);
-						Uri uri = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/" + curs.getInt(PhrazeTable.PHRAZE_COL_ID));
-
-						getContentResolver().update(uri, cv, null, null);
-						cv.clear();
-						/*Done with DB work*/
-						
 						userAnswer.getText().clear();
 						
 						if (curs.moveToNext()) {
 							currentPhraze = curs.getString(PhrazeTable.PHRAZE_COL_TEXT);
 							currentAnswer = curs.getString(PhrazeTable.PHRAZE_COL_ANSWER);
+							
+							/** Update the DB to add one to the "Seen" column **/
+							cv.put(PhrazeTable.PHRAZE_KEY_TIMES_SEEN, curs.getInt(PhrazeTable.PHRAZE_COL_TIMES_SEEN) + 1);
+							Uri uriSeen = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/" + curs.getInt(PhrazeTable.PHRAZE_COL_ID));
+							getContentResolver().update(uriSeen, cv, null, null);
+							cv.clear();
 						}
 						else {
 							Toast.makeText(getBaseContext(), "Something went terribly wrong.", Toast.LENGTH_SHORT).show();
@@ -206,18 +215,18 @@ public class TimedPlay extends Activity {
 				if (skipsLeft > 0) {
 					userAnswer.getText().clear();
 					
-					/** Update the DB to add one to the "Seen" column **/
-					cv.put(PhrazeTable.PHRAZE_KEY_TIMES_SEEN, curs.getInt(PhrazeTable.PHRAZE_COL_TIMES_SEEN) + 1);
-					Uri uri = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/" + curs.getInt(PhrazeTable.PHRAZE_COL_ID));
-
-					getContentResolver().update(uri, cv, null, null);
-					cv.clear();
-					
 					if (curs.moveToNext()) {
 						currentPhraze = curs.getString(PhrazeTable.PHRAZE_COL_TEXT);
 						currentAnswer = curs.getString(PhrazeTable.PHRAZE_COL_ANSWER);
 						Log.d("PHRAZES", currentPhraze + " and " + currentAnswer);
-					} else {
+						
+						/** Update the DB to add one to the "Seen" column **/
+						cv.put(PhrazeTable.PHRAZE_KEY_TIMES_SEEN, curs.getInt(PhrazeTable.PHRAZE_COL_TIMES_SEEN) + 1);
+						Uri uri = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/" + curs.getInt(PhrazeTable.PHRAZE_COL_ID));
+						getContentResolver().update(uri, cv, null, null);
+						cv.clear();
+					}
+					else {
 						Toast.makeText(getBaseContext(), "Something went terribly wrong.", Toast.LENGTH_SHORT).show();
 					}			
 					phrazeText.setText(currentPhraze);

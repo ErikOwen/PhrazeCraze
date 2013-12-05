@@ -58,6 +58,7 @@ public class PreTimedPlay extends Activity {
 		this.twoMinCheckBox.setTypeface(font);
 		this.threeMinCheckBox.setTypeface(font);
 		this.twoMinCheckBox.setChecked(true);
+		twoMinCheckBox.setClickable(false);
 		this.timeSelected = TWO_MIN;
 		this.numSkips = TWO_SKIPS;
 	}
@@ -69,6 +70,11 @@ public class PreTimedPlay extends Activity {
 				if(isChecked) {
 					twoMinCheckBox.setChecked(false);
 					threeMinCheckBox.setChecked(false);
+					
+					oneMinCheckBox.setClickable(false);
+					twoMinCheckBox.setClickable(true);
+					threeMinCheckBox.setClickable(true);
+					
 					timeSelected = ONE_MIN;
 					numSkips = ONE_SKIPS;
 				}
@@ -80,6 +86,11 @@ public class PreTimedPlay extends Activity {
 				if(isChecked) {
 					oneMinCheckBox.setChecked(false);
 					threeMinCheckBox.setChecked(false);
+					
+					oneMinCheckBox.setClickable(true);
+					twoMinCheckBox.setClickable(false);
+					threeMinCheckBox.setClickable(true);
+					
 					timeSelected = TWO_MIN;
 					numSkips = TWO_SKIPS;
 				}
@@ -91,6 +102,11 @@ public class PreTimedPlay extends Activity {
 				if(isChecked) {
 					oneMinCheckBox.setChecked(false);
 					twoMinCheckBox.setChecked(false);
+					
+					oneMinCheckBox.setClickable(true);
+					twoMinCheckBox.setClickable(true);
+					threeMinCheckBox.setClickable(false);
+					
 					timeSelected = THREE_MIN;
 					numSkips = THREE_SKIPS;
 				}

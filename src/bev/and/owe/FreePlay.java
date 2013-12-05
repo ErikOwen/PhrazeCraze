@@ -73,6 +73,12 @@ public class FreePlay extends BaseGameActivity implements GooglePlayServicesClie
 		if (curs.moveToFirst()) {
 			this.currentPhraze = this.curs.getString(PhrazeTable.PHRAZE_COL_TEXT);
 			this.currentAnswer = this.curs.getString(PhrazeTable.PHRAZE_COL_ANSWER);
+			
+			/** Update the DB to add one to the "Seen" column **/
+			cv.put(PhrazeTable.PHRAZE_KEY_TIMES_SEEN, curs.getInt(PhrazeTable.PHRAZE_COL_TIMES_SEEN) + 1);
+			Uri uriSeen = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/" + curs.getInt(PhrazeTable.PHRAZE_COL_ID));
+			getContentResolver().update(uriSeen, cv, null, null);
+			cv.clear();
 		}
 		else {
 			Toast.makeText(this, "Something went terribly wrong.", Toast.LENGTH_SHORT).show();
@@ -135,7 +141,12 @@ public class FreePlay extends BaseGameActivity implements GooglePlayServicesClie
 					if (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
 						if (StringComparer.stringChecker(userAnswer.getText().toString(), currentAnswer) < 15) {
 							currentStreak++;
+							
 							cv.put(PhrazeTable.PHRAZE_KEY_COMPLETED, 1);
+							Uri uri = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/" + curs.getInt(PhrazeTable.PHRAZE_COL_ID));
+							getContentResolver().update(uri, cv, null, null);
+							cv.clear();
+							
 							if (isSignedIn() && currentStreak >= TEN_STREAK_ACHIEVEMENT) {
 								gameClient.unlockAchievement(getString(R.string.tenInARowAchievement));
 							}
@@ -150,16 +161,15 @@ public class FreePlay extends BaseGameActivity implements GooglePlayServicesClie
 						
 						userAnswer.getText().clear();
 						
-						/** Update the DB to add one to the "Seen" column **/
-						cv.put(PhrazeTable.PHRAZE_KEY_TIMES_SEEN, curs.getInt(PhrazeTable.PHRAZE_COL_TIMES_SEEN) + 1);
-						Uri uri = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/" + curs.getInt(PhrazeTable.PHRAZE_COL_ID));
-
-						getContentResolver().update(uri, cv, null, null);
-						cv.clear();
-						
 						if (curs.moveToNext()) {
 							currentPhraze = curs.getString(PhrazeTable.PHRAZE_COL_TEXT);
 							currentAnswer = curs.getString(PhrazeTable.PHRAZE_COL_ANSWER);
+							
+							/** Update the DB to add one to the "Seen" column **/
+							cv.put(PhrazeTable.PHRAZE_KEY_TIMES_SEEN, curs.getInt(PhrazeTable.PHRAZE_COL_TIMES_SEEN) + 1);
+							Uri uriSeen = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/" + curs.getInt(PhrazeTable.PHRAZE_COL_ID));
+							getContentResolver().update(uriSeen, cv, null, null);
+							cv.clear();
 						}
 						else {
 							Toast.makeText(getBaseContext(), "Something went terribly wrong.", Toast.LENGTH_SHORT).show();
@@ -181,16 +191,15 @@ public class FreePlay extends BaseGameActivity implements GooglePlayServicesClie
 				Toast.makeText(getBaseContext(), "Answer was: " + currentAnswer, Toast.LENGTH_SHORT).show();
 				userAnswer.getText().clear();
 				
-				/** Update the DB to add one to the "Seen" column **/
-				cv.put(PhrazeTable.PHRAZE_KEY_TIMES_SEEN, curs.getInt(PhrazeTable.PHRAZE_COL_TIMES_SEEN) + 1);
-				Uri uri = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/" + curs.getInt(PhrazeTable.PHRAZE_COL_ID));
-
-				getContentResolver().update(uri, cv, null, null);
-				cv.clear();
-				
 				if (curs.moveToNext()) {
 					currentPhraze = curs.getString(PhrazeTable.PHRAZE_COL_TEXT);
 					currentAnswer = curs.getString(PhrazeTable.PHRAZE_COL_ANSWER);
+					
+					/** Update the DB to add one to the "Seen" column **/
+					cv.put(PhrazeTable.PHRAZE_KEY_TIMES_SEEN, curs.getInt(PhrazeTable.PHRAZE_COL_TIMES_SEEN) + 1);
+					Uri uri = Uri.parse("content://" + auth + "/" + base + "/" + "phrazes/" + curs.getInt(PhrazeTable.PHRAZE_COL_ID));
+					getContentResolver().update(uri, cv, null, null);
+					cv.clear();
 				}
 				else {
 					Toast.makeText(getBaseContext(), "Something went terribly wrong.", Toast.LENGTH_SHORT).show();
